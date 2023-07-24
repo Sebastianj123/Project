@@ -1,0 +1,10 @@
+.icon {
+    width: 5vw;
+    height: 100%;
+}
+
+.icon img {
+    width: 100%;
+    height: 100%;
+    transform: translateY(-5px);
+}

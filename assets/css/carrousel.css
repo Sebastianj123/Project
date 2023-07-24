@@ -1,0 +1,33 @@
+#carrousel {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#carrousel-sc {
+    height: 40vw;
+}
+
+#carrousel-sc {
+    display: flex;
+}
+
+.carrousel .on{
+    justify-content: center;
+    width: 80vw;
+}
+
+#carrousel .off {
+    display: none;
+}
+
+#carrousel-buttons {
+    display: flex;
+    background: #337;
+    justify-content: center;
+    gap: 5rem;
+}
+
+#rigth {
+    rotate: 180deg;
+}

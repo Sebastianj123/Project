@@ -1,0 +1,62 @@
+body{
+    overflow-x:hidden;
+    position: relative;
+}
+
+#form-div {
+    width: 45vw;
+    padding: .5vw;
+    height: max(80vh);
+    background: #000a;
+    border-radius: 2vw;
+    backdrop-filter: blur(2px);
+    color: #fff;
+}
+
+#form,#form1 {
+    height: 100%;
+    gap: 1vw;
+}
+
+
+#form {
+    overflow-y: scroll;
+}
+
+#usrInfo {
+    width: 100%;
+    margin-bottom: 1vw;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+label, button {
+    width: 70%;
+}
+
+label input, select, button {
+    padding: .4vw 1vw;
+    border-radius: 2vw;
+    background: linear-gradient(-45deg,#000,#333,#666);
+    font-weight: bold;
+    color: #fff;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#remember {
+    display: flex;
+    flex-direction: row;
+}
+
+label input:hover,label input:focus ,button:hover{
+    background-color: #bbb;
+}

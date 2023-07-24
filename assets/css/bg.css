@@ -1,0 +1,33 @@
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+.bag-img1 {
+    background: url(../img/wall2.jpg);
+}
+
+.bag-img2 {
+    background: url(../img/wall3.jpg);
+    backdrop-filter: blur(5px);
+}
+
+.bag-img3 {
+    background: url(../img/wall4.jpg);
+    backdrop-filter: blur(5px);
+}
+
+.bag-img4 {
+    background: url(../img/wall5.jpg);
+}
+
+.bag{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #000;
+    background-position: center;
+}
+
+.bag-gra-secondary {
+    background: linear-gradient(#444 ,#5557,#2225);
+}
