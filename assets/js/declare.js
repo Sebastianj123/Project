@@ -41,7 +41,10 @@ funciones = {
 },
 data = {},
 outErrores = {},
-btn = document.getElementById('enviar');
+DOMd = freeze({
+    btn: document.getElementById('enviar'),
+    form: document.getElementById('form')
+});
 
 var validate = new Array();
 

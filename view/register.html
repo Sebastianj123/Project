@@ -114,7 +114,7 @@
         
         <div id="form-div">
             
-            <form action="" method="post" id="form" class="d-flex flex-column align-items-center py-2">
+            <form action="" id="form" class="d-flex flex-column align-items-center py-2">
 
                 <h1 class="border-bottom border-2 border-ligth text-light text-center">
                     Register
@@ -138,8 +138,8 @@
                     <label for="gen">
                         <span>Genero:</span>
                         <select required ="gen" id="gen" >
-                        <option selected disabled></option>
-                        
+                            <option selected disabled></option>
+                            <option value="a">a</option>
                         </select>
                     </label>
 
@@ -147,6 +147,7 @@
                         <span>Tipo De Documento:</span>
                         <select required name="docTy" id="docTy" >
                             <option selected disabled></option>
+                            <option value="a">a</option>
                         </select>
                     </label>
 
@@ -159,6 +160,7 @@
                         <span>Serie Según El País</span>
                         <select name="telTy" id="telTy">
                             <option selected disabled></option>
+                            <option value="a">a</option>
                         </select>
                     </label>
 
@@ -199,7 +201,7 @@
 
                 </div>
 
-                <button type="submit justify-self-center">
+                <button type="submit justify-self-center" id="enviar" onclick="val(event,this.id)">
                     Registrarme
                 </button>
                 
@@ -214,6 +216,9 @@
 <!-- SCRIPTS-->
     <!-- BOOSTRAP JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <!-- DECLARAR -->
+<script src="../assets/js/declare.js"></script>
+    <!-- VALIDATE REG -->
+<!-- <script src="../assets/js/validate.js"></script> -->
 </body>
 </html>
