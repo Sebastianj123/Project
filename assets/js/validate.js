@@ -1,8 +1,15 @@
-dom.form.addEventListener('submit',(e)=>{
+etiquetas.form.addEventListener('submit',(e)=>{
 
     e.preventDefault();
 
-    let inps = new FormData(form)
+    let inps = new FormData(form);
+     
+    for(let [name, value] of inps) {
+        console.log(`${name} = ${value}`); // key1 = value1, luego key2 = value2
+        let inp = document.querySelector(`[name="${name}"]`);
+        // console.log(inp);
+        if (funciones.hollow(inp)) funciones.err({inp:inp,err:errores.hollow});
+    }
     // ,form = document.querySelector('form');
 
     // for (let i = 0; i < inps.length; i++) {
@@ -11,7 +18,7 @@ dom.form.addEventListener('submit',(e)=>{
     // }
 
     // let data = new FormData(form);
-    console.log(inps);
+    // console.log(inps);
 
     // if(!validate.includes(false)){
         
@@ -27,8 +34,8 @@ dom.form.addEventListener('submit',(e)=>{
 
 });
 
-function val(e,id) {
-    e.preventDefault();
-    let data = new FormData(dom.form)
-    console.log(data);
-};
+// function val(e,id) {
+//     e.preventDefault();
+//     let data = new FormData(etiquetas.form)
+//     console.log(data);
+// };
