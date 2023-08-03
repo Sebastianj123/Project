@@ -74,7 +74,7 @@ CREATE TABLE srv (
     CONSTRAINT `staPk_srvFK_sta_id` FOREIGN KEY (sta_id) REFERENCES sta (sta_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Inserción de datos
-INSERT INTO sj.srv (`srv_nam`,`srv_dsc`) VALUES
+INSERT INTO srv (`srv_nam`,`srv_dsc`) VALUES
 ('Manicure y pedicure','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.'),
 ('Masajes',null),
 ('Maquillaje',null),

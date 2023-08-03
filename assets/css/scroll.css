@@ -17,3 +17,7 @@
 *::-webkit-scrollbar-thumb:hover {
     background-color: rgb(0, 118, 120);
 }
+
+.body-scrollx-hidden {
+    overflow-x: hidden;
+}
