@@ -25,7 +25,7 @@
 </head>
 
 <!-- Body ----------------------------------------------------------------------------------->
-<body  class="bag bg-black d-flex flex-column gap-0">
+<body  class="bag bg-black d-flex flex-column gap-0 over-x-hidden">
         
 <?php
     include('view/header.php');
@@ -74,9 +74,9 @@
         </section>
 
         <!-- Vistas -->
-        <div class="tab-content flex-grow-1" id="v-pills-tabContent" style="heigth:100%; overflo">
+        <div class="tab-content flex-grow-1 w-100" id="v-pills-tabContent" style="heigth:100%; overflo">
             
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+            <div class="tab-pane fade show active overflow-scroll" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
                 
             <?php
                 include('view/home.php');
