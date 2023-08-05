@@ -63,19 +63,26 @@ INSERT INTO `sex` VALUES
 (NULL, 'Mujer'),
 (NULL, 'Otro');
 
+
 -- Creación tabla "Servicios"
 CREATE TABLE srv (
     srv_id INT PRIMARY KEY AUTO_INCREMENT,
-    srv_nam varchar(60),
+    srv_nam VARCHAR(60),
+    srv_code VARCHAR(40),
     srv_dsc TEXT,
+    srv_img TEXT,
+    srv_prc DOUBLE,
     sta_id INT,
     INDEX(sta_id),
-    UNIQUE(srv_nam,srv_dsc),
+    UNIQUE(srv_nam,srv_code,srv_dsc),
     CONSTRAINT `staPk_srvFK_sta_id` FOREIGN KEY (sta_id) REFERENCES sta (sta_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Inserción de datos
+
+INSERT INTO `srv`(`srv_nam`, `srv_code`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id`) VALUES
+('Manicure y pedicure','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.','001-a','https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp',40000,1);
+
 INSERT INTO srv (`srv_nam`,`srv_dsc`) VALUES
-('Manicure y pedicure','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.'),
 ('Masajes',null),
 ('Maquillaje',null),
 ('Depilación',null),
@@ -285,7 +292,65 @@ WHERE u.usr_id = id;
 END //
 DELIMITER ();
 
+-- Crear nuevo Servicio
+DELIMITER $$
+CREATE PROCEDURE i_srv (
+    IN nam VARCHAR(60),
+    cod VARCHAR(40),
+    dsc TEXT,
+    img TEXT,
+    prc DOUBLE,
+    sta INT
+) 
 
+INSERT INTO `srv`(`srv_id`, `srv_nam`, `srv_code`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id`) 
+VALUES (NULL,nam,cod,dsc,img,prc,2);
+$$
+
+-- Ver Servicio mediante id
+DELIMITER $$
+CREATE PROCEDURE v_srv (IN id int) 
+SELECT `srv_id`,`srv_nam`,`srv_code`,`srv_dsc`,`srv_img`,`srv_prc`,a.`sta_id`,a.`sta_nam` FROM srv s INNER JOIN 
+sta a ON s.sta_id = a.sta_id WHERE s.srv_id = id AND a.sta_id = 1;
+$$
+
+-- Ver todos los Servicios Activos
+DELIMITER $$
+CREATE PROCEDURE vT_srvA () 
+SELECT `srv_id`,`srv_nam`,`srv_code`,`srv_dsc`,`srv_img`,`srv_prc`,a.`sta_id`,a.`sta_nam` FROM srv s INNER JOIN 
+sta a ON s.sta_id = a.sta_id WHERE a.sta_id = 1;
+$$
+
+-- Ver todos los Servicios
+DELIMITER $$
+CREATE PROCEDURE vT_srv () 
+SELECT `srv_id`,`srv_nam`,`srv_code`,`srv_dsc`,`srv_img`,`srv_prc`,a.`sta_id`,a.`sta_nam` FROM srv s INNER JOIN 
+sta a ON s.sta_id = a.sta_id;
+$$
+
+-- Cambiar el estado de los servicios
+DELIMITER $$
+CREATE PROCEDURE u_srvS (
+    IN id INT,
+	sta INT
+)
+UPDATE `srv` SET `sta_id` = sta WHERE srv_id = id;
+$$
+
+-- Actualizar Servicios
+DELIMITER $$
+CREATE PROCEDURE u_srv (
+	IN id INT,
+    nam VARCHAR(60),
+    cod VARCHAR(40),
+    dsc TEXT,
+    img TEXT,
+    prc DOUBLE,
+    sta INT
+)
+UPDATE `srv` SET `srv_nam`= nam,`srv_code`= cod,`srv_dsc`= dsc,`srv_img`= img,`srv_prc`=prc,`sta_id`=sta 
+WHERE `srv_id` = ID;
+$$
 -- Creación de vistas -------------------------------------------------------------------------------------------------------------------------
 
 -- -- Ver todos los datos de los usuarios

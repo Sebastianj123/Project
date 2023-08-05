@@ -5,7 +5,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgb(44, 149, 156);
+    background-color: rgb(34, 117, 122);
     border-radius: 1vw;
 }
 
@@ -15,7 +15,7 @@
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(0, 118, 120);
+    background-color: rgb(1, 68, 70);
 }
 
 .body-scrollx-hidden {
