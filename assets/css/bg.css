@@ -37,3 +37,7 @@ body {
 .bag-gra-secondary {
     background: linear-gradient(#444 ,#5557,#2225);
 }
+
+.over-x-hidden {
+    overflow-x: hidden!important;
+}

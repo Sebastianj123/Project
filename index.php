@@ -25,7 +25,7 @@
 </head>
 
 <!-- Body ----------------------------------------------------------------------------------->
-<body  class="bag bg-black d-flex flex-column gap-0">
+<body  class="bag bg-black d-flex flex-column gap-0 over-x-hidden">
         
 <?php
     include('view/header.php');
