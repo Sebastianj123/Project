@@ -80,7 +80,7 @@ CREATE TABLE srv (
 -- Inserción de datos
 
 INSERT INTO `srv`(`srv_nam`, `srv_code`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id`) VALUES
-('Manicure y pedicure','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.','001-a','https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp',40000,1);
+('Manicure y pedicure','001-a','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.','https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp',40000,1);
 
 INSERT INTO srv (`srv_nam`,`srv_dsc`) VALUES
 ('Masajes',null),

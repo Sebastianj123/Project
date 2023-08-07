@@ -25,15 +25,15 @@
 
   <section class="d-flex g-5 align-items-center">
 
-  <div class="collapse" id="collapseWidthExample">
+  <div class="collapse show" id="collapseWidthExample">
         <div class="card card-body d-flex flex-row bg-transparent g-2">
         
-          <a href="view/register.html" class="form-control me-1 bg-transparent border-0 text-uppercase text-info">
-            login
+          <a href="view/register.html" class="form-control me-1 bg-transparent border-0 text-uppercase text-info" data-bs-toggle="modal" data-bs-target="#loginM">
+            Login
           </a>
 
-          <a href="" class="form-control me-1 bg-transparent border-0 text-info text-uppercase">
-              register
+          <a href="" class="form-control me-1 bg-transparent border-0 text-info text-uppercase" data-bs-toggle="modal" data-bs-target="#registerM">
+              Register
           </a>
         
         </div>
@@ -51,3 +51,4 @@
 </section>
 
 </header>
+

@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; 
-$db = 'fromProj'; 
+$db = 'cabellobellojj'; 
 $usr = 'root';
 $pass = '';
 $call_v_s = 'SELECT * FROM v_s;'; 

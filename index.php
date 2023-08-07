@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html:5>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +42,7 @@
                 <div class="nav d-grid nav-pills me-3 g-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     
                         <!-- HOME -->
-                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                    <button class="nav-link" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
                                 <!-- Icon HOME -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
                             <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z"/>
@@ -51,7 +51,7 @@
                     </button>
 
                         <!-- SERVICES -->
-                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                    <button class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
                     
                         <!-- Servicios icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -88,17 +88,17 @@
         <div class="tab-content flex-grow-1 mx-3 p-2" id="v-pills-tabContent" style="heigth:100vh; overflow-y: scroll;">
             
                 <!-- Home (vista) -->
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">    
+            <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">    
                 <?php
                     include('view/home.php');
                 ?>
             </div>
             
                 <!-- Servicio (vista) -->
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                 
                 <?php
-                    include('view/services.php')
+                    include('view/services.php');
                 ?>
 
             </div>
@@ -130,6 +130,12 @@
 <footer class="bg-danger bottom-0">
     oasdf
 </footer>
+
+<!-- Modales -->
+
+<?php
+    include('view/modals.php')
+?>
 
 <!-- SCRIPTS-->
     <!-- BOOSTRAP JS -->
