@@ -25,7 +25,7 @@
 ?>
 
         
-        <div id="cardSrv-<?php echo $queryAsocc[$i]['srv_code']; ?>" class="card bg-info rounded-2 d-grid border-3 border-info flex-grow-1 mx-2" style="max-width: 25vw; max-height:100vh;">
+        <div id="cardSrv-<?php echo $queryAsocc[$i]['srv_code']; ?>" class="card bg-info rounded-2 d-grid border-3 border-info flex-grow-1 m-2" style="max-width: 25vw; max-height:100vh;">
 
             <div id="cardImg <?php echo$queryAsocc[$i]['srv_code']; ?>" class="p-3">
                 <img src="<?php echo $queryAsocc[$i]['srv_img']; ?>" class="card-img-top border border-4 border-dark rounded-2" alt="<?php echo$queryAsocc[$i]['srv_img']; ?>"
