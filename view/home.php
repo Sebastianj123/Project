@@ -1,50 +1,8 @@
-<head>
 
+<?php
+  include('view/carrousel.php');
+?>
 
-
-</head>
-
-<article class="flex-fill justify-content-center align-items-center px-10">
-        
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-        
-            <!-- Indicadores (la rayita) -->
-            <div class="carousel-indicators">
-              <!-- Esté es el número de rayitas que tiene debajo -->
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
-            </div>
-
-            <!-- Contenedor de las imagenes -->
-            <div class="carousel-inner col-12">
-
-                <!-- Contenedor de la imagen -->
-              <div class="carousel-item active">
-                <img src="assets/img/wall-hearhs.jpg" class="d-block w-100" alt="...">
-              </div>
-
-              <!-- <div class="carousel-item">
-                <img src="assets/img/wall2.jpg" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="assets/img/wall3.jpg" class="d-block w-100" alt="...">
-              </div> -->
-            </div>
-        
-            <!-- Botones de interacción -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          
-        </div>    
-
-</article>
 
 <article class="content">
     <h1>¿Quienes somos?</h1>

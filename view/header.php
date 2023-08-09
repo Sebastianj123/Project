@@ -28,7 +28,7 @@
   <div class="collapse show" id="collapseWidthExample">
         <div class="card card-body d-flex flex-row bg-transparent g-2">
         
-          <a href="view/register.html" class="form-control me-1 bg-transparent border-0 text-uppercase text-info" data-bs-toggle="modal" data-bs-target="#loginM">
+          <a href="" class="form-control me-1 bg-transparent border-0 text-uppercase text-info" data-bs-toggle="modal" data-bs-target="#loginM">
             Login
           </a>
 
