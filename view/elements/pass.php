@@ -24,10 +24,12 @@
 </div>
 
 <script>
-    const btn = document.getElementById('btnPassView')
-    .addEventListener('click', ()=> {
-        let b = document.getElementById('reg_pass');
-        btn.className.split(' ').includes('active') ? b.type="text":
-        b.type="password";
+    const btn = document.getElementById('btnPassView');
+    // console.log(btn.className);
+    btn.addEventListener ('click', ()=>{
+        const inp = document.getElementById('reg_pass');
+        inp.type = btn.className.include('active') ? 
+        'text' :
+        'password';
     });
 </script>

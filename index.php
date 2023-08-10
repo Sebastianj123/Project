@@ -39,7 +39,7 @@
 
             <section style="height: 100%;" class="d-flex align-content-center flex-fill">
                     <!-- Botones de acceso a las vistas -->
-                <div class="nav d-grid nav-pills me-3 g-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <div class="nav d-grid nav-pills me-3 g-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="width: 8vw;">
                     
                         <!-- HOME -->
                     <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
@@ -70,7 +70,7 @@
 
                     </button>
 
-                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                    <!-- <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
                         Messages
 
                     </button>
@@ -78,7 +78,7 @@
                     <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                         Settings
 
-                    </button>
+                    </button> -->
                 </div>
             </section>
 

@@ -1,7 +1,7 @@
 <head>
   <?php
-    // include('../controller/connectDb.php');
-    include('controller/connectDb.php');
+    // include('../config/connectDb.php');
+    include('config/connectDb.php');
 
     $sql = 'CALL cabellobellojj.vT_srvA();';
 
