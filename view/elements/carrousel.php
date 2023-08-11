@@ -4,11 +4,9 @@
     include('config/connectDb.php');
 
     $sql = 'CALL cabellobellojj.vT_srvA();';
-
-
     $query = $con->query($sql);
     $queryAsocc = $query->fetch_all(MYSQLI_ASSOC);
-    $interval = 3000;
+    $interval = '3000';
     $url_error = 'https://www.mundodeportivo.com/alfabeta/hero/2018/10/167687.alfabetajuega-problemas-tecnicos.jpg?width=1200';
   ?>
 
@@ -32,7 +30,7 @@
             <a 
                 href="#" id="a-carrousel-<?php echo $code; ?>" 
                 class="carousel-item w-100 <?php if($i==0) {echo 'active';} else; ?>" 
-                data-bs-interval="3000"
+                data-bs-interval="<?php echo $interval ?>"
             />
 
                 <div class="container-fluid w-60 d-flex justify-content-center align-items-center" style="height:70vh;">
@@ -42,6 +40,7 @@
                         alt="<?php if($url == '') {echo $url_error;} else {echo $url;} ?>" 
                         class="w-60 img-carrousel"
                     />
+                    <button></button>
                 </div>
             
             </a>

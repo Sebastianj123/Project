@@ -40,4 +40,23 @@ CALL v_usrStaId (2);
 CALL u_usrStaId (2,2);
 CALL v_usrStaId (2);
 
+CALL u_dtsUser (
+    1,
+    Null, 
+    Null, 
+    Null, 
+    1,
+    2,
+    12321,
+    'asdf',
+    3,
+	NULL,
+    1231231231,
+    'as@a.a', 
+    'Feliapzos', 
+    1123
+);
+
+CALL i_infoPag ('Sobre Nosotros','Somos...','https://www.eude.es/wp-content/uploads/2018/05/Dise%C3%B1o-sin-t%C3%ADtulo-2021-05-11T165120.480.png');
+
 SELECT * FROM v_tUsr;

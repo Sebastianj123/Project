@@ -28,7 +28,11 @@
 <body  class="bag bg-black d-flex flex-column gap-0 over-x-hidden">
         
 <?php
-    include('view/header.php');
+    include('view/elements/header.php');
+    // <!-- Modales -->
+    include('view/elements/modals.php');
+    // $con->close();
+
 ?>
 
 <!-- Cuerpo de la Página -->
@@ -90,7 +94,7 @@
                 <!-- Home (vista) -->
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">    
                 <?php
-                    include('view/home.php');
+                    include('view/elements/home.php');
                 ?>
             </div>
             
@@ -98,7 +102,7 @@
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                 
                 <?php
-                    include('view/services.php');
+                    include('view/elements/services.php');
                 ?>
 
             </div>
@@ -107,7 +111,7 @@
             <div class="tab-pane fade m-auto" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0" style="height:100%;">
                 <?php
                     // Calendarío
-                    include('view/calendario.php');
+                    include('view/elements/calendario.php');
                 ?>
 
             </div>
@@ -129,14 +133,10 @@
 <!-- Footer -->
 
 <?php
-    include('view/footer.php')
+    include('view/elements/footer.php')
 ?>
 
-<!-- Modales -->
 
-<?php
-    include('view/modals.php')
-?>
 
 <!-- SCRIPTS-->
     <!-- BOOSTRAP JS -->

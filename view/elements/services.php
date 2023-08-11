@@ -123,7 +123,7 @@
                     
                     <a href="#" class="btn btn-primary">
                             Haz tu reserva...
-                        </a>
+                    </a>
                 </mfooter>
 
             </form>

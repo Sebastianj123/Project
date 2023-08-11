@@ -8,7 +8,7 @@
   <nav class="navbar bg-body-tertiary col-8;">
       <div class="container">
         
-      <a class="navbar-brand d-flex justify-content-center" href="../index.php">
+      <a class="navbar-brand d-flex justify-content-center" title="Salon De Belleza Cabello Bello JJ">
           
           <div class="me-4">
             <img src="./assets/img/icon1-modified.png" 
