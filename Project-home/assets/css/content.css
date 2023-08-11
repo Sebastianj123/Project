@@ -1,0 +1,13 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    padding: 2.5rem;
+    gap: 1rem;
+    fill: 1;
+    text-align: center;
+}
+
+.content {
+    color: #fff;
+    align-self: center;
+}
