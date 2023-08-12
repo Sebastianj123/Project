@@ -37,7 +37,7 @@
 <div class="modal fade" id="loginM" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary">
+    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="controller/user/user.php" method="POST">
       
             <!-- Encabezado -->
         <mheader class="modal-header">
@@ -56,7 +56,7 @@
                     Email
                 </label>
 
-                <input type="email" class="form-control bg-secondary" id="reg_ema" autofocus require>
+                <input type="email" class="form-control bg-secondary" id="reg_ema" name="reg_ema" autofocus require>
 
             </div>
             
@@ -98,9 +98,9 @@
                         <li><hr class="dropdown-divider"></li>
                         
                         <li data-bs-toggle="modal" data-bs-target="#registerM">
-                            <a class="dropdown-item text-info" data-bs-dismiss="modal">
+                            <button type="submit" class="dropdown-item text-info" data-bs-dismiss="modal">
                                 Register
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -367,7 +367,7 @@
 
                         <li><hr class="dropdown-divider"></li>
                         
-                        <li data-bs-toggle="modal" data-bs-target="#loguinM">
+                        <li data-bs-toggle="modal" data-bs-target="#registerM">
                             <a class="dropdown-item text-info" data-bs-dismiss="modal">
                                 Ya tengo una cuenta
                             </a>
