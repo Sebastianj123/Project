@@ -4,7 +4,7 @@
 <?php
     include('config/connectDb.php');
 
-    $sql = 'CALL cabellobellojj.vT_srvA();';
+    $sql = 'CALL cabellobellojj.v_srvA();';
 
 
     $query = $con->query($sql);
@@ -23,9 +23,9 @@
         <!-- Cards individuales -->
 <?php
     for ($i=0; $i < count($queryAsocc); $i++) {
-        $code = $queryAsocc[$i]['srv_code'];
+        $code = $queryAsocc[$i]['srv_cod'];
         $url_img = $queryAsocc[$i]['srv_img'];
-        $nam = $queryAsocc[$i]['srv_nam'];
+        $nam = $queryAsocc[$i]['srv_name'];
         $precio = $queryAsocc[$i]['srv_prc'];
         $dsc = $queryAsocc[$i]['srv_dsc'];
 ?>

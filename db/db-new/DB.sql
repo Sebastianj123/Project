@@ -86,7 +86,7 @@ CREATE TABLE `per` (
 	per_id INT AUTO_INCREMENT PRIMARY KEY,
     per_name VARCHAR(120),
     sex_id INT,
-    brithDate DATE,
+    per_brithDate DATE,
     tyDoc_id INT,
     per_doc DOUBLE,
     per_tel DOUBLE,
@@ -111,13 +111,53 @@ CREATE TABLE `user` (
     CONSTRAINT `user_sta_idFK_sta_sta_idPK` FOREIGN KEY (sta_id) REFERENCES sta (sta_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE table emp_srv (
+	emp_srv_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    srv_id INT,
+    UNIQUE(emp_srv_id,user_id,srv_id),
+    INDEX(user_id,srv_id),
+    CONSTRAINT `emp_srv_user_idFK_user_user_idPK` FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `emp_srv_SRV_idFK_srv_srv_idPK` FOREIGN KEY (srv_id) REFERENCES srv (srv_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- CITA
 CREATE TABLE cita (
 	cita_id INT PRIMARY KEY AUTO_INCREMENT,
-    cita_date DATE,
-    srv_id INT,
+    cita_date DATETIME,
+    user_id INT,
+    emp_srv_id INT,
     sta_id INT,
-    INDEX(srv_id,sta_id),
-    CONSTRAINT `cita_srv_idFK_srv_srv_idPK` FOREIGN KEY (srv_id) REFERENCES srv (srv_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX(user_id,emp_srv_id,sta_id),
+    CONSTRAINT `cita_user_idFK_user_user_idPK` FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` FOREIGN KEY (emp_srv_id) REFERENCES emp_srv (emp_srv_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `cita_sta_idFK_sta_sta_idPK` FOREIGN KEY (sta_id) REFERENCES sta (sta_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE topic (
+	topic_id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_name VARCHAR(80),
+    topic_dsc TEXT,
+    topic_img TEXT
+);
+
+CREATE TABLE empr (
+	empr_id INT AUTO_INCREMENT PRIMARY KEY,
+    empr_name VARCHAR(80),
+    topic_id INT,
+    empr_logo TEXT,
+    addr VARCHAR(80),
+    INDEX(topic_id),
+    CONSTRAINT `empr_topic_idFK_topic_topic_idPK` FOREIGN KEY (topic_id) REFERENCES topic (topic_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `info` (
+	info_id INT AUTO_INCREMENT PRIMARY KEY,
+    empr_id INT,
+    info_name VARCHAR(70),
+    info_text TEXT,
+    info_img TEXT,
+    UNIQUE(empr_id),
+    INDEX(empr_id),
+    CONSTRAINT `info_empr_idFK_empr_empr_idPK` FOREIGN KEY (empr_id) REFERENCES empr (empr_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -3,7 +3,7 @@
     // include('../config/connectDb.php');
     include('config/connectDb.php');
 
-    $sql = 'CALL cabellobellojj.vT_srvA();';
+    $sql = 'CALL cabellobellojj.v_srvA();';
     $query = $con->query($sql);
     $queryAsocc = $query->fetch_all(MYSQLI_ASSOC);
     $interval = '3000';
@@ -23,7 +23,7 @@
                 
                 for ($i=0; $i < count($queryAsocc); $i++) {
                     $url = $queryAsocc[$i]['srv_img'];
-                    $code =$queryAsocc[$i]['srv_code'];
+                    $code =$queryAsocc[$i]['srv_cod'];
              ?>
             
             <!-- Imagen #<?php echo $i + 1 ?> code-<?php echo $code; ?> -->
