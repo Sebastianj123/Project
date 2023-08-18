@@ -93,7 +93,7 @@ CREATE TABLE `per` (
     per_ema VARCHAR(80),
     per_usrName VARCHAR(80),
     per_pass VARCHAR(80),
-    UNIQUE(per_usrName,per_pass),
+    UNIQUE(per_doc,per_usrName,per_pass),
     INDEX(tyDoc_id,sex_id),
     CONSTRAINT `per_tyDoc_idFK_tyDoc_tyDoc_idPK` FOREIGN KEY (tyDoc_id) REFERENCES tyDoc (tyDoc_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `per_sex_idFK_sex_sex_idPK` FOREIGN KEY (sex_id) REFERENCES sex (sex_id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -22,12 +22,17 @@
         
         <!-- Cards individuales -->
 <?php
-    for ($i=0; $i < count($queryAsocc); $i++) {
+    require('view/funciones/funciones.php');
+
+    for ($i=0; $i < count($queryAsocc); $i++) :
         $code = $queryAsocc[$i]['srv_cod'];
         $url_img = $queryAsocc[$i]['srv_img'];
         $nam = $queryAsocc[$i]['srv_name'];
-        $precio = $queryAsocc[$i]['srv_prc'];
+        $pre = $queryAsocc[$i]['srv_prc'];
         $dsc = $queryAsocc[$i]['srv_dsc'];
+        $precio = punto($pre);
+
+        
 ?>
 
         
@@ -54,7 +59,7 @@
                     Ver Más
                 </a>
 
-                <a href="#" class="btn btn-primary">
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginM">
                     Haz tu reserva...
                 </a>
 
@@ -98,13 +103,13 @@
                             <h2 class="text-info">
                                 Precio:
                             </h2>
-                        <h5 class="card-title text-white"> $ <span class="text-white"><?php echo$precio; ?> </span></h5>
+                        <h5 class="card-title text-white"> $ <span class="text-white"><?php echo$precio; ?></span> COP</h5>
 
                             <h2 class="text-info">
                                 Descripción
                             </h2>
                         <p class="card-text text-white">
-                            <?php echo$queryAsocc[$i][$dsc]; ?>
+                            <?php echo$dsc ?>
                         </p>
 
                             <h2 class="text-info">
@@ -120,17 +125,18 @@
                     <!-- Footer -->
                 <mfooter class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    
-                    <a href="#" class="btn btn-primary">
+                    <button data-bs-dismiss="modal" class="btn btn-primary">
+                        <a data-bs-toggle="modal" data-bs-target="#loginM">
                             Haz tu reserva...
-                    </a>
+                        </a>
+                    </button>
                 </mfooter>
 
             </form>
         </div>
         </div>
 <?php
-    }
+    endfor;
     $con -> close();
 ?>
     </div>

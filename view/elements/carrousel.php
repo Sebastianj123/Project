@@ -33,14 +33,13 @@
                 data-bs-interval="<?php echo $interval ?>"
             />
 
-                <div class="container-fluid w-60 d-flex justify-content-center align-items-center" style="height:70vh;">
+                <div class="container-fluid w-60 d-flex justify-content-center align-items-center" style="height:70vh; width:80%;">
                     <img 
                         id="img-carrousel-<?php echo $code; ?>" 
                         src="<?php if($url == '') {echo $url_error;} else {echo $url;} ?>" 
                         alt="<?php if($url == '') {echo $url_error;} else {echo $url;} ?>" 
-                        class="w-60 img-carrousel"
+                        class="w-100 img-carrousel"
                     />
-                    <button></button>
                 </div>
             
             </a>

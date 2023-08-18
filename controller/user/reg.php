@@ -22,6 +22,7 @@
         $sql = "call i_client('$name',$sex_id,'$brithDate',$tyDoc_id,$per_doc,$per_tel,'$per_ema','$per_usrName','$per_pass');";
         // echo($sql);
         $query = $con -> query($sql);
+        echo 'Registrado :D ahora ingrese al login y logueese';
     } else {
         echo('Hay algo equivocado');
     }
