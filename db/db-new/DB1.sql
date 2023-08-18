@@ -47,7 +47,7 @@ CREATE TABLE srv (
 
 INSERT INTO `srv`(`srv_name`, `srv_cod`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id`) 
 VALUES
-('Manicure y pedicure','001-a','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.','https://images7.alphacoders.com/348/348000.jpg',40000,1),
+('Manicure y pedicure','001-a','Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.','https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp',40000,1),
 ('Masajes','002-a','Es un tipo de medicina integral en la que un masajista frota y presiona firmemente la piel, los músculos, los tendones y los ligamentos. En la masoterapia, un especialista frota y presiona los tejidos blandos del cuerpo. Los tejidos blandos incluyen músculo, tejido conectivo, tendones, ligamentos y piel.','https://velkaspa.com/wp-content/uploads/2022/09/blog_3.jpg',100000,1),
 ('Maquillaje','003-a','Aplicar cosméticos a alguien o a una parte de su cuerpo, especialmente su rostro, para embellecerlo o modificar su aspecto.','https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/04/04/16490814041338.jpg',35990,1),
 ('Depilación','004-a','La depilación es una práctica muy común entre las mujeres, que se realiza comúnmente en las cejas, el rostro, las axilas, las piernas y la Zona V. Existen diferentes tipos de depilación íntima, como la cera, cremas, cuchillas y el láser, siendo esta última realizada por un experto.','https://www.diariamenteali.com/medias/depilacion-con.cera-crema-o-laser-1900Wx500H?context=bWFzdGVyfGltYWdlc3w5NDcwOXxpbWFnZS9qcGVnfGhhOS9oNzkvOTA3NDM5ODU2MDI4Ni9kZXBpbGFjaW9uLWNvbi5jZXJhLWNyZW1hLW8tbGFzZXIgXzE5MDBXeDUwMEh8ZTJkNTJkYjc0NjZhZWVlZGNkMjU4OTM4OGI4ZTRlZTE5MmMxMDBlZDQzNjhkMmRmMGU2ZDJkMTk3Y2ZhOTc2Ng',20000,1),
@@ -86,14 +86,14 @@ CREATE TABLE `per` (
 	per_id INT AUTO_INCREMENT PRIMARY KEY,
     per_name VARCHAR(120),
     sex_id INT,
-    brithDate DATE,
+    per_brithDate DATE,
     tyDoc_id INT,
     per_doc DOUBLE,
     per_tel DOUBLE,
     per_ema VARCHAR(80),
     per_usrName VARCHAR(80),
     per_pass VARCHAR(80),
-    UNIQUE(per_usrName,per_pass),
+    UNIQUE(per_doc,per_usrName,per_pass),
     INDEX(tyDoc_id,sex_id),
     CONSTRAINT `per_tyDoc_idFK_tyDoc_tyDoc_idPK` FOREIGN KEY (tyDoc_id) REFERENCES tyDoc (tyDoc_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `per_sex_idFK_sex_sex_idPK` FOREIGN KEY (sex_id) REFERENCES sex (sex_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -132,6 +132,34 @@ CREATE TABLE cita (
     CONSTRAINT `cita_user_idFK_user_user_idPK` FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` FOREIGN KEY (emp_srv_id) REFERENCES emp_srv (emp_srv_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `cita_sta_idFK_sta_sta_idPK` FOREIGN KEY (sta_id) REFERENCES sta (sta_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE topic (
+	topic_id INT AUTO_INCREMENT PRIMARY KEY,
+    topic_name VARCHAR(80),
+    topic_dsc TEXT,
+    topic_img TEXT
+);
+
+CREATE TABLE empr (
+	empr_id INT AUTO_INCREMENT PRIMARY KEY,
+    empr_name VARCHAR(80),
+    topic_id INT,
+    empr_logo TEXT,
+    addr VARCHAR(80),
+    INDEX(topic_id),
+    CONSTRAINT `empr_topic_idFK_topic_topic_idPK` FOREIGN KEY (topic_id) REFERENCES topic (topic_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `info` (
+	info_id INT AUTO_INCREMENT PRIMARY KEY,
+    empr_id INT,
+    info_name VARCHAR(70),
+    info_text TEXT,
+    info_img TEXT,
+    UNIQUE(empr_id),
+    INDEX(empr_id),
+    CONSTRAINT `info_empr_idFK_empr_empr_idPK` FOREIGN KEY (empr_id) REFERENCES empr (empr_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Sta --------------------------------------------------------
@@ -252,7 +280,7 @@ $$
     BEGIN
 
         DECLARE idPer INT;
-        INSERT INTO `per`(`per_name`, `sex_id`, `brithDate`, `tyDoc_id`, `per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`) 
+        INSERT INTO `per`(`per_name`, `sex_id`, `per_brithDate`, `tyDoc_id`, `per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`) 
         VALUES 
         (name, sex, `date`, tyDoc, doc, tel, ema, usrName, pass);
         SET idPer = LAST_INSERT_ID();
@@ -280,7 +308,7 @@ $$
     BEGIN
 
         DECLARE idPer INT;
-        INSERT INTO `per`(`per_name`, `sex_id`, `brithDate`, `tyDoc_id`, `per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`) 
+        INSERT INTO `per`(`per_name`, `sex_id`, `per_brithDate`, `tyDoc_id`, `per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`) 
         VALUES 
         (name, sex, `date`, tyDoc, doc, tel, ema, usrName, pass);
         SET idPer = LAST_INSERT_ID();
@@ -293,7 +321,7 @@ $$
 DELIMITER $$
 CREATE PROCEDURE v_users ()
 BEGIN
-	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
+	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `per_brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
     INNER JOIN per P ON U.per_id = P.per_id
     INNER JOIN tyDoc D ON P.tyDoc_id = D.tyDoc_id
 	INNER JOIN rol R ON U.rol_id = R.rol_id
@@ -308,7 +336,7 @@ CREATE PROCEDURE v_users_IN_staId_rolId (
     IN rolId INT
     )
 BEGIN
-	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
+	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `per_brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
     INNER JOIN per P ON U.per_id = P.per_id
     INNER JOIN tyDoc D ON P.tyDoc_id = D.tyDoc_id
 	INNER JOIN rol R ON U.rol_id = R.rol_id
@@ -323,13 +351,26 @@ CREATE PROCEDURE v_users_IN_ID (
     IN id INT
     )
 BEGIN
-	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
+	SELECT U.`user_id`, P.`per_id`, `per_name`, Se.`sex_id`, Se.sex_name, `per_brithDate`, D.`tyDoc_id`, D.tyDoc_name, D.tyDoc_dsc ,`per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, R.`rol_id`, R.rol_name, R.rol_dsc, S.`sta_id`, S.sta_name, S.sta_dsc FROM `user` U  
     INNER JOIN per P ON U.per_id = P.per_id
     INNER JOIN tyDoc D ON P.tyDoc_id = D.tyDoc_id
 	INNER JOIN rol R ON U.rol_id = R.rol_id
     INNER JOIN sta S ON U.sta_id = S.sta_id
     INNER JOIN sex Se ON P.sex_id = Se.sex_id
     WHERE U.user_id = id;
+END
+$$
+
+DELIMITER $$
+CREATE PROCEDURE v_usersReg (
+    IN usr VARCHAR(80)
+    )
+BEGIN
+	SELECT U.user_id, `per_tel`, `per_ema`, `per_usrName`, `per_pass`, S.sta_id, S.sta_name, S.sta_dsc
+    FROM `per` P INNER JOIN
+    user U ON U.per_id = P.per_id INNER JOIN
+    sta S ON U.sta_id = S.sta_id
+    WHERE `per_ema` = usr OR `per_usrName` = usr OR `per_tel` = usr AND U.sta_id = 1;
 END
 $$
 
@@ -355,7 +396,7 @@ BEGIN
 UPDATE `per` SET 
 `per_name`= name
 ,`sex_id`= sex
-,`brithDate`= `date`
+,`per_brithDate`= `date`
 ,`tyDoc_id`= tydoc
 ,`per_doc`= doc
 ,`per_tel`= tel
@@ -472,7 +513,7 @@ $$
 --- Cita ---------------------------------------------------------------------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE i_cita (
-	IN `date` DATE,
+	IN `date` DATETIME,
     IN `usr` INT,
     IN emp_srv INT
 )
@@ -485,7 +526,7 @@ DELIMITER $$
 CREATE PROCEDURE u_cita (
 	IN id INT,
     IN changeId INT,
-    IN `date` DATE,
+    IN `date` DATETIME,
     IN `usr` INT,
     IN emp_srv INT,
     IN sta INT

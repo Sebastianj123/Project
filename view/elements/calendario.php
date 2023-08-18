@@ -11,9 +11,7 @@
 <body>
 
 <section style="height:100%; width:100%;" class="d-flex justify-content-center align-items-center">
-<div id="calendar">
-
-</div>
+<div id="calendar"></div>
 </section> 
     
     <!-- Add jQuery library (required) -->
@@ -24,26 +22,12 @@
 
 <script>
 
-$("#calendar").evoCalendar();
     // language
-    // $('#calendar').evoCalendar({
-    //     // theme: 'Midnight Blue',
-    //     // language: 'es'
-    // });
+    $('#calendar').evoCalendar({
+        theme: 'Midnight Blue',
+        language: 'es'
+    });
 
-//     $("#evoCalendar").on('selectDate', function() {
-//     // code here
-//   });
-
-//     $("#evoCalendar").evoCalendar('addCalendarEvent', [
-//     {
-//       id: '09nk7Ts',
-//       name: "My Birthday",
-//       date: "1 15 2023",
-//       type: "birthday",
-//       everyYear: true
-//     }
-//   ]);
 </script>
 
 </body>

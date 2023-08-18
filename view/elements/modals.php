@@ -56,7 +56,7 @@
                     Ingrese el nombre de Usuario, Teléfono o Correo Con el que este registrado 
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="reg_ema" name="reg_ema" autofocus require>
+                <input type="text" class="form-control bg-secondary" id="reg_ema" name="reg_ema" autofocus required>
 
             </div>
             
@@ -67,7 +67,7 @@
             
             <div class="col-10 container-fluid">
                 <div class="form-check">
-                    <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck">
+                    <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck" required>
                     <label class=" fw-bolder text-light" for="gridCheck">
                         Recuerdame el inició de sección
                     </label>
@@ -98,7 +98,7 @@
                         <li><hr class="dropdown-divider"></li>
                         
                         <li data-bs-toggle="modal" data-bs-target="#registerM" >
-                            <a class="dropdown-item text-info" data-bs-dismiss="#loginM">
+                            <a class="dropdown-item text-info" data-bs-dismiss="modal">
                                 Register
                             </a>
                         </li>
@@ -144,7 +144,7 @@
                     Nombre
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_name" name="per_name" autofocus require>
+                <input type="text" class="form-control bg-secondary" id="per_name" name="per_name" autofocus required>
 
             </div>
             
@@ -155,7 +155,7 @@
                     Apellido
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="lastName" name="lastName" require>
+                <input type="text" class="form-control bg-secondary" id="lastName" name="lastName" required>
 
             </div>
 
@@ -184,7 +184,7 @@
                         Fecha nacimiento
                     </label>
 
-                    <input type="date" class="form-control bg-secondary" id="brithDate" name="brithDate" require>
+                    <input type="date" class="form-control bg-secondary" id="brithDate" name="brithDate" required>
                 </div>
                 
             </div>
@@ -208,7 +208,7 @@
                             endfor;
                         ?>
                     </select>
-                    <input type="number" class="form-control bg-secondary" id="per_doc" name="per_doc" require>
+                    <input type="number" class="form-control bg-secondary" id="per_doc" name="per_doc" required>
                 </div>
 
             </div>
@@ -219,7 +219,7 @@
                     Número De Telefono
                 </label>
 
-                <input type="tel" class="form-control bg-secondary" id="per_tel" name="per_tel" require>
+                <input type="tel" class="form-control bg-secondary" id="per_tel" name="per_tel" required>
 
             </div>
 
@@ -230,7 +230,7 @@
                     Email
                 </label>
 
-                <input type="email" class="form-control bg-secondary" id="per_ema" name="per_ema" require>
+                <input type="email" class="form-control bg-secondary" id="per_ema" name="per_ema" required>
 
             </div>
 
@@ -240,7 +240,7 @@
                     Nombre De Usuario
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_usrName" name="per_usrName" require>
+                <input type="text" class="form-control bg-secondary" id="per_usrName" name="per_usrName" required>
 
             </div>
 
@@ -250,7 +250,7 @@
                     Contraseña
                 </label>
 
-                <input type="password" class="form-control bg-secondary" id="per_pass" name="per_pass" require>
+                <input type="password" class="form-control bg-secondary" id="per_pass" name="per_pass" required>
 
             </div>
             
@@ -263,7 +263,7 @@
             <div class="col-md-10 container-fluid">
                     
                     <!-- Titulo -->
-                <label for="pass" class=" fw-bolder text-light">
+                <label for="pass" class="fw-bolder text-light">
                     Repetir Password
                 </label>
 
@@ -271,7 +271,7 @@
                 <div class="d-flex position-relative">
 
                         <!-- Input del password -->
-                    <input type="password" class="form-control bg-secondary" id="pass" name="pass" require>
+                    <input type="password" class="form-control bg-secondary" id="pass" name="pass" required>
                     
                         <!-- Boton para cambiar el tipo de input que es (toogel de text input) -->
                     <button class="position-absolute end-0 btn btn-primary" data-bs-toggle="button" id="btnPassView1" style="width:10%; height:100%;">
@@ -288,7 +288,7 @@
             <div class="col-10 container-fluid">
                 <div class="form-check">
                     <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck">
-                    <label class=" fw-bolder text-light" for="gridCheck">
+                    <label class=" fw-bolder text-light" for="gridCheck" required>
                         Hacepto Terminos y condiciones
                     </label>
                 </div>
@@ -309,16 +309,16 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-dark ">
-                        <li data-bs-toggle="modal" data-bs-target="#q1M">
-                            <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-dismiss="#registerM">
+                        <li data-bs-toggle="modal" data-bs-dismiss="modal">
+                            <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#q1M">
                                 ¿Por qué tengo que registrar me?
                             </a>
                         </li>
 
                         <li><hr class="dropdown-divider"></li>
                         
-                        <li data-bs-toggle="modal" data-bs-target="#loginM">
-                            <a class="dropdown-item text-info" data-bs-dismiss="#registerM">
+                        <li data-bs-dismiss="modal">
+                            <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#loginM" >
                                 Ya tengo una cuenta
                             </a>
                         </li>
@@ -341,7 +341,7 @@
 <div class="modal fade" id="q1M" tabindex="-2" aria-labelledby="q1MModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="" method="POST">
+    <div class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="" method="POST">
       
             <!-- Encabezado -->
         <mheader class="modal-header">
@@ -362,41 +362,63 @@
 
             <!-- Footer -->
         <mfooter class="modal-footer d-flex justify-content-between container-fluid">
-            
-                <!-- Links -->
-            <div id="mfooter-links" class="d-grid text-center">
-            
-                <div class="dropdown">
-                    
-                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Otras Opciones
-                    </button>
-
-                    ul class="dropdown-menu dropdown-menu-dark ">
-                      <  <li>
-                            <a class="dropdown-item text-info">
-                                ¿Olvido su contraseña?
-                            </a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-                        
-                        <li data-bs-toggle="modal" data-bs-target="#registerM" >
-                            <a class="dropdown-item text-info" data-bs-dismiss="#loginM">
-                                Register
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-            </div>
                 <!-- Botones -->
             <div id="mfooter-buttons">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-dismiss="#q1M" data-bs-target="#registerM">Vale Registrar me 😁</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="#q1M">Ok 👍 (Cerrar)</button>
+                <div data-bs-dismiss="modal" data-bs-toggle="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registerM">
+                        Vale Registrar me 😁
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok 👍 (Cerrar)</button>
             </div>
         </mfooter>
 
-    </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Question -->
+<div class="modal fade" id="term" tabindex="-2" aria-labelledby="termModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    
+    <div class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="" method="POST">
+      
+            <!-- Encabezado -->
+        <mheader class="modal-header">
+            
+            <h1 class="modal-title text-info fs-3" id="termModalLabel">
+                Terminos y condiciones
+            </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+        </mheader>
+      
+            <!-- Cuerpo -->
+        <mbody class="modal-body d-grid row g-2">
+            
+            <p>
+                Terminos y condiciones... (locale_filter_matches)
+            </p>
+      
+        </mbody>
+
+            <!-- Footer -->
+        <mfooter class="modal-footer d-flex justify-content-between container-fluid">
+                <!-- Botones -->
+            <div id="mfooter-buttons">
+                <div data-bs-dismiss="modal" data-bs-toggle="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registerM">
+                        Vale Registrar me 😁
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok 👍 (Cerrar)</button>
+            </div>
+        </mfooter>
+
+    </div>
   </div>
 </div>

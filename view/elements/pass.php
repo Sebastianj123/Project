@@ -9,7 +9,7 @@
     <div class="d-flex position-relative">
 
             <!-- Input del password -->
-        <input type="password" class="form-control bg-secondary" id="reg_pass" name="reg_pass" require>
+        <input type="password" class="form-control bg-secondary" id="reg_pass" name="reg_pass" required>
         
             <!-- Boton para cambiar el tipo de input que es (toogel de text input) -->
         <button class="position-absolute end-0 btn btn-primary" data-bs-toggle="button" id="btnPassView" style="width:10%; height:100%;">

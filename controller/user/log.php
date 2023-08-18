@@ -21,7 +21,7 @@
           echo('El usuario existe y esta activo pero la contraseña es incorrecta <br>');
         }
     } else {
-      echo('El usuario existe pero "'. $result[0]['sta_dsc'] .'" :,c <br>');
+      echo('El usuario existe pero esta "'. $result[0]['sta_name'] .'" :,c <br>');
     }
   } else {
     echo (':,c');

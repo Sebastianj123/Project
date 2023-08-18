@@ -1,26 +1,26 @@
 -- Sta --------------------------------------------------------
 DELIMITER $$
 CREATE PROCEDURE i_sta (
-	IN name VARCHAR(20),
+	IN `name` VARCHAR(20),
     IN dsc TEXT
 )
 BEGIN
-	INSERT INTO sta VALUES (NULL,name,dsc);
+	INSERT INTO sta VALUES (NULL,`name`,dsc);
 END
 $$
 
 
 DELIMITER $$
 CREATE PROCEDURE u_sta (
-    IN id INT,
+    IN `id` INT,
     IN changeId INT,
-	IN name VARCHAR(20),
+	IN `name` VARCHAR(20),
     IN dsc TEXT
 )
 BEGIN
 
-	UPDATE `sta` SET `sta_id` = changeId WHERE `sta_id` = id;
-	UPDATE `sta` SET `sta_name` = name, `sta_dsc` = dsc WHERE `sta_id` = changeId;
+	UPDATE `sta` SET `sta_id` = changeId WHERE `sta_id` = `id`;
+	UPDATE `sta` SET `sta_name` = `name`, `sta_dsc` = dsc WHERE `sta_id` = changeId;
     
 END
 $$
@@ -36,24 +36,24 @@ $$
 
 DELIMITER $$
 CREATE PROCEDURE i_tyDoc (
-	IN name VARCHAR(30),
+	IN `name` VARCHAR(30),
     IN dsc TEXT
 )
 BEGIN
-	INSERT INTO `tydoc`(`tyDoc_name`, `tyDoc_dsc`) VALUES (name,dsc);
+	INSERT INTO `tydoc`(`tyDoc_name`, `tyDoc_dsc`) VALUES (`name`,dsc);
 END
 $$
 
 DELIMITER $$
 CREATE PROCEDURE u_tyDoc (
-	IN id INT,
+	IN `id` INT,
     IN changeId INT,
-	IN name VARCHAR(30),
+	IN `name` VARCHAR(30),
     IN dsc TEXT
 )
 BEGIN
-	UPDATE `tydoc` SET `tyDoc_id` = changeId WHERE `tyDoc_id` = id; 
-	UPDATE `tydoc` SET `tyDoc_name`= name,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = changeId;
+	UPDATE `tydoc` SET `tyDoc_id` = changeId WHERE `tyDoc_id` = `id`; 
+	UPDATE `tydoc` SET `tyDoc_name`= `name`,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = changeId;
 END
 $$
 
@@ -69,24 +69,24 @@ $$
 
 DELIMITER $$
 CREATE PROCEDURE i_sex (
-	IN name VARCHAR(20),
+	IN `name` VARCHAR(20),
     IN dsc TEXT
 )
 BEGIN
-	INSERT INTO `sex`(`sex_name`, `sex_dsc`) VALUES (name,dsc);
+	INSERT INTO `sex`(`sex_name`, `sex_dsc`) VALUES (`name`,dsc);
 END
 $$
 
 DELIMITER $$
 CREATE PROCEDURE u_sex (
-    IN id INT,
+    IN `id` INT,
     IN changeId INT,
-	IN name VARCHAR(20),
+	IN `name` VARCHAR(20),
     IN dsc TEXT
 )
 BEGIN
-	UPDATE `sex` SET `sex_id` = changeId WHERE `sex_id` = id;
-    UPDATE `sex` SET `sex_name` = name, `sex_dsc` = dsc WHERE `sex_id` = changeId;
+	UPDATE `sex` SET `sex_id` = changeId WHERE `sex_id` = `id`;
+    UPDATE `sex` SET `sex_name` = `name`, `sex_dsc` = dsc WHERE `sex_id` = changeId;
 END
 $$
 
@@ -103,7 +103,7 @@ $$
 
     DELIMITER $$
     CREATE PROCEDURE i_client (
-        IN name VARCHAR(120),
+        IN `name` VARCHAR(120),
         IN sex INT,
         IN `date` DATE,
         IN tyDoc INT,
@@ -111,14 +111,14 @@ $$
         IN tel DOUBLE,
         IN ema VARCHAR(80),
         IN usrName VARCHAR(80),
-        IN pass VARCHAR(80)
+        IN `pass` VARCHAR(80)
     )
     BEGIN
 
         DECLARE idPer INT;
         INSERT INTO `per`(`per_name`, `sex_id`, `per_brithDate`, `tyDoc_id`, `per_doc`, `per_tel`, `per_ema`, `per_usrName`, `per_pass`) 
         VALUES 
-        (name, sex, `date`, tyDoc, doc, tel, ema, usrName, pass);
+        (`name`, sex, `date`, tyDoc, doc, tel, ema, usrName, `pass`);
         SET idPer = LAST_INSERT_ID();
         
         INSERT INTO `user`(`per_id`, `rol_id`, `sta_id`) 

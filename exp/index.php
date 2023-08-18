@@ -1,11 +1,10 @@
-<?php
-    $precioIn = strrev('4000000000000');
-    $a = array();
-    for ($i = 0; $i < strlen($precioIn) ; $i++) { 
-        if ($i == 2 || $i == 5 || $i == 8) {
-            array_push($a,'.',$precioIn[$i]);
-        }
-        array_push($a,$precioIn[$i]);
-    };
-    $e = strrev(implode("",$a));
-?>
+<form action="index1.php" method="post">
+    
+    <input class="form-check-input bg-secondary" type="checkbox" name="gridCheck" id="gridCheck">
+    <label class=" fw-bolder text-light" for="gridCheck">
+        Hacepto Terminos y condiciones
+    </label>
+    <button type="submit">Enviar</button>
+
+</form>
+
