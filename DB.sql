@@ -1,187 +1,27 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-08-2023 a las 00:51:00
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `cabellobellojj`
---
-
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_cita` (IN `date` DATETIME, IN `usr` INT, IN `emp_srv` INT)   BEGIN
-	INSERT INTO `cita`(`cita_date`, `user_id`, `emp_srv_id`, `sta_id`) VALUES (`date`,usr,emp_srv,3);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_client` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `date` DATE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(80), IN `addr` VARCHAR(80))   BEGIN
-        DECLARE idPer INT;
-        INSERT INTO `per`(`per_name`, `per_lastname`, `sex_id`, `tyDoc_id`, `per_doc`, `per_bith`, `per_addr`) VALUES
-        (`name`, lastName, sex, tyDoc, doc, `date`);
-        SET idPer = LAST_INSERT_ID();
-        
-        INSERT INTO `user`(`user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, `per_id`, `sta_id`) 
-        VALUES (usrName, ema, tel, `pass`, 3, idPer, 3);
-    END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_emp` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `date` DATE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(80), IN `addr` VARCHAR(80))   BEGIN
-        DECLARE idPer INT;
-        INSERT INTO `per`(`per_name`, `per_lastname`, `sex_id`, `tyDoc_id`, `per_doc`, `per_bith`, `per_addr`) VALUES
-        (`name`, lastName, sex, tyDoc, doc, `date`);
-        SET idPer = LAST_INSERT_ID();
-        
-        INSERT INTO `user`(`user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, `per_id`, `sta_id`) 
-        VALUES (usrName, ema, tel, `pass`, 2, idPer, 3);
-    END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_rol` (IN `name` VARCHAR(30), IN `dsc` TEXT)   BEGIN
-	INSERT INTO `rol`(`rol_name`, `rol_dsc`) VALUES (name,dsc);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_sex` (IN `name` VARCHAR(20), IN `dsc` TEXT)   BEGIN
-	INSERT INTO `sex`(`sex_name`, `sex_dsc`) VALUES (`name`,dsc);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_srv` (IN `name` VARCHAR(60), IN `cod` VARCHAR(40), IN `dsc` TEXT, IN `img` TEXT, IN `prc` DOUBLE)   BEGIN
-	INSERT INTO `srv`(`srv_name`, `srv_cod`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id`) VALUES (name,cod,dsc,img,prc,3);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_sta` (IN `name` VARCHAR(20), IN `dsc` TEXT)   BEGIN
-	INSERT INTO sta VALUES (NULL,`name`,dsc);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_tyDoc` (IN `name` VARCHAR(30), IN `dsc` TEXT)   BEGIN
-	INSERT INTO `tydoc`(`tyDoc_name`, `tyDoc_dsc`) VALUES (`name`,dsc);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_cita` (IN `id` INT, IN `changeId` INT, IN `date` DATETIME, IN `usr` INT, IN `emp_srv` INT, IN `sta` INT)   BEGIN
-	UPDATE `cita` SET `cita_id`= changeId, `cita_date`= `date`, `user_id`= usr,`emp_srv_id`=emp_srv,`sta_id`= sta WHERE `cita_id` = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_rol` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(30), IN `dsc` TEXT)   BEGIN
-	UPDATE rol SET rol_id = changeId WHERE rol_id = id;
-    UPDATE rol SET `rol_name` = name, `rol_dsc` = dsc WHERE rol_id = changeId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sex` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(20), IN `dsc` TEXT)   BEGIN
-	UPDATE `sex` SET `sex_id` = changeId WHERE `sex_id` = `id`;
-    UPDATE `sex` SET `sex_name` = `name`, `sex_dsc` = dsc WHERE `sex_id` = changeId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_srv` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(60), IN `cod` VARCHAR(40), IN `dsc` TEXT, IN `img` TEXT, IN `prc` DOUBLE, IN `sta` INT)   BEGIN
-	UPDATE srv SET srv_id = changeId WHERE srv_id = id;
-    UPDATE srv SET srv_name = name, srv_cod = cod, srv_dsc = dsc, srv_img = img, srv_prc = prc, sta_id = sta WHERE srv_id = changeId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sta` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(20), IN `dsc` TEXT)   BEGIN
-
-	UPDATE `sta` SET `sta_id` = changeId WHERE `sta_id` = `id`;
-	UPDATE `sta` SET `sta_name` = `name`, `sta_dsc` = dsc WHERE `sta_id` = changeId;
-    
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_tyDoc` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(30), IN `dsc` TEXT)   BEGIN
-	UPDATE `tydoc` SET `tyDoc_id` = changeId WHERE `tyDoc_id` = `id`; 
-	UPDATE `tydoc` SET `tyDoc_name`= `name`,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = changeId;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita` ()   BEGIN
-	SELECT * FROM cita;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_citaA` ()   BEGIN
-	SELECT * FROM cita WHERE `sta_id` = 1;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita_IN_id` (IN `id` INT)   BEGIN
-	SELECT * FROM cita WHERE `cita_id` = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol` ()   BEGIN
-	SELECT * FROM rol;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol_IN_id` (IN `id` INT)   BEGIN
-	SELECT * FROM rol WHERE rol_id = id;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sex` ()   BEGIN
-	SELECT * FROM `sex`;	
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srv` ()   BEGIN
-	SELECT `srv_id`, `srv_name`, `srv_cod`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id` FROM `srv`;	
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srvA` ()   BEGIN
-	SELECT `srv_id`, `srv_name`, `srv_cod`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id` FROM `srv` WHERE sta_id = 1;	
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srv_IN_id` (IN `id` INT)   BEGIN
-	SELECT `srv_id`, `srv_name`, `srv_cod`, `srv_dsc`, `srv_img`, `srv_prc`, `sta_id` FROM `srv` WHERE `srv_id` = id;	
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sta` ()   BEGIN
-	SELECT * FROM sta;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDoc` ()   BEGIN
-	SELECT * FROM `tydoc`;	
-END$$
-
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `caja`
---
+CREATE or REPLACE DATABASE cabellobellojj;
+use cabellobellojj;
 
 CREATE TABLE `caja` (
   `caja_id` int(11) NOT NULL,
   `caja_numModulo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `caja`
---
-
 INSERT INTO `caja` (`caja_id`, `caja_numModulo`) VALUES
 (1, 1),
 (2, 2);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `caja_user`
---
+CREATE TABLE IF NOT EXISTS `his_fin` (
+  `his_fin_id` int(11) NOT NULL,
+  `his_type_id` int(11) DEFAULT NULL,
+  `fin_id` int(11) DEFAULT NULL,
+  `his_fin_monto` double DEFAULT NULL,
+  `recivo_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `caja_user` (
   `caja_user_id` int(11) NOT NULL,
   `caja_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cita`
---
 
 CREATE TABLE `cita` (
   `cita_id` int(11) NOT NULL,
@@ -191,90 +31,12 @@ CREATE TABLE `cita` (
   `sta_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `emp_srv`
---
-
-CREATE TABLE `emp_srv` (
-  `emp_srv_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `srv_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `fin`
---
-
-CREATE TABLE `fin` (
-  `fin_id` int(11) NOT NULL,
-  `fin_total` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `his_fin`
---
-
-CREATE TABLE `his_fin` (
-  `his_fin_id` int(11) NOT NULL,
-  `his_type_id` int(11) DEFAULT NULL,
-  `fin_id` int(11) DEFAULT NULL,
-  `his_fin_monto` double DEFAULT NULL,
-  `recivo_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `his_type`
---
-
-CREATE TABLE `his_type` (
-  `his_type_id` int(11) NOT NULL,
-  `his_type_name` varchar(20) DEFAULT NULL,
-  `his_type_dsc` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `per`
---
-
-CREATE TABLE `per` (
-  `per_id` int(11) NOT NULL,
-  `per_name` varchar(80) DEFAULT NULL,
-  `per_lastname` varchar(80) DEFAULT NULL,
-  `sex_id` int(11) DEFAULT NULL,
-  `tyDoc_id` int(11) DEFAULT NULL,
-  `per_doc` double DEFAULT NULL,
-  `per_bith` date DEFAULT NULL,
-  `per_addr` varchar(80) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `recibo`
---
-
 CREATE TABLE `recibo` (
   `recivo_id` int(11) NOT NULL,
   `cita_id` int(11) DEFAULT NULL,
   `recivo_time` datetime DEFAULT NULL,
   `caja_user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rol`
---
 
 CREATE TABLE `rol` (
   `rol_id` int(11) NOT NULL,
@@ -384,33 +146,10 @@ INSERT INTO `tydoc` (`tyDoc_id`, `tyDoc_name`, `tyDoc_dsc`) VALUES
 (3, 'CC', 'Cedula Ciudadana'),
 (4, 'CE', 'Cedula Extrangera');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `user`
---
-
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `user_name` varchar(80) DEFAULT NULL,
-  `user_email` varchar(80) DEFAULT NULL,
-  `user_tel` double DEFAULT NULL,
-  `user_pass` text DEFAULT NULL,
-  `rol_id` int(11) DEFAULT NULL,
-  `per_id` int(11) DEFAULT NULL,
-  `sta_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tablas volcadas
---
-
---
 -- Indices de la tabla `caja`
 --
 ALTER TABLE `caja`
-  ADD PRIMARY KEY (`caja_id`),
-  ADD UNIQUE KEY `caja_numModulo` (`caja_numModulo`);
+  ADD PRIMARY KEY (`caja_id`);
 
 --
 -- Indices de la tabla `caja_user`
@@ -425,14 +164,10 @@ ALTER TABLE `caja_user`
 --
 ALTER TABLE `cita`
   ADD PRIMARY KEY (`cita_id`),
-  ADD UNIQUE KEY `cita_date` (`cita_date`),
   ADD KEY `user_id` (`user_id`,`emp_srv_id`,`sta_id`),
   ADD KEY `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` (`emp_srv_id`),
   ADD KEY `cita_sta_idFK_sta_sta_idPK` (`sta_id`);
 
---
--- Indices de la tabla `emp_srv`
---
 ALTER TABLE `emp_srv`
   ADD PRIMARY KEY (`emp_srv_id`),
   ADD UNIQUE KEY `emp_srv_id` (`emp_srv_id`,`user_id`,`srv_id`),
@@ -460,17 +195,7 @@ ALTER TABLE `his_fin`
 ALTER TABLE `his_type`
   ADD PRIMARY KEY (`his_type_id`);
 
---
--- Indices de la tabla `per`
---
-ALTER TABLE `per`
-  ADD PRIMARY KEY (`per_id`),
-  ADD KEY `sex_id` (`sex_id`,`tyDoc_id`),
-  ADD KEY `tyDoc_tyDocidPK-per_tyDoc_idFK` (`tyDoc_id`);
-
---
--- Indices de la tabla `recibo`
---
+  
 ALTER TABLE `recibo`
   ADD PRIMARY KEY (`recivo_id`),
   ADD KEY `cita_id` (`cita_id`,`caja_user_id`),
@@ -511,23 +236,6 @@ ALTER TABLE `tydoc`
   ADD PRIMARY KEY (`tyDoc_id`),
   ADD UNIQUE KEY `tyDoc_name` (`tyDoc_name`,`tyDoc_dsc`) USING HASH;
 
---
--- Indices de la tabla `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `user_name` (`user_name`,`user_email`,`user_tel`,`per_id`),
-  ADD KEY `per_id` (`per_id`),
-  ADD KEY `rol_id` (`rol_id`),
-  ADD KEY `sta_id` (`sta_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `caja`
---
 ALTER TABLE `caja`
   MODIFY `caja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
@@ -542,6 +250,9 @@ ALTER TABLE `caja_user`
 --
 ALTER TABLE `cita`
   MODIFY `cita_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `emp_srv`
+  MODIFY `emp_srv_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `fin`
@@ -560,6 +271,12 @@ ALTER TABLE `his_fin`
 --
 ALTER TABLE `his_type`
   MODIFY `his_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `per`
+--
+ALTER TABLE `per`
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `recibo`
@@ -596,20 +313,6 @@ ALTER TABLE `sta`
 --
 ALTER TABLE `tydoc`
   MODIFY `tyDoc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `caja_user`
---
 ALTER TABLE `caja_user`
   ADD CONSTRAINT `caja_caja_idPK-caja_user_caja_idFK` FOREIGN KEY (`caja_id`) REFERENCES `caja` (`caja_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_user_idPK-caja_user_user_idFK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -621,13 +324,12 @@ ALTER TABLE `cita`
   ADD CONSTRAINT `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` FOREIGN KEY (`emp_srv_id`) REFERENCES `emp_srv` (`emp_srv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_sta_idFK_sta_sta_idPK` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_user_idFK_user_user_idPK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
 --
 -- Filtros para la tabla `emp_srv`
 --
 ALTER TABLE `emp_srv`
-  ADD CONSTRAINT `emp_srv_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `emp_srv_ibfk_2` FOREIGN KEY (`srv_id`) REFERENCES `srv` (`srv_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `emp_srv_SRV_idFK_srv_srv_idPK` FOREIGN KEY (`srv_id`) REFERENCES `srv` (`srv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `emp_srv_user_idFK_user_user_idPK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `his_fin`
@@ -637,13 +339,7 @@ ALTER TABLE `his_fin`
   ADD CONSTRAINT `his_fin_ibfk_1` FOREIGN KEY (`recivo_id`) REFERENCES `recibo` (`recivo_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `his_type_his_type_idPK-his_fin_his_type_idFK` FOREIGN KEY (`his_type_id`) REFERENCES `his_type` (`his_type_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Filtros para la tabla `per`
---
-ALTER TABLE `per`
-  ADD CONSTRAINT `sex_sex_idPK-per_sex_idFK` FOREIGN KEY (`sex_id`) REFERENCES `sex` (`sex_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tyDoc_tyDocidPK-per_tyDoc_idFK` FOREIGN KEY (`tyDoc_id`) REFERENCES `tydoc` (`tyDoc_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
+  
 --
 -- Filtros para la tabla `recibo`
 --
@@ -658,14 +354,3 @@ ALTER TABLE `srv`
   ADD CONSTRAINT `sta_sta_idPK-srv_sta_idFk` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `rol_rol_idPK-per_rol_idFK` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sta_sta_idPK-user_sta` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
