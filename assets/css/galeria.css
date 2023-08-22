@@ -1,0 +1,47 @@
+.galeria {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3vw;
+
+}
+
+.galeria section {
+    display: flex;
+    width: 70vw;
+    height: 70vh;
+    position: relative;
+    background-color: #000;
+}
+
+.galeria section::after {
+    content: "";
+    background-color: #000;
+    backdrop-filter: blur(3px);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .2;
+    z-index: 1;
+}
+
+
+.galeria section img{
+    width: 0px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8;
+    transition: .5s ease;
+
+}
+
+.galeria section:hover::after{
+    z-index: -1;
+}
+
+.galeria section img:hover{
+    cursor: crosshair;
+    width: 300px;
+    opacity: 1;
+    filter: contrast(130%);
+}

@@ -1,0 +1,23 @@
+*::-webkit-scrollbar {
+    width: 10px;
+    background-color: #0000;
+    margin-right: 1vw;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgb(34, 117, 122);
+    border-radius: 1vw;
+}
+
+
+*::-webkit-scrollbar:hover {
+    background-color: #333;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(1, 68, 70);
+}
+
+.body-scrollx-hidden {
+    overflow-x: hidden;
+}
