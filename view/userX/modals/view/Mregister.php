@@ -1,122 +1,3 @@
-<head>
-
-    <link rel="stylesheet" href="assets/css/btnInpNum.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-
-    <?php
-        include('config/connectDb.php');
-        $sql = 'CALL v_sex();';
-        $sql .= 'CALL v_tyDoc();';
-
-        $querysArray = array();
-
-        if (!$con->multi_query($sql)) {
-            echo "Falló la multiconsulta: (" . $con->errno . ") " . $con->error;
-        }
-
-        do {
-        if ($result = $con->store_result()) {
-
-                $resultQuery = $result->fetch_all(MYSQLI_ASSOC);
-                array_push($querysArray, $resultQuery);
-    
-                $result->free();
-            }
-        } while ($con->more_results() && $con->next_result());
-
-        $querySex = $querysArray[0];
-        $queryTD = $querysArray[1];
-        // $querySerial = $querysArray[2];
-        // $queryCity = $querysArray[3];
-
-    ?>
-</head>
-
-
-<!-- Modal Login -->
-<div class="modal fade" id="loginM" tabindex="-1" aria-labelledby="loguinModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="controller/user/log.php" method="POST">
-      
-            <!-- Encabezado -->
-        <mheader class="modal-header">
-            
-            <h1 class="modal-title text-info fs-3" id="loguinModalLabel">Login</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        
-        </mheader>
-      
-            <!-- Cuerpo -->
-        <mbody class="modal-body d-grid row g-2">
-            
-            <div class="col-md-10 container-fluid">
-                
-                <label for="reg_ema" class="fw-bold fw-2 text-light">
-                    Ingrese el nombre de Usuario, Teléfono o Correo Con el que este registrado 
-                </label>
-
-                <input type="text" class="form-control bg-secondary" id="reg_ema" name="reg_ema" autofocus required>
-
-            </div>
-            
-                <!-- Password -->
-            <?php
-                include('view\elements\pass.php')
-            ?>
-            
-            <div class="col-10 container-fluid">
-                <div class="form-check">
-                    <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck" required>
-                    <label class=" fw-bolder text-light" for="gridCheck">
-                        Recuerdame el inició de sección
-                    </label>
-                </div>
-            </div>
-      
-        </mbody>
-
-            <!-- Footer -->
-        <mfooter class="modal-footer d-flex justify-content-between container-fluid">
-            
-                <!-- Links -->
-            <div id="mfooter-links" class="d-grid text-center">
-            
-                <div class="dropdown">
-                    
-                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Otras Opciones
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-menu-dark ">
-                        <li>
-                            <a class="dropdown-item text-info">
-                                ¿Olvido su contraseña?
-                            </a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-                        
-                        <li data-bs-toggle="modal" data-bs-target="#registerM" >
-                            <a class="dropdown-item text-info" data-bs-dismiss="modal">
-                                Register
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-            </div>
-                <!-- Botones -->
-            <div id="mfooter-buttons">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </div>
-        </mfooter>
-
-    </form>
-  </div>
-</div>
-
 <!-- Modal Register -->
 <div class="modal fade" id="registerM" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -216,7 +97,7 @@
             <div class="col-md-10 container-fluid">
                 
                 <label for="per_addr" class="fw-bold fw-2 text-light">
-                    per_lastname
+                    Dirección
                 </label>
 
                 <input type="text" class="form-control bg-secondary" id="per_addr" name="per_addr" required>
@@ -318,7 +199,8 @@
                         Otras Opciones
                     </button>
 
-                    <ul class="dropdown-menu dropdown-menu-dark ">
+                    <ul class="dropdown-menu dropdown-menu-dark" style="z-index:10000;">
+                    
                         <li data-bs-toggle="modal" data-bs-dismiss="modal">
                             <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#q1M">
                                 ¿Por qué tengo que registrar me?
@@ -344,91 +226,5 @@
         </mfooter>
 
     </form>
-  </div>
-</div>
-
-<!-- Modal Question -->
-<div class="modal fade" id="q1M" tabindex="-2" aria-labelledby="q1MModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    
-    <div class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="" method="POST">
-      
-            <!-- Encabezado -->
-        <mheader class="modal-header">
-            
-            <h1 class="modal-title text-info fs-3" id="q1MModalLabel">¿Por qué? 🤔</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        
-        </mheader>
-      
-            <!-- Cuerpo -->
-        <mbody class="modal-body d-grid row g-2">
-            
-            <p>
-                Para apartar una cita online requerimos que hagas un registro de tus datos personales para así poder saber quien eres y darte un servicio personalizado... 😊
-            </p>
-      
-        </mbody>
-
-            <!-- Footer -->
-        <mfooter class="modal-footer d-flex justify-content-between container-fluid">
-                <!-- Botones -->
-            <div id="mfooter-buttons">
-                <div data-bs-dismiss="modal" data-bs-toggle="modal">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registerM">
-                        Vale Registrar me 😁
-                    </button>
-                </div>
-
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok 👍 (Cerrar)</button>
-            </div>
-        </mfooter>
-
-    </div>
-  </div>
-</div>
-
-
-
-<!-- Modal Question -->
-<div class="modal fade" id="term" tabindex="-2" aria-labelledby="termModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    
-    <div class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="" method="POST">
-      
-            <!-- Encabezado -->
-        <mheader class="modal-header">
-            
-            <h1 class="modal-title text-info fs-3" id="termModalLabel">
-                Terminos y condiciones
-            </h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        
-        </mheader>
-      
-            <!-- Cuerpo -->
-        <mbody class="modal-body d-grid row g-2">
-            
-            <p>
-                Terminos y condiciones... (locale_filter_matches)
-            </p>
-      
-        </mbody>
-
-            <!-- Footer -->
-        <mfooter class="modal-footer d-flex justify-content-between container-fluid">
-                <!-- Botones -->
-            <div id="mfooter-buttons">
-                <div data-bs-dismiss="modal" data-bs-toggle="modal">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registerM">
-                        Vale Registrar me 😁
-                    </button>
-                </div>
-
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok 👍 (Cerrar)</button>
-            </div>
-        </mfooter>
-
-    </div>
   </div>
 </div>

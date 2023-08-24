@@ -6,18 +6,19 @@
     <title>Home</title>
 
     <!-- ICON -->
-    <link rel="icon" href="assets/img/icon1-modified.png">
+    <link rel="icon" href="../../assets/img/icon1-modified.png">
 
     <!-- CSS -->
         <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!-- Background -->
-    <link rel="stylesheet" href="assets/css/bg.css">
+    <link rel="stylesheet" href="../../assets/css/bg.css">
         <!-- Font -->
-    <link rel="stylesheet" href="assets/css/text.css">
+    <link rel="stylesheet" href="../../assets/css/text.css">
         <!-- Scroll -->
-    <link rel="stylesheet" href="assets/css/scroll.css">
+    <link rel="stylesheet" href="../../assets/css/scroll.css">
     <!-- INCLUDE -->
+    <link rel="stylesheet" href="../../assets/css/btnInpNum.css">
 
         <!-- ICONOS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -28,10 +29,11 @@
 <body  class="bag bg-black d-flex flex-column gap-0 over-x-hidden">
         
 <?php
-    include('view/userX/elements/header.php');
+    include('elements/header.php');
     // <!-- Modales -->
-    include('view/userX/modals/modals.php');
+    include('modals/modals.php');
     // $con->close();
+    // include('modals/');
 
 ?>
 
@@ -95,7 +97,7 @@
                 <!-- Home (vista) -->
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">    
                 <?php
-                    include('view/every/home.php');
+                    include('../every/home.php');
                 ?>
             </div>
             
@@ -103,7 +105,7 @@
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                 
                 <?php
-                    include('view/userX/elements/services.php');
+                    include('elements/services.php');
                 ?>
 
             </div>
@@ -112,7 +114,7 @@
             <div class="tab-pane fade m-auto" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0" style="height:100%;">
                 <?php
                     // Calendarío
-                    include('view/userX/elements/calendario.php');
+                    include('elements/calendario.php');
                 ?>
 
             </div>
@@ -134,7 +136,7 @@
 <!-- Footer -->
 
 <?php
-    include('view/every/footer.php');
+    include('../every/footer.php');
 ?>
 
 
