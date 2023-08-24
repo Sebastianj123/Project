@@ -2,7 +2,7 @@
 <div class="modal fade" id="loginM" tabindex="-1" aria-labelledby="loguinModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="controller/userX/log.php" method="POST">
+    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="controller/admin/log.php" method="POST">
       
             <!-- Encabezado -->
         <mheader class="modal-header">

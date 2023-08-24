@@ -1,8 +1,10 @@
 <?php
-        include('../config/connectDb.php');
+
+    // echo 'asfsdf';
+        include('config/connectDb.php');
         $sql = 'CALL v_sex();';
         $sql .= 'CALL v_tyDoc();';
-        $sql .= 'CALL v_user_id(2);';
+        $sql .= "CALL v_user_id($id);";
         $sql .= 'CALL v_rol();';
         $sql .= 'CALL v_sta();';
 
@@ -17,6 +19,7 @@
         if ($result = $con->store_result()) {
 
                 $resultQuery = $result->fetch_all(MYSQLI_ASSOC);
+                // echo "$sql <br>";
                 array_push($querysArray, $resultQuery);
     
                 $result->free();
@@ -29,6 +32,8 @@
         $queryUser = $querysArray[2];
         $queryRol = $querysArray[3];
         $querySta = $querysArray[4];
+
+        // var_dump($queryUser);
 
         // Declaración de mensaje X
         $noExiste = 'placeholder="No existe" style::placeholder="color:black"';

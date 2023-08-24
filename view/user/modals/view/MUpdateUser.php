@@ -2,7 +2,7 @@
 <div class="modal fade" id="updInfoUserM" tabindex="-1" aria-labelledby="updInfoUserModalLabel" aria-hidden="true">
 <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" method="POST" action="controller/user/reg.php" autocomplete="off">
+    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" method="POST" action="controller/user/update.php" autocomplete="off">
       
             <!-- Encabezado -->
         <mheader class="modal-header">
@@ -66,11 +66,11 @@
                 </div>
 
                 <div class="flex-fill col-6">
-                    <label for="brithDate" class="fw-bold fw-2 text-light">
+                    <label for="per_bith" class="fw-bold fw-2 text-light">
                         Fecha nacimiento
                     </label>
 
-                    <input type="date" class="form-control bg-secondary" value="<?php echo $per_bith ?>" id="brithDate" name="brithDate" required >
+                    <input type="date" class="form-control bg-secondary" value="<?php echo $per_bith ?>" id="per_bith" name="per_bith" required >
                 </div>
                 
             </div>
@@ -118,31 +118,31 @@
 
             <div class="col-md-10 container-fluid">
                 
-                <label for="per_usrName" class="fw-bold fw-2 text-light">
+                <label for="user_name" class="fw-bold fw-2 text-light">
                     Nombre De Usuario
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_usrName" name="per_usrName" value="<?= $user_name; ?>" required >
+                <input type="text" class="form-control bg-secondary" id="user_name" name="user_name" value="<?= $user_name; ?>" required >
 
             </div>
             
             <div class="col-md-10 container-fluid">
                 
-                <label for="per_ema" class="fw-bold fw-2 text-light">
+                <label for="user_ema" class="fw-bold fw-2 text-light">
                     Email
                 </label>
 
-                <input type="email" class="form-control bg-secondary" id="per_ema" value="<?= $user_email; ?>" name="per_ema" required >
+                <input type="email" class="form-control bg-secondary" id="user_ema" value="<?= $user_email; ?>" name="user_ema" required >
 
             </div>
 
             <div class="col-md-10 container-fluid">
                 
-                <label for="per_tel" class="fw-bold fw-2 text-light">
+                <label for="user_tel" class="fw-bold fw-2 text-light">
                     Número De Telefono
                 </label>
 
-                <input type="tel" class="form-control bg-secondary" id="per_tel" value="<?= $user_tel; ?>" name="per_tel" required >
+                <input type="tel" class="form-control bg-secondary" id="user_tel" value="<?= $user_tel; ?>" name="user_tel" required >
 
             </div>
         </mbody>
@@ -178,7 +178,7 @@
         </div>
             <!-- Botones -->
         <div id="mfooter-buttons">
-            <?php include('modals/elements/buttonClose.php'); ?>
+            <?php include('view/user/modals/elements/buttonClose.php'); ?>
             <button type="submit" class="btn btn-primary">Sign in</button>
         </div>
     </mfooter>

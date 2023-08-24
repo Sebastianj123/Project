@@ -1,40 +1,6 @@
-<!DOCTYPE html:5>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-
-    <!-- ICON -->
-    <link rel="icon" href="assets/img/icon1-modified.png">
-
-    <!-- CSS -->
-        <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <!-- Background -->
-    <link rel="stylesheet" href="assets/css/bg.css">
-        <!-- Font -->
-    <link rel="stylesheet" href="assets/css/text.css">
-        <!-- Scroll -->
-    <link rel="stylesheet" href="assets/css/scroll.css">
-    <!-- INCLUDE -->
-    <link rel="stylesheet" href="assets/css/btnInpNum.css">
-
-        <!-- ICONOS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-</head>
-
-<!-- Body ----------------------------------------------------------------------------------->
-<body  class="bag bg-black d-flex flex-column gap-0 over-x-hidden">
-        
+<body class="bag bg-black d-flex flex-column gap-0 over-x-hidden">      
 <?php
-    // include('view/user/elements/header.php');
-    // <!-- Modales -->
-    include('view/user/modals/modals.php');
-    // $con->close();
-    // include('modals/');
-
+    include('view/userX/modals/modals.php');
 ?>
 
 <!-- Cuerpo de la Página -->
@@ -105,7 +71,7 @@
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                 
                 <?php
-                    include('view/user/elements/services.php');
+                    include('view/userX/elements/services.php');
                 ?>
 
             </div>
@@ -114,7 +80,7 @@
             <div class="tab-pane fade m-auto" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0" style="height:100%;">
                 <?php
                     // Calendarío
-                    include('view/user/elements/calendario.php');
+                    include('view/userX/elements/calendario.php');
                 ?>
 
             </div>

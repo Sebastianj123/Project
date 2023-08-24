@@ -151,9 +151,9 @@
                 
                 <!-- Botones -->
             <?php
-                include('modals/elements/buttonClose.php');
-                include('modals/elements/buttonUpdate.php');
-                include('modals/elements/buttonErase.php');
+                include('view/user/modals/elements/buttonClose.php');
+                include('view/user/modals/elements/buttonUpdate.php');
+                include('view/user/modals/elements/buttonErase.php');
             ?>
                  
         </mfooter>

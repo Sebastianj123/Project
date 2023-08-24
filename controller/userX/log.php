@@ -12,15 +12,16 @@
   $result = $queryEma -> fetch_all(MYSQLI_ASSOC);
 
   $rol = $result[0]['rol_id'];
-
+  $id = $result[0]['user_id'];
+  $sta = $result[0]['sta_id'];
 
   if (count($result) > 0) {
     echo('El usuario existe <br>');
-    if ($result[0]['sta_id'] == 1) {
+    if ($sta == 1) {
       echo('El usuario existe y esta activo <br>');
         if ($result[0]['user_pass'] == $user_pass) {
 
-          $local = "Location: ../../index.php?rol=$rol";
+          $local = "Location: ../../index.php?rol=$rol&id=$id&sta=$sta";
 
           header($local);
         
