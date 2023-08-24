@@ -164,16 +164,15 @@ sta S ON U.sta_id = S.sta_id
 WHERE `user_name` = usr OR `user_email` = usr OR `user_tel` = usr AND U.sta_id = 1 AND user_pass = pass;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_id` (IN `ID` INT)   BEGIN 
-	SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, U.`rol_id`, U.`per_id`, P.per_name, P.per_lastname, P.sex_id, P.tyDoc_id, P.per_doc, P.per_bith, P.per_addr, U.`sta_id`
-    
-    FROM `user` U INNER JOIN
-    rol R ON R.rol_id = U.rol_id INNER JOIN
-    per P ON p.per_id = U.rol_id
+DELIMITER $$
+CREATE PROCEDURE v_user_id(
+	IN ID INT
+)
+BEGIN 
+	SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, U.`per_id`, `sta_id`, P.per_name, P.per_lastname, P.sex_id, P.tyDoc_id, P.per_doc, P.per_bith, P.per_addr FROM `user` U INNER JOIN `per` P ON U.per_id = P.per_id 
     WHERE U.user_id = ID;
-    END$$
-
-DELIMITER ;
+    END
+$$
 
 -- --------------------------------------------------------
 

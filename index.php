@@ -27,15 +27,26 @@
     include('view/every/header.php');
 
     
-
-    if (isset($_GET['rol'])) {
+// Rol
+    if (!isset($_GET['rol'])) {
         $rol = null;
     } else {
         $rol = $_GET['rol'];
     }
-        $rol = $_GET['rol'];
+// id
+    if (!isset($_GET['id'])) {
+        $id = null;
+    } else {
         $id = $_GET['id'];
+    }
+// sta
+    if (!isset($_GET['sta'])) {
+        $sta = null;
+    } else {
         $sta = $_GET['sta'];
+    }
+    
+    
 
         switch ($rol) {
             case 1:
@@ -52,6 +63,5 @@
             default:
                 include('view/userX/index.php');
                 break;
-            ;
 }
 ?>

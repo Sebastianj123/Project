@@ -26,7 +26,13 @@
 <section class="d-flex g-5 align-items-center">
 
   <?php
-    $rol = $_GET['rol'];
+    // Rol
+    if (!isset($_GET['rol'])) {
+      $rol = null;
+  } else {
+      $rol = $_GET['rol'];
+  }
+  
     if ($rol > 3 || $rol < 1) {
       include('view/every/header/header.php');
     } else {
