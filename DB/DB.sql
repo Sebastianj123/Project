@@ -3,15 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-08-2023 a las 06:01:13
+-- Tiempo de generación: 25-08-2023 a las 05:29:00
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
-CREATE or REPLACE DATABASE cabellobellojj;
-use cabellobellojj;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,6 +20,9 @@ use cabellobellojj;
 --
 -- Base de datos: `cabellobellojj`
 --
+
+CREATE or REPLACE DATABASE cabellobellojj;
+use cabellobellojj;
 
 DELIMITER $$
 --
@@ -156,6 +158,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDoc` ()   BEGIN
 	SELECT * FROM `tydoc`;	
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_users` ()   BEGIN
+		SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, `sta_id`, P.`per_id`, `per_name`, `per_lastname`, `sex_id`, `tyDoc_id`, `per_doc`, `per_bith`, `per_addr` 
+        FROM `user` U INNER JOIN per P ON U.per_id = P.per_id;
+    END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usersReg` (IN `usr` VARCHAR(80), IN `pass` VARCHAR(80))   BEGIN
 	SELECT U.`user_id`, `user_name`, `user_email`, `user_tel`, 
     `user_pass`, U.`rol_id`, `per_id`, U.`sta_id`, S.sta_name, S.sta_dsc
@@ -164,15 +171,17 @@ sta S ON U.sta_id = S.sta_id
 WHERE `user_name` = usr OR `user_email` = usr OR `user_tel` = usr AND U.sta_id = 1 AND user_pass = pass;
 END$$
 
-DELIMITER $$
-CREATE PROCEDURE v_user_id(
-	IN ID INT
-)
-BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_id` (IN `ID` INT)   BEGIN 
 	SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, U.`per_id`, `sta_id`, P.per_name, P.per_lastname, P.sex_id, P.tyDoc_id, P.per_doc, P.per_bith, P.per_addr FROM `user` U INNER JOIN `per` P ON U.per_id = P.per_id 
     WHERE U.user_id = ID;
-    END
-$$
+    END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_repeat` (IN `usrname` VARCHAR(80), IN `email` VARCHAR(80), IN `tel` DOUBLE, IN `doc` DOUBLE)   BEGIN
+SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, U.`per_id`,P.per_doc from `user` U INNER JOIN per P ON U.per_id = P.per_id 
+WHERE `user_name` = usrname or `user_email` = email or `user_tel` = tel or P.per_doc = doc;
+    END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -284,7 +293,6 @@ CREATE TABLE `per` (
   `per_bith` date DEFAULT NULL,
   `per_addr` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 -- --------------------------------------------------------
 
@@ -430,7 +438,6 @@ CREATE TABLE `user` (
   `sta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
 --
 -- Índices para tablas volcadas
 --
@@ -495,7 +502,7 @@ ALTER TABLE `his_type`
 --
 ALTER TABLE `per`
   ADD PRIMARY KEY (`per_id`),
-  ADD UNIQUE KEY `per_doc` (`per_doc`,`per_addr`),
+  ADD UNIQUE KEY `per_doc` (`per_doc`),
   ADD KEY `sex_id` (`sex_id`,`tyDoc_id`),
   ADD KEY `tyDoc_tyDocidPK-per_tyDoc_idFK` (`tyDoc_id`);
 
@@ -554,6 +561,10 @@ ALTER TABLE `user`
   ADD KEY `sta_id` (`sta_id`);
 
 --
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
@@ -587,7 +598,7 @@ ALTER TABLE `his_fin`
 -- AUTO_INCREMENT de la tabla `his_type`
 --
 ALTER TABLE `his_type`
-  MODIFY `his_type_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `his_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `per`
@@ -698,6 +709,7 @@ ALTER TABLE `user`
   ADD CONSTRAINT `rol_rol_idPK-per_rol_idFK` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sta_sta_idPK-user_sta` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
