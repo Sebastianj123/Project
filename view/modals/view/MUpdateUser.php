@@ -178,8 +178,8 @@
         </div>
             <!-- Botones -->
         <div id="mfooter-buttons">
-            <?php include('view/user/modals/elements/buttonClose.php'); ?>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <?php include('view/modals/elements/buttonClose.php'); ?>
+            <button type="submit" class="btn btn-primary">Enviar</button>
         </div>
     </mfooter>
 

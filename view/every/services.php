@@ -1,6 +1,3 @@
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-<!-- <link rel="stylesheet" href="assets/css/text.css"> -->
-
 <?php
     include('config/connectDb.php');
 
@@ -22,7 +19,7 @@
         
         <!-- Cards individuales -->
 <?php
-    require('view/funciones/funciones.php');
+    require('assets/php/funciones.php');
 
     for ($i=0; $i < count($queryAsocc); $i++) :
         $code = $queryAsocc[$i]['srv_cod'];
@@ -125,13 +122,30 @@
                     <!-- Footer -->
                 <mfooter class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button data-bs-dismiss="modal" class="btn btn-primary">
-                        <a data-bs-toggle="modal" data-bs-target="#loginM">
-                            Haz tu reserva...
-                        </a>
-                    </button>
+                    
+                    <?php
+                        switch ($rol) {
+                            case 1:
+                            case 2:
+                            case 3:
+                                echo('<button data-bs-dismiss="modal" class="btn btn-primary">
+                                <a data-bs-toggle="modal" data-bs-target="#comprarM">
+                                    Reservar :D
+                                </a>
+                            </button>');
+                                break;
+                            
+                            default:
+                            echo('<button data-bs-dismiss="modal" class="btn btn-primary">
+                            <a data-bs-toggle="modal" data-bs-target="#loginM">
+                                Haz tu reserva...
+                            </a>
+                        </button>');
+                                break;
+                        }
+                    ?>
+                
                 </mfooter>
-
             </form>
         </div>
         </div>

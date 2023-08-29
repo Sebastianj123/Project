@@ -98,7 +98,7 @@
                 <!-- Botones -->
             <div id="mfooter-buttons">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
         </mfooter>
 

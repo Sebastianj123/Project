@@ -1,13 +1,15 @@
 <!-- Modal Login -->
-<div class="modal fade" id="loginM" tabindex="-1" aria-labelledby="loguinModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteM" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formLoguin" action="controller/admin/log.php" method="POST">
+    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" id="formdelete" action="view/modals/controller/deleteU.php" method="POST">
       
             <!-- Encabezado -->
         <mheader class="modal-header">
             
-            <h1 class="modal-title text-info fs-3" id="loguinModalLabel">Login</h1>
+            <h1 class="modal-title text-info fs-3" id="loguinModalLabel">
+                Eliminar usuario
+            </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         
         </mheader>
@@ -18,7 +20,7 @@
             <div class="col-md-10 container-fluid">
                 
                 <label for="user_ema" class="fw-bold fw-2 text-light">
-                    Ingrese el nombre de Usuario, Teléfono o Correo Con el que este registrado 
+                    Ingrese el nombre de Usuario, Teléfono o Correo con el que este registrado 
                 </label>
 
                 <input type="text" class="form-control bg-secondary" id="user_ema" name="user_ema" autofocus required>
@@ -29,7 +31,7 @@
             <div class="col-md-10 container-fluid">
         
                 <label for="user_pass" class=" fw-bolder text-light">
-                    Password
+                    Ingrese la contraseña
                 </label>
             
                     <!-- contenedor del input y el botón -->
@@ -54,51 +56,17 @@
                         
             </div>
             
-            <!-- <div class="col-10 container-fluid">
-                <div class="form-check">
-                    <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck" required>
-                    <label class=" fw-bolder text-light" for="gridCheck">
-                        Recuerdame el inició de sección
-                    </label>
-                </div>
-            </div> -->
+            <input type="number" name="rol" value="<?= $rol ?>" style="display:none;">
+            <input type="number" name="id" value="<?= $id ?>" style="display:none;">
       
         </mbody>
 
             <!-- Footer -->
         <mfooter class="modal-footer d-flex justify-content-between container-fluid">
-            
-                <!-- Links -->
-            <div id="mfooter-links" class="d-grid text-center">
-            
-                <div class="dropdown">
-                    
-                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Otras Opciones
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-menu-dark ">
-                        <li>
-                            <a class="dropdown-item text-info">
-                                ¿Olvido su contraseña?
-                            </a>
-                        </li>
-
-                        <li><hr class="dropdown-divider"></li>
-                        
-                        <li data-bs-toggle="modal" data-bs-target="#registerM" >
-                            <a class="dropdown-item text-info" data-bs-dismiss="modal">
-                                Register
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-            </div>
                 <!-- Botones -->
             <div id="mfooter-buttons">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Borrar</button>
             </div>
         </mfooter>
 

@@ -6,21 +6,15 @@
 
 <?php
     // Se enlazan los querys requeridos para los modales
-    require('view/userX/modals/controller/querys.php');
+    require('view/modals/controller/querysUserX.php');
 
     // Se enlazan diferentes modales como lo son:
         // Login
-    require('view/userX/modals/view/Mlogin.php');
+    require('view/modals/view/Mlogin.php');
         // Register
-    require('view/userX/modals/view/Mregister.php');
+    require('view/modals/view/Mregister.php');
         // Pregunta
-    require('view/userX/modals/view/Mquestion.php');
+    require('view/modals/view/Mquestion.php');
         // Terminos del servicio
-    require('view/userX/modals/view/Mterms.php');
+    require('view/modals/view/Mterms.php');
 ?>
-
-
-
-
-
-
