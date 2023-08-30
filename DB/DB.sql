@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-08-2023 a las 05:29:00
+-- Tiempo de generación: 30-08-2023 a las 03:33:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -21,13 +21,17 @@ SET time_zone = "+00:00";
 -- Base de datos: `cabellobellojj`
 --
 
-CREATE or REPLACE DATABASE cabellobellojj;
-use cabellobellojj;
+CREATE OR REPLACE DATABASE cabellobellojj;
+USE cabellobellojj;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_user` (IN `id` INT, IN `ema` VARCHAR(80), IN `pass` VARCHAR(80))   BEGIN
+	UPDATE `user` SET `sta_id`= 4 WHERE user_id = id AND user_name = ema AND user_pass = pass;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_cita` (IN `date` DATETIME, IN `usr` INT, IN `emp_srv` INT)   BEGIN
 	INSERT INTO `cita`(`cita_date`, `user_id`, `emp_srv_id`, `sta_id`) VALUES (`date`,usr,emp_srv,3);
 END$$
@@ -113,6 +117,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_user` (IN `id` INT, IN `changeId`
     UPDATE `user` SET user_name = usrName, user_email = ema, user_tel = tel, user_pass = pass, rol_id = rol , sta_id = sta WHERE user.per_id = changeId;
     
     END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_user_sta` (IN `id` INT, IN `sta` INT)   BEGIN
+	UPDATE `user` SET `sta_id`= sta WHERE user_id = id;
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita` ()   BEGIN
 	SELECT * FROM cita;
@@ -294,6 +302,15 @@ CREATE TABLE `per` (
   `per_addr` varchar(80) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `per`
+--
+
+INSERT INTO `per` (`per_id`, `per_name`, `per_lastname`, `sex_id`, `tyDoc_id`, `per_doc`, `per_bith`, `per_addr`) VALUES
+(1, 'Juali', 'ape', 1, 3, 123123123, '1200-12-12', 'kr'),
+(2, 'juli1', 'Poster', 1, 3, 1232121211, '0012-12-03', 'kr1a'),
+(3, 'juli', 'Pastrana', 1, 3, 1012000, '0012-12-10', 'kr');
+
 -- --------------------------------------------------------
 
 --
@@ -397,7 +414,8 @@ CREATE TABLE `sta` (
 INSERT INTO `sta` (`sta_id`, `sta_name`, `sta_dsc`) VALUES
 (1, 'Activo', 'Este estado respecta a un usuario o servicio activo en la plataforma'),
 (2, 'Inactivo', 'Este estado respecta a un usuario o servicio inactivo en la plataforma'),
-(3, 'Por confirmar', 'Este estado respecta a un usuario o servicio en proceso de ser activado en la plataforma ya que requiere de un proceso para este mismo');
+(3, 'Por confirmar', 'Este estado respecta a un usuario o servicio en proceso de ser activado en la plataforma ya que requiere de un proceso para este mismo'),
+(4, 'inhabilitado', 'El usuario borro la cuenta');
 
 -- --------------------------------------------------------
 
@@ -437,6 +455,15 @@ CREATE TABLE `user` (
   `per_id` int(11) DEFAULT NULL,
   `sta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
+(1, 'ruben:d', 's@a.a', 3211231212, 'pas', 3, 1, 4),
+(2, 'juli1231', 'juli1233211@gmail.com', 12312312123, '1233213', 1, 2, 1),
+(3, 'gamil', 'juli123321@gmail.com', 1231231212, '123321', 2, 3, 3);
 
 --
 -- Índices para tablas volcadas
@@ -567,6 +594,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT de la tabla `caja`
 --
+ALTER TABLE `emp_srv`
+  MODIFY `emp_srv_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `caja`
+--
 ALTER TABLE `caja`
   MODIFY `caja_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
@@ -604,7 +637,7 @@ ALTER TABLE `his_type`
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `recibo`
@@ -634,7 +667,7 @@ ALTER TABLE `srv`
 -- AUTO_INCREMENT de la tabla `sta`
 --
 ALTER TABLE `sta`
-  MODIFY `sta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `sta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tydoc`
@@ -646,7 +679,7 @@ ALTER TABLE `tydoc`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

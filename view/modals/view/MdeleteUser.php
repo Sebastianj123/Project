@@ -56,8 +56,8 @@
                         
             </div>
             
-            <input type="number" name="rol" value="<?= $rol ?>" style="display:none;">
-            <input type="number" name="id" value="<?= $id ?>" style="display:none;">
+            <input type="number" name="rol" value="<?= $rol; ?>" style="display:none;">
+            <input type="number" name="id" value="<?= $id; ?>" style="display:none;">
       
         </mbody>
 

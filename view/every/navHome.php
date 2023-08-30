@@ -18,6 +18,6 @@
 <div class="tab-pane fade m-auto" id="v-pills-disabled" role="tabpanel" aria-labelledby="v-pills-disabled-tab" tabindex="0" style="height:100%;">
     <?php
         // Calendarío
-        include('view/every/calendario.php');
+        include('view/every/calendar.php');
     ?>
 </div>
