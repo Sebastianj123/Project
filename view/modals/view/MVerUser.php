@@ -24,7 +24,7 @@
                     Nombre
                 </label>
 
-                <input type="text" class="form-control bg-secondary" value="<?php if(strlen($per_name) > 0) echo $per_name; else echo 'No existe'; ?>" id="per_name" name="per_name" autofocus required readonly>
+                <input type="text" class="form-control bg-secondary" value="<?php if(strlen($per_name) > 0) echo $per_name; else echo 'No existe'; ?>" "per_name" "per_name" autofocus required readonly>
 
             </div>
             
@@ -35,7 +35,7 @@
                     Apellido
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_lastname" <?php if(strlen($per_lastname) == 0)  echo $noExiste; else echo 'value="'.$per_lastname.'"'; ?> name="per_lastname" required readonly>
+                <input type="text" class="form-control bg-secondary" "per_lastname" <?php if(strlen($per_lastname) == 0)  echo $noExiste; else echo 'value="'.$per_lastname.'"'; ?> "per_lastname" required readonly>
 
             </div>
 
@@ -46,7 +46,7 @@
                     <label for="sex_id" class="fw-bold fw-2 text-light">
                         Genero:
                     </label>
-                    <select class="p-2 fw-bold fw-2 text-dark btn-primary" id="sex_id" name="sex_id" required readonly>
+                    <select class="p-2 fw-bold fw-2 text-dark btn-primary" "sex_id" "sex_id" required readonly>
                         <option disabled>Genero</option>
                         <?php
                             for ($i = 0; $i < count($querySex); $i++) :
@@ -69,7 +69,7 @@
                         Fecha nacimiento
                     </label>
 
-                    <input type="date" class="form-control bg-secondary" value="<?php echo $per_bith ?>" id="brithDate" name="brithDate" required readonly>
+                    <input type="date" class="form-control bg-secondary" value="<?php echo $per_bith ?>" "brithDate" "brithDate" required readonly>
                 </div>
                 
             </div>
@@ -82,7 +82,7 @@
                 </label>
 
                 <div class="d-flex g-2">
-                    <select class="p-2 fw-bold fw-2 text-dark btn-primary me-2" title="Tipo de documento" id="tyDoc_id" name="tyDoc_id" required readonly style="width:17.5%;">
+                    <select class="p-2 fw-bold fw-2 text-dark btn-primary me-2" title="Tipo de documento" "tyDoc_id" "tyDoc_id" required readonly style="width:17.5%;">
                         <option disabled>TD (Tipo De Documento)</option>
                         <?php
                             for ($i = 0; $i < count($queryTD); $i++) :
@@ -100,7 +100,7 @@
                             endfor;
                         ?>
                     </select>
-                    <input type="number" class="form-control bg-secondary" id="per_doc" value="<?= $per_doc ?>" name="per_doc" required readonly>
+                    <input type="number" class="form-control bg-secondary" "per_doc" value="<?= $per_doc ?>" required readonly>
                 </div>
 
             </div>
@@ -111,7 +111,7 @@
                     Dirección
                 </label>
 
-                <input type="text" class="form-control bg-secondary" value="<?= $per_addr ?>" id="per_addr" name="per_addr" required readonly>
+                <input type="text" class="form-control bg-secondary" value="<?= $per_addr ?>" "per_addr" required readonly>
 
             </div>
 
@@ -121,7 +121,7 @@
                     Nombre De Usuario
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_usrName" name="per_usrName" value="<?= $user_name; ?>" required readonly>
+                <input type="text" class="form-control bg-secondary" "per_usrName" "per_usrName" value="<?= $user_name; ?>" required readonly>
 
             </div>
             
@@ -131,7 +131,7 @@
                     Email
                 </label>
 
-                <input type="email" class="form-control bg-secondary" id="per_ema" value="<?= $user_email; ?>" name="per_ema" required readonly>
+                <input type="email" class="form-control bg-secondary" "per_ema" value="<?= $user_email; ?>" "per_ema" required readonly>
 
             </div>
 
@@ -141,7 +141,7 @@
                     Número De Telefono
                 </label>
 
-                <input type="tel" class="form-control bg-secondary" id="per_tel" value="<?= $user_tel; ?>" name="per_tel" required readonly>
+                <input type="tel" class="form-control bg-secondary" "per_tel" value="<?= $user_tel; ?>" "per_tel" required readonly>
 
             </div>
         </mbody>

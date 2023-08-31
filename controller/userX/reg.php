@@ -16,13 +16,12 @@
   $per_addr = $_REQUEST['per_addr'];
   $pass = $_REQUEST['pass'];
 
-  $sql = "CALL v_user_repeat('$user_name','$user_ema',$user_tel,$per_doc);";
-  $query = $con -> query($sql);
-  $queryAssoc = $query -> fetch_all(MYSQLI_ASSOC);
-
-  if (isset($queryAssoc)) {
-    $sql1 = "CALL i_client('$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith','$user_name','$user_ema',$user_tel,'$user_pass','$per_addr');";
-    $query1 = $con -> query($sql1); 
+  $sql = "CALL i_client('$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith','$user_name','$user_ema',$user_tel,'$user_pass','$per_addr');";
+  
+  if (!$con -> query($sql)) {
+      header('Location: ../../index.php?error=reg');
+  } else {
+      header('Location: ../../index.php?mss=log');
   }
 
 

@@ -167,8 +167,8 @@
 
                     <li><hr class="dropdown-divider"></li>
                     
-                    <li data-bs-dismiss="modal">
-                        <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#" >
+                    <li data-bs-toggle="modal" data-bs-dismiss="modal">
+                        <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#deleteM">
                             Borrar perfil
                         </a>
                     </li>

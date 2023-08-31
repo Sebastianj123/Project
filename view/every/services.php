@@ -2,8 +2,6 @@
     include('config/connectDb.php');
 
     $sql = 'CALL cabellobellojj.v_srvA();';
-
-
     $query = $con->query($sql);
     $queryAsocc = $query->fetch_all(MYSQLI_ASSOC);
     
@@ -28,12 +26,10 @@
         $pre = $queryAsocc[$i]['srv_prc'];
         $dsc = $queryAsocc[$i]['srv_dsc'];
         $precio = punto($pre);
-
-        
 ?>
 
         
-        <div id="cardSrv-<?php echo $code; ?>" class="card bg-info rounded-2 d-grid border-3 border-info flex-grow-1 m-2" style="max-width: 25vw; max-height:100vh;">
+        <div id="cardSrv-<?php echo $code; ?>" class="card bg-info rounded-2 d-grid border-3 border-info flex-grow-1 m-2" style="max-width: 27vw; max-height:100vh;">
 
             <div id="cardImg <?php echo$code; ?>" class="p-3">
                 <img src="<?php echo $url_img; ?>" class="card-img-top border border-4 border-dark rounded-2" alt="<?php echo$url_img; ?>"

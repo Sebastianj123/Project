@@ -7,6 +7,7 @@
         $sql .= "CALL v_user_id($id);";
         $sql .= 'CALL v_rol();';
         $sql .= 'CALL v_sta();';
+        $sql .= 'CALL v_srv();';
 
 
         $querysArray = array();
@@ -32,6 +33,7 @@
         $queryUser = $querysArray[2];
         $queryRol = $querysArray[3];
         $querySta = $querysArray[4];
+        $querySrv = $querysArray[5];
 
         // var_dump($queryUser);
 

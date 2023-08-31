@@ -15,26 +15,10 @@
   $id = $result[0]['user_id'];
   $sta = $result[0]['sta_id'];
 
-  if (count($result) > 0) {
-    echo('El usuario existe <br>');
-    if ($sta == 1) {
-      echo('El usuario existe y esta activo <br>');
-        if ($result[0]['user_pass'] == $user_pass) {
+  $local = (count($result) > 0 && $sta == 1 && $result[0]['user_pass'] == $user_pass) 
+  ? "Location: ../../index.php?rol=$rol&id=$id&sta=$sta" 
+  : "Location: ../../index.php?error=log";
+  
+  header($local);
 
-          $local = "Location: ../../index.php?rol=$rol&id=$id&sta=$sta";
-
-          header($local);
-        
-        } else {
-          echo('El usuario existe y esta activo pero la contraseña es incorrecta <br>
-          <button><a href="../../"> Inicio </a></button>
-          ');
-        }
-    } else {
-      echo('El usuario existe pero esta "'. strtolower($result[0]['sta_name']) .'" :,c <br>
-      <button><a href="../../"> Inicio </a></button>');
-    }
-  } else {
-    echo (':,c');
-  }
 ?>

@@ -26,18 +26,14 @@
 <section class="d-flex g-5 align-items-center">
 
   <?php
-    // Rol
-    if (!isset($_GET['rol'])) {
-      $rol = null;
-  } else {
-      $rol = $_GET['rol'];
-  }
+  require('assets/php/declare.php');
   
     if ($rol > 3 || $rol < 1) {
       include('view/every/header/header.php');
-    } else {
-      include('view/every/header/header1.php');
-    }
+    } 
+    // else {
+    //   include('view/every/header/header1.php');
+    // }
   ?>
 
 </section>
