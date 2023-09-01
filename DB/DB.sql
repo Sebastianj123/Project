@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-08-2023 a las 03:33:36
+-- Tiempo de generación: 01-09-2023 a las 18:37:20
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,8 +32,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `d_user` (IN `id` INT, IN `ema` VARC
 	UPDATE `user` SET `sta_id`= 4 WHERE user_id = id AND user_name = ema AND user_pass = pass;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `i_cita` (IN `date` DATETIME, IN `usr` INT, IN `emp_srv` INT)   BEGIN
-	INSERT INTO `cita`(`cita_date`, `user_id`, `emp_srv_id`, `sta_id`) VALUES (`date`,usr,emp_srv,3);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `i_agend` (IN `datea` DATETIME)   BEGIN
+    	INSERT INTO `agend`(`agend_date`) VALUES (datea);	
+    END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `i_cita` (IN `date` INT, IN `usr` INT, IN `emp_srv` INT)   BEGIN
+	INSERT INTO `cita`(`agend_id`, `user_id`, `emp_srv_id`, `sta_id`) VALUES (`date`,usr,emp_srv,3);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_client` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `date` DATE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(80), IN `addr` VARCHAR(80))   BEGIN
@@ -77,9 +81,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `i_tyDoc` (IN `name` VARCHAR(30), IN
 	INSERT INTO `tydoc`(`tyDoc_name`, `tyDoc_dsc`) VALUES (`name`,dsc);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_cita` (IN `id` INT, IN `changeId` INT, IN `date` DATETIME, IN `usr` INT, IN `emp_srv` INT, IN `sta` INT)   BEGIN
-	UPDATE `cita` SET `cita_id`= changeId, `cita_date`= `date`, `user_id`= usr,`emp_srv_id`=emp_srv,`sta_id`= sta WHERE `cita_id` = id;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_agend` (IN `id` INT, IN `changeId` INT, IN `datea` DATETIME)   BEGIN
+		UPDATE `agend` SET `agend_id`= changeId WHERE agend_id = id;
+        UPDATE `agend` SET agend_date = datea WHERE agend_id = changeId;
+    END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_cita` (IN `id` INT, IN `changeId` INT, IN `date` INT, IN `usr` INT, IN `emp_srv` INT, IN `sta` INT)   BEGIN
+	UPDATE `cita` SET `cita_id`= changeId, `agend_id`= `date`, `user_id`= usr,`emp_srv_id`=emp_srv,`sta_id`= sta WHERE `cita_id` = id;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_cita_sta` (IN `id` INT, IN `sta` INT)   BEGIN
+		UPDATE cita SET sta_id = sta WHERE cita_id = id;
+    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_rol` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(30), IN `dsc` TEXT)   BEGIN
 	UPDATE rol SET rol_id = changeId WHERE rol_id = id;
@@ -122,13 +135,37 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_user_sta` (IN `id` INT, IN `sta` 
 	UPDATE `user` SET `sta_id`= sta WHERE user_id = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_agend` ()   BEGIN
+    	SELECT * FROM agend;
+    END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita` ()   BEGIN
-	SELECT * FROM cita;
+	SELECT `cita_id`, C.agend_id, A.agend_date, C.`user_id`, Pe.per_name, C.`emp_srv_id`, P.per_name, ES.srv_id, S.srv_name, C.`sta_id`, st.sta_name
+FROM `cita` C INNER JOIN emp_srv ES on C.emp_srv_id = ES.emp_srv_id
+INNER JOIN srv S on ES.srv_id = S.srv_id
+INNER JOIN agend A on A.agend_id = C.agend_id
+INNER JOIN sta st ON st.sta_id = C.sta_id
+INNER JOIN `user` U ON ES.user_id = U.user_id
+INNER JOIN per P ON U.per_id = P.per_id
+INNER JOIN `user` US ON US.user_id = C.user_id
+INNER JOIN `per` Pe ON Pe.per_id = US.per_id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_citaA` ()   BEGIN
 	SELECT * FROM cita WHERE `sta_id` = 1;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita_emp` (IN `id` INT)   BEGIN
+        SELECT `cita_id`, C.agend_id, A.agend_date, C.`user_id`, Pe.per_name, C.`emp_srv_id`, ES.user_id, P.per_name, ES.srv_id, S.srv_name, C.`sta_id`, st.sta_name
+        FROM `cita` C INNER JOIN emp_srv ES on C.emp_srv_id = ES.emp_srv_id
+        INNER JOIN srv S on ES.srv_id = S.srv_id
+        INNER JOIN agend A on A.agend_id = C.agend_id
+        INNER JOIN sta st ON st.sta_id = C.sta_id
+        INNER JOIN `user` U ON ES.user_id = U.user_id
+        INNER JOIN per P ON U.per_id = P.per_id
+        INNER JOIN `user` US ON US.user_id = C.user_id
+        INNER JOIN `per` Pe ON Pe.per_id = US.per_id WHERE U.user_id = id;
+    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita_IN_id` (IN `id` INT)   BEGIN
 	SELECT * FROM cita WHERE `cita_id` = id;
@@ -184,12 +221,34 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_id` (IN `ID` INT)   BEGIN
     WHERE U.user_id = ID;
     END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_pass` (IN `correo` VARCHAR(80))   BEGIN
+    	SELECT * FROM `user` where user_email = correo;
+    END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_user_repeat` (IN `usrname` VARCHAR(80), IN `email` VARCHAR(80), IN `tel` DOUBLE, IN `doc` DOUBLE)   BEGIN
 SELECT `user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, U.`per_id`,P.per_doc from `user` U INNER JOIN per P ON U.per_id = P.per_id 
 WHERE `user_name` = usrname or `user_email` = email or `user_tel` = tel or P.per_doc = doc;
     END$$
 
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agend`
+--
+
+CREATE TABLE `agend` (
+  `agend_id` int(11) NOT NULL,
+  `agend_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `agend`
+--
+
+INSERT INTO `agend` (`agend_id`, `agend_date`) VALUES
+(1, '2023-09-01 10:25:00');
 
 -- --------------------------------------------------------
 
@@ -230,11 +289,18 @@ CREATE TABLE `caja_user` (
 
 CREATE TABLE `cita` (
   `cita_id` int(11) NOT NULL,
-  `cita_date` datetime DEFAULT NULL,
+  `agend_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `emp_srv_id` int(11) DEFAULT NULL,
   `sta_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`cita_id`, `agend_id`, `user_id`, `emp_srv_id`, `sta_id`) VALUES
+(2, 1, 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -247,6 +313,13 @@ CREATE TABLE `emp_srv` (
   `user_id` int(11) DEFAULT NULL,
   `srv_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `emp_srv`
+--
+
+INSERT INTO `emp_srv` (`emp_srv_id`, `user_id`, `srv_id`) VALUES
+(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -309,7 +382,9 @@ CREATE TABLE `per` (
 INSERT INTO `per` (`per_id`, `per_name`, `per_lastname`, `sex_id`, `tyDoc_id`, `per_doc`, `per_bith`, `per_addr`) VALUES
 (1, 'Juali', 'ape', 1, 3, 123123123, '1200-12-12', 'kr'),
 (2, 'juli1', 'Poster', 1, 3, 1232121211, '0012-12-03', 'kr1a'),
-(3, 'juli', 'Pastrana', 1, 3, 1012000, '0012-12-10', 'kr');
+(3, 'juli', 'Pastrana', 1, 3, 1012000, '0012-12-10', 'kr'),
+(4, 'Sebastian David', 'Jara', 3, 2, 1321231231, '2023-08-15', 'kr'),
+(7, 'Esteban', 'juan', 2, 3, 1012121212, '1111-01-01', 'adsdasdfasdfa');
 
 -- --------------------------------------------------------
 
@@ -461,13 +536,21 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_tel`, `user_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(1, 'ruben:d', 's@a.a', 3211231212, 'pas', 3, 1, 4),
-(2, 'juli1231', 'juli1233211@gmail.com', 12312312123, '1233213', 1, 2, 1),
-(3, 'gamil', 'juli123321@gmail.com', 1231231212, '123321', 2, 3, 3);
+(1, 'ruben:d', 's@a.a', 3211231212, 'pas', 3, 1, 1),
+(2, 'juli1231', 'juli1233211@gmail.com', 12312312123, '1233213', 2, 2, 1),
+(3, 'gamil', 'juli123321@gmail.com', 1231231212, '123321', 2, 3, 1),
+(4, 'feoasdafsadf', 'a@a.a', 3211231212, '123123', 3, 4, 3),
+(5, 'Esteban123', 'sisoyyosebastian@gmail.com', 3211231212123, '123123', 3, 7, 3);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `agend`
+--
+ALTER TABLE `agend`
+  ADD PRIMARY KEY (`agend_id`);
 
 --
 -- Indices de la tabla `caja`
@@ -489,10 +572,10 @@ ALTER TABLE `caja_user`
 --
 ALTER TABLE `cita`
   ADD PRIMARY KEY (`cita_id`),
-  ADD UNIQUE KEY `cita_date` (`cita_date`),
   ADD KEY `user_id` (`user_id`,`emp_srv_id`,`sta_id`),
   ADD KEY `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` (`emp_srv_id`),
-  ADD KEY `cita_sta_idFK_sta_sta_idPK` (`sta_id`);
+  ADD KEY `cita_sta_idFK_sta_sta_idPK` (`sta_id`),
+  ADD KEY `change_id` (`agend_id`);
 
 --
 -- Indices de la tabla `emp_srv`
@@ -592,10 +675,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT de la tabla `caja`
+-- AUTO_INCREMENT de la tabla `agend`
 --
-ALTER TABLE `emp_srv`
-  MODIFY `emp_srv_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `agend`
+  MODIFY `agend_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -613,7 +696,13 @@ ALTER TABLE `caja_user`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `cita_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cita_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `emp_srv`
+--
+ALTER TABLE `emp_srv`
+  MODIFY `emp_srv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `fin`
@@ -637,7 +726,7 @@ ALTER TABLE `his_type`
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `recibo`
@@ -679,7 +768,7 @@ ALTER TABLE `tydoc`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -696,6 +785,7 @@ ALTER TABLE `caja_user`
 -- Filtros para la tabla `cita`
 --
 ALTER TABLE `cita`
+  ADD CONSTRAINT `cita_agend_idFK_agend_gend_idPK` FOREIGN KEY (`agend_id`) REFERENCES `agend` (`agend_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_emp_srv_idFK_emp_srv_emp_srv_idPK` FOREIGN KEY (`emp_srv_id`) REFERENCES `emp_srv` (`emp_srv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_sta_idFK_sta_sta_idPK` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `cita_user_idFK_user_user_idPK` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;

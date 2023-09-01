@@ -34,7 +34,7 @@ $(document).ready(
     for ($i = 0; $i < count($result) ; $i++) :
         $row = $result[$i];
         $cita_id = $row['cita_id'];
-        $cita_date = $row['cita_date'];
+        $agend_date = $row['agend_date'];
         $user_id = $row['user_id'];
         $per_name = $row['per_name'];
         $emp_srv_id = $row['emp_srv_id'];
@@ -57,9 +57,9 @@ $(document).ready(
             '11' => 'November',
             '12' => 'December'
         ];
-        $mount = $map[substr($cita_date,5,2)];
-        $day = substr($cita_date,8,2);
-        $year = substr($cita_date,0,4);
+        $mount = $map[substr($agend_date,5,2)];
+        $day = substr($agend_date,8,2);
+        $year = substr($agend_date,0,4);
         $date = "$mount/$day/$year";
 ?>
             {

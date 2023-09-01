@@ -73,7 +73,7 @@
 ?>
 
 <!-- ALERTS -->
-<div class="position-absolute">
+<div class="position-absolute container-fluid">
     <?php
         if (!$error == null) :
     ?>

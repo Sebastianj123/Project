@@ -18,7 +18,7 @@
             <div class="col-md-10 container-fluid">
                 
                 <label for="user_ema" class="fw-bold fw-2 text-light">
-                    Ingrese el nombre de Usuario, Teléfono o Correo Con el que este registrado 
+                     Ingrese el nombre de Usuario, Teléfono o Correo Con el que este registrado 
                 </label>
 
                 <input type="text" class="form-control bg-secondary" id="user_ema" name="user_ema" autofocus required>
@@ -53,15 +53,6 @@
                 </div>
                         
             </div>
-            
-            <!-- <div class="col-10 container-fluid">
-                <div class="form-check">
-                    <input class="form-check-input bg-secondary" type="checkbox" id="gridCheck" required>
-                    <label class=" fw-bolder text-light" for="gridCheck">
-                        Recuerdame el inició de sección
-                    </label>
-                </div>
-            </div> -->
       
         </mbody>
 
@@ -78,8 +69,8 @@
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-dark ">
-                        <li>
-                            <a class="dropdown-item text-info">
+                        <li data-bs-toggle="modal" data-bs-target="#forgetPassM">
+                            <a class="dropdown-item text-info" data-bs-dismiss="modal">
                                 ¿Olvido su contraseña?
                             </a>
                         </li>

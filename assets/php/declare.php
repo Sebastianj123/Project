@@ -16,10 +16,14 @@
     $errors = array(
         'reg' => 'Se produjo un error en el registro (Datos duplicados)',
         'log' => 'Se produjo un error en el login (Correo, contraseña incorrecta ó usuario inactivo en este ultimo caso requiere validar su correo)',
-        'empty' => 'Los campos (nombre de usuario, telefono y correo) del formulario no pueden quedar vacios...'
+        'empty' => 'Los campos (nombre de usuario, telefono y correo) del formulario no pueden quedar vacios...',
+        'invalid' => 'Se produjo un error. Intente más tarde',
+        'correoIn' => 'El correo no es correcto'
     );
 
     $msss = array(
-        'log' => 'Logueese :D (Registro completado)'
+        'log' => 'Logueese :D (Registro completado)',
+        'valid' => 'Su correo se valido correctamente y se actualizarón sus datos',
+        'send' => 'Se enviaron correctamente sus datos'
     );
 ?>

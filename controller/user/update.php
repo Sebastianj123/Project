@@ -11,7 +11,18 @@
     $user_tel = $_REQUEST['user_tel'];
     $user_ema = $_REQUEST['user_ema'];
     $user_name = $_REQUEST['user_name'];
-  } else {
+    $asunto = "Validar que eres tú para actualizar tus datos";
+    $msg = "127.0.0.1/SENA/project/controller/user/updateTrue.php?id=$id&rol=$rol&sta=$sta";
+
+    $header = "From: Cabello Bello JJ". "\r\n";
+    $header .= "Reply-To: noreply@example.com". "\r\n";
+    $header .= "X-Mailer: PHP/". phpversion();
+    $mail = @mail($user_ema, $asunto, $msg, $header) ;
+      if ($mail) {
+        header("Location: ../../index.php?rol=$rol&id=$id&sta=$sta&mss=send");
+      }
+  } 
+  else {
     header("Location: ../../index.php?rol=$rol&id=$id&sta=$sta&error=empty");
   }
   // echo("$id,$id,'$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith',null,'$user_name','$user_ema',$user_tel,$rol,$sta");

@@ -5,6 +5,27 @@
     $query = $con->query($sql);
     $queryAsocc = $query->fetch_all(MYSQLI_ASSOC);
     
+    function btnAgend($a){
+        switch ($a) {
+            case 1:
+            case 2:
+            case 3:
+                echo('<button data-bs-dismiss="modal" class="btn btn-primary">
+                <a data-bs-toggle="modal" data-bs-target="#agendarCitaM">
+                    Reservar :D
+                </a>
+            </button>');
+                break;
+            
+            default:
+            echo('<button data-bs-dismiss="modal" class="btn btn-primary">
+            <a data-bs-toggle="modal" data-bs-target="#loginM">
+                Haz tu reserva...
+            </a>
+        </button>');
+                break;
+        }
+    }
 ?>
 
 <!-- <section id="services"> -->
@@ -52,9 +73,9 @@
                     Ver Más
                 </a>
 
-                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginM">
-                    Haz tu reserva...
-                </a>
+                <?php
+                        btnAgend($rol);
+                    ?>
 
             </div>
         
@@ -120,25 +141,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     
                     <?php
-                        switch ($rol) {
-                            case 1:
-                            case 2:
-                            case 3:
-                                echo('<button data-bs-dismiss="modal" class="btn btn-primary">
-                                <a data-bs-toggle="modal" data-bs-target="#comprarM">
-                                    Reservar :D
-                                </a>
-                            </button>');
-                                break;
-                            
-                            default:
-                            echo('<button data-bs-dismiss="modal" class="btn btn-primary">
-                            <a data-bs-toggle="modal" data-bs-target="#loginM">
-                                Haz tu reserva...
-                            </a>
-                        </button>');
-                                break;
-                        }
+                        btnAgend($a)
                     ?>
                 
                 </mfooter>
