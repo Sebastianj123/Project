@@ -5,12 +5,17 @@
   $per_bith = $_REQUEST['per_bith'];
   $tyDoc_id = $_REQUEST['tyDoc_id'];
   $per_doc = $_REQUEST['per_doc'];
-  $user_tel = $_REQUEST['user_tel'];
-  $user_ema = $_REQUEST['user_ema'];
-  $user_name = $_REQUEST['user_name'];
-  $user_pass = $_REQUEST['user_pass'];
+  require('../../assets/php/declare.php');
 
-  $sql = "call u_user($id,$id,'$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith',null,'$user_name','$user_ema',$user_tel,'$user_pass',$rol,$sta);";
+  if(!empty($_REQUEST['user_name'])&&!empty($_REQUEST['user_ema'])&&!empty($_REQUEST['user_tel'])){
+    $user_tel = $_REQUEST['user_tel'];
+    $user_ema = $_REQUEST['user_ema'];
+    $user_name = $_REQUEST['user_name'];
+  } else {
+    header("Location: ../../index.php?rol=$rol&id=$id&sta=$sta&error=empty");
+  }
+  // echo("$id,$id,'$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith',null,'$user_name','$user_ema',$user_tel,$rol,$sta");
+  // $sql = "call u_user($id,$id,'$per_name','$per_lastName',$sex_id,$tyDoc_id,$per_doc,'$per_bith',null,'$user_name','$user_ema',$user_tel,'$user_pass',$rol,$sta);";
 
-  var_dump($sql);
+  // var_dump($sql);
 ?>

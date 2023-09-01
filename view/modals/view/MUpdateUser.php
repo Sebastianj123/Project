@@ -2,13 +2,13 @@
 <div class="modal fade" id="updInfoUserM" tabindex="-1" aria-labelledby="updInfoUserModalLabel" aria-hidden="true">
 <div class="modal-dialog">
     
-    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" method="POST" action="controller/user/update.php" autocomplete="off">
+    <form class="fw-bolder modal-content bg-dark fw-bolder text-primary" method="POST" action="controller/user/update.php?<?="rol=$rol&id=$id&sta=$sta"?>" autocomplete="off">
       
             <!-- Encabezado -->
         <mheader class="modal-header">
             
             <h1 class="modal-title text-info fs-3">
-                Actualizar Datos De <?php echo $name; ?>
+                Actualizar Datos De <?= $name; ?>
             </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         
@@ -25,7 +25,7 @@
                     Nombre
                 </label>
 
-                <input type="text" class="form-control bg-secondary" value="<?php if(strlen($per_name) > 0) echo $per_name; else echo 'No existe'; ?>" id="per_name" name="per_name" autofocus required >
+                <input type="text" class="form-control bg-secondary" value="<?=(strlen($per_name) > 0) ? $per_name : 'No existe'; ?>" id="per_name" name="per_name" autofocus required >
 
             </div>
             
@@ -36,7 +36,7 @@
                     Apellido
                 </label>
 
-                <input type="text" class="form-control bg-secondary" id="per_lastname" <?php if(strlen($per_lastname) == 0)  echo $noExiste; else echo 'value="'.$per_lastname.'"'; ?> name="per_lastname" required >
+                <input type="text" class="form-control bg-secondary" id="per_lastname" <?= (strlen($per_lastname) == 0) ? $noExiste : "value='$per_lastname'"; ?> name="per_lastname" required >
 
             </div>
 
@@ -56,7 +56,7 @@
                         ?>
                             <option value="<?php echo $idSex; ?>" 
                             title="<?php echo $per_nameSex; ?>" 
-                            <?php if($idSex == $sex_id) echo 'selected'; ?>>
+                            <?=($idSex == $sex_id)?'selected':'';?>>
                                 <?php echo$per_nameSex; ?>
                             </option>
                         <?php
@@ -70,7 +70,7 @@
                         Fecha nacimiento
                     </label>
 
-                    <input type="date" class="form-control bg-secondary" value="<?php echo $per_bith ?>" id="per_bith" name="per_bith" required >
+                    <input type="date" class="form-control bg-secondary" value="<?= $per_bith ?>" id="per_bith" name="per_bith" required>
                 </div>
                 
             </div>
@@ -94,7 +94,7 @@
                         ?>
                             <option value="<?= $docId; ?>" 
                             title="<?php echo $docId?>"
-                            <?php if($docId == $tyDoc_id) echo 'selected';?>>
+                            <?=($docId == $tyDoc_id)?'selected':'';?>>
                                 <?= $docname; ?> (<?= $docdsc; ?>).
                             </option>
                         <?php
@@ -161,7 +161,7 @@
 
                     <li data-bs-toggle="modal" data-bs-dismiss="modal">
                         <a class="dropdown-item text-info" data-bs-toggle="modal" data-bs-target="#verInfoUserM">
-                            Ver datos de <?= $name ?>
+                            Ver datos de <?= $name; ?>
                         </a>
                     </li>
 
