@@ -40,6 +40,10 @@ class con extends data{
     public function printData() {
         echo($this->getData());
     }
+
+    public function query($sql) {
+        $query = $this->con->multi_query($sql);
+    }
 }
 $con = new con();
 $con->printData();
