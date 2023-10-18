@@ -5,7 +5,7 @@ require_once('declare.php');
 class con extends data{
     private $con;
 
-    public final function __construct()
+    public function __construct()
     {
         parent::__construct();
         try {
@@ -45,5 +45,3 @@ class con extends data{
         $query = $this->con->multi_query($sql);
     }
 }
-$con = new con();
-$con->printData();

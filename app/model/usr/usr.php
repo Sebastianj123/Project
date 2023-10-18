@@ -12,19 +12,10 @@
         protected $sta_id;
 
         public function __construct() {
-            parent::__construct();
-            $this->con;
-            $this->usr_id = ;
-            $this->usr_nm = ;
-            $this->usr_ema = ;
-            $this->usr_tel = ;
-            $this->usr_pass = ;
-            $this->rol_id = ;
-            $this->per_id = ;
-            $this->sta_id = ;
+            parent::__construct();            
         }
 
-
+        
         /**
          * Get the value of sta_id
          */ 
