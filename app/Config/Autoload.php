@@ -1,5 +1,13 @@
 <?php
+/*
+ *Ahutor:DIEGO CASALLAS
+ *Busines: SINAPSIS TECHNOLOGIES
+ *Date:13/10/2023
+ *Description:...
+ */
+
 namespace App\Config;
+
 
 use Exception;
 
@@ -7,9 +15,9 @@ try {
 
   spl_autoload_register(function ($className) {
     $file = '../' . str_replace('\\', '/', $className) . '.php';
-    // var_dump($className);
+
     if (file_exists($file)) {
-    //   echo ("<br>" . $file);
+      //echo ("<br>" . $file);
       require_once($file);
       return true;
     };
@@ -22,5 +30,7 @@ try {
 
   echo ($e->getMessage());
 }
+
+
 
 ?>

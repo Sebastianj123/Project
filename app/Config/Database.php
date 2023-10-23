@@ -1,9 +1,9 @@
 <?php
-require_once("../app/Config/Constans.php");
-
-namespace App\Config\Database;
+namespace App\Config;
 use \mysqli;
 use \Exception;
+// use App\Config\Constants;
+require_once("../app/Config/Constants.php");
 
 class Database
 {
@@ -19,7 +19,7 @@ class Database
         $this->user = USER;
         $this->pass = PASS;
         $this->db = DB;
-        $this->con = null;
+        $this->con = Null;
     }
 
     public function getConnect()
@@ -31,9 +31,10 @@ class Database
 			echo $e->getMessage();
 			exit();
         }
+        return $this->con;
     }
 
-    public function closeCon()
+    public function closeConnect()
     {
         try {
 			$this->con->close();
