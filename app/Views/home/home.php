@@ -7,6 +7,6 @@
     <?php require_once('../app/Views/template/meta.php'); ?>
 </head>
 <body>
-    <?php $data[]; ?>
+    <!-- <?php // $data[]; ?> -->
 </body>
 </html>

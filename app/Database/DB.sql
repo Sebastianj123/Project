@@ -20,6 +20,10 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cabellobellojj`
 --
+DROP DATABASE IF EXISTS cabelloBelloJJ;
+
+CREATE DATABASE cabelloBelloJJ;
+use CabelloBelloJJ;
 
 DELIMITER $$
 --
@@ -97,9 +101,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `typeData` VARCHAR(8), I
     END = `data`;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_agn` (IN `id` INT, IN `changeId` INT, IN `dt` DATETIME)   BEGIN
-	UPDATE agn SET agn_id = changeId WHERE agn_id = id;
-    UPDATE agn SET agn_dt = dt WHERE agn_id = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_agn` (IN `id` INT, IN `dt` DATETIME)   BEGIN
+    UPDATE agn SET agn_dt = dt WHERE agn_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_emp_srv` (IN `id` INT, IN `srv` INT)   BEGIN
@@ -110,35 +113,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_mdl` (IN `id` INT, IN `name` VARC
 	UPDATE mdl SET mdl_nm = name, mdl_url = url, mdl_dsc = dsc WHERE mdl.mdl_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_rol` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
-	UPDATE rol SET rol_id = changeId WHERE rol_id = id;
-    UPDATE rol SET `rol_nm` = name, `rol_dsc` = dsc WHERE rol_id = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_rol` (IN `id` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
+    UPDATE rol SET `rol_nm` = name, `rol_dsc` = dsc WHERE rol_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_rol_mdl` (IN `id` INT, IN `rol` INT, IN `mdl` INT)   BEGIN 
 	UPDATE rol_mdl SET rol_id = rol, mdl_id = mdl WHERE rol_mdl_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sex` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
-	UPDATE `sex` SET `sex_id` = changeId WHERE `sex_id` = `id`;
-    UPDATE `sex` SET `sex_nm` = `name`, `sex_dsc` = dsc WHERE `sex_id` = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sex` (IN `id` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
+    UPDATE `sex` SET `sex_nm` = `name`, `sex_dsc` = dsc WHERE `sex_id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_srv` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(80), IN `dsc` TEXT, IN `ti` INT, IN `img` TEXT, IN `prc` DOUBLE, IN `sta` INT)   BEGIN
-	UPDATE srv SET srv_id = changeId WHERE srv_id = id;
-    UPDATE srv SET srv_name = name, srv_dsc = dsc, srv_tm = ti ,srv_img = img, srv_cost = prc, sta_id = sta WHERE srv_id = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_srv` (IN `id` INT, IN `name` VARCHAR(80), IN `dsc` TEXT, IN `ti` INT, IN `img` TEXT, IN `prc` DOUBLE, IN `sta` INT)   BEGIN
+    UPDATE srv SET srv_name = name, srv_dsc = dsc, srv_tm = ti ,srv_img = img, srv_cost = prc, sta_id = sta WHERE srv_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sta` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
-
-	UPDATE `sta` SET `sta_id` = changeId WHERE `sta_id` = `id`;
-	UPDATE `sta` SET `sta_nm` = `name`, `sta_dsc` = dsc WHERE `sta_id` = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sta` (IN `id` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
+	UPDATE `sta` SET `sta_nm` = `name`, `sta_dsc` = dsc WHERE `sta_id` = id;
     
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_tyDoc` (IN `id` INT, IN `changeId` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
-	UPDATE `tydoc` SET `tyDoc_id` = changeId WHERE `tyDoc_id` = `id`; 
-	UPDATE `tydoc` SET `tyDoc_nm`= `name`,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = changeId;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_tyDoc` (IN `id` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN 
+	UPDATE `tydoc` SET `tyDoc_nm`= `name`,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr` (IN `id` INT, IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `addr` VARCHAR(80), IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(60), IN `sta` INT)   BEGIN
@@ -180,6 +177,10 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_active_regs` ()   BEGIN
 	SELECT * FROM usr u WHERE u.sta_id =1 ;
 END$$
+CREATE PROCEDURE u_srv_sta (IN id INT, IN sta INT)
+BEGIN
+	UPDATE srv SR SET SR.sta_id = sta WHERE SR.srv_id = id;
+END $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_active_user` (IN `id` INT)   BEGIN
 	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
@@ -259,8 +260,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sex` ()   BEGIN
 	SELECT * FROM sex;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srv` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srvs` ()   BEGIN
 	SELECT * FROM srv;
+END$$
+
+CREATE PROCEDURE `v_srv` (IN id INT)   BEGIN
+	SELECT * FROM srv WHERE srv.srv_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sta` ()   BEGIN

@@ -1,1 +1,2 @@
-call i_client('julian','Barbosa','0021-12-21',3,2,1233121212,'juan123','@mail',305,123,'kr')
+call i_client('julian','Barbosa','0021-12-21',3,2,1233121212,'juan123','@mail',305,123,'kr');
+call i_emp ('Juan', 'Garcia', '2006-08-12',1,2,1232122233,'JuanDa','JUANNEITOR98@gmail.com',3121221212,123123,'KR',3);

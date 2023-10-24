@@ -9,6 +9,7 @@ namespace App\Config;
 
 use App\Controllers\Usr\UsrController;
 use App\Controllers\Home\HomeController;
+use App\Controllers\Srv\SrvController;
 use App\Config\Constants;
 use Exception;
 
@@ -85,6 +86,7 @@ class Routing
         case "UsrController":
           $controller = new UsrController();
           break;
+
         default:
           $controller = new HomeController();
           break;

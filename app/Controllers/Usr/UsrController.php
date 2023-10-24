@@ -17,7 +17,6 @@ class UsrController extends Controller
     $data['users'] = $this->model->getUsrAll();
     return $this->view("usr/home", $data);
   }
-
 }
 
 ?>

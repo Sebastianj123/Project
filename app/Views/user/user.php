@@ -8,7 +8,6 @@
 include_once('../app/Views/template/header.php');
 $users = $data['users'];
 
-
 ?>
 <div class="table-responsive">
   <table class="table table-sm">

@@ -1,56 +1,42 @@
 <?php
     
     namespace App\Models\Usr;
-    use App\Config\Database;
     use App\Controllers\validateTypeData;
+    use App\Config\Model;
     use PDO;
 
-class UsrModel
+final class UsrModel extends Model
 {
   protected $table;
   protected $primary;
   protected $attributes;
-  protected $conn;
-  protected $result;
-  protected $typeConn;      
-  protected $objDB;
-  protected $sql;
 
   public function __construct()
   {
+    parent::__construct();
     $this->table = "usr";
     $this->primary = "usr_id";
     $this->attributes = array( 'usr_nm', 'usr_ema', 'usr_tel', 'usr_pass', 'rol_id', 'per_id', 'sta_id');
-    $this->objDB = new Database();
-    $this->conn = $this->objDB->getConnect();
   }
 
-  protected function error($e) : string {
-    return 'Error: ' . $e->getMenssage();
-  }
-  protected function getQuery() {
-    try {
-      $sql = $this->sql;
-      $prepare_sql = $this->conn->query($sql);
-      $this->result = $prepare_sql->fetch_all(MYSQLI_NUM);
-      $this->sql->free();
-      $prepare_sql->free();
-      $this->objDB->connectMysqliClose();
-    } catch (Exception $e) {
-      $this->result = $this->error($e);
-    } finally {
-      return $this->result;
-    }
-  }
-
-  public function get($id)
+  public function getUsr($id)
   {
-    $this->sql = "Call v_reg($id);";
+    $this->sql = "Call v_usr($id);";
     return $this->getQuery();
   }
 
-  public function getUsrAll() {
-    $this->sql = "Call v_regs();";
+  public function getUsrs() {
+    $this->sql = "Call v_usrs();";
+    return $this->getQuery();
+  }
+  
+  public function getUsrSta($id, $sta) {
+    $this->sql = "Call v_usr_sta($id,$sta);";
+    return $this->getQuery();
+  }
+  
+  public function getUsrsSta($sta) {
+    $this->sql = "Call v_usrs_sta($sta);";
     return $this->getQuery();
   }
 
@@ -60,11 +46,12 @@ class UsrModel
     return $this->getQuery();
   }
 
-  public function insertUsr(string $typeUsr, array $data){
+  public function insertUsr(string $typeUsr, array $data, string &$srv_id){
+    $values = $this->getValuseForSql($data);
     switch ($typeUsr) {
       case 'emp':
         $sp = 'i_emp';
-        $srv = "," . $data['srv_id'];
+        $srv = ",'$srv_id'";
         break;
       case 'client' :
         $sp = 'i_client';
@@ -74,19 +61,16 @@ class UsrModel
         trigger_error("No se encuentra el tipo de usuario a registrar", E_USER_ERROR);
         break;
     }
-    foreach ($data as $key => $value) {
-      $this->sql = "CALL $sp ($value $srv);";
-    }
+    
+    $this->sql = "CALL $sp ($values $srv);";
     $this->resul = $this->getQuery();
     return $this->result;
   }
 
   public function updateUsr(string $typeUsr, array $data){
-    foreach ($data as $key => $value) {
-      $this->sql = "CALL u_usr ($value);";
-    }
-    $this->resul = $this->getQuery();
-    return $this->result;
+        $values = $this->getValuseForSql($data);
+        $this->sql = "CALL u_usr ();";
+        return $this->getQuery();
   }
 
   public function deleteUsr($id) {
@@ -114,7 +98,7 @@ class UsrModel
     return $this->getQuery();
   }
   
-  public function setEmpRol(int $id, $srv){
+  public function setEmpRol($id, $srv){
     $this->sql = "Call u_usr_rol_emp($id,$srv);";
     return $this->getQuery();
   }
