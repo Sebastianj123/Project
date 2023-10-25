@@ -1,10 +1,4 @@
 <?php
-
-/*
- * Author:DIEGO CASALLAS
- * DATE: 29/09/2023
- * DESCRIPTION: THIS FUNCTIONS ROUTING
- */
 namespace App\Config;
 
 use App\Controllers\Usr\UsrController;
@@ -17,26 +11,39 @@ class Routing
 {
 
   private $_folder;
-  private $_defaultController;
-  private $_defaultFolder;
-  private $_defaultMethod;
+  private $defaults = [
+    "folder" => "public/",
+    "controller" => "home",
+    "method" => "show",
+  ];
+  private $_folderController;
   private $serverUri;
   private $url;
   private $_controller;
   private $_method;
   private $_attributes;
-  private $_subMethod;
 
   public function __construct()
   {
-    $this->_folder = "public/";
-    $this->_defaultController = "home";
-    $this->_defaultFolder = "Home";
-    $this->_defaultMethod = "show";
-    $this->serverUri = $_SERVER['REQUEST_URI'];
 
+    // Carpetas Default
+    $this->_folder = $this->defaults['folder']; //public
+    $_folderController = $this->defaults['controller']; // home
+
+    // Controlador Default
+    $this->_controller = ucwords($_folderController . "Controller"); //HomeController
+
+    // Metodo Default
+    $this->_method = $this->defaults['method']; // show
+    // Atributos default
+    $this->_attributes = ""; // none
+    
+    // Adquisicion de la url
+    $this->serverUri = $_SERVER['REQUEST_URI'];
+    // Subdivición de la url en 3 partes (1 = public/, 2 =usr/ (carpeta del controlador), 3 = show?id=3 (metodo del controlador y sus atributos)
     $this->url = explode("/", substr($this->serverUri,strpos($this->serverUri, $this->_folder),strlen($this->serverUri)));
 
+    // Inicialización metodo
     $this->matchRoute();
   }
 
@@ -44,80 +51,38 @@ class Routing
   {
     
     if (isset($this->url[1]) && isset($this->url[2])) {
+      
+      // Controlador
       $_folderController = ucwords($this->url[1]);
-      $this->_controller = ucwords($this->url[1] . "Controller");
-      $this->_attributes = explode("?", $this->url[2]);
-      if (substr_count($this->_attributes[0],"-") >= 1) {
-        $method = explode("-",$this->_attributes[0]);
-        $this->_method = $method[0];
-        $this->_subMethod = $method[1];
-      } else  {
-        $this->_method = $this->_attributes[0];
-        $this->_subMethod = '';
+      
+      // Atributos
+      $tempAttributes = explode("?", $this->url[2]);
+      $this->_attributes = (isset($tempAttributes[1])) ? $tempAttributes[1] : "" ;
+      
+      // Verificacion de controlador y metodo
+      $tempController = ucwords($this->url[1] . "Controller");
+      $tempMethod = $tempAttributes[0];
+      if(class_exists($tempController)) {
+        $this->_controller = $tempController;
+        $this->_method = (in_array($tempMethod, get_class_methods($this->_controller))) ? $tempMethod : $this->defaults['method'];
       }
-
-      if (isset($this->_attributes[1])) {
-        $this->_attributes = $this->_attributes[1];
-      } else {
-        $this->_attributes = "";
-      }
-    } else {
-      $_folderController = $this->_defaultFolder;
-      $this->_controller = ucwords($_folderController . "Controller");
-      $this->_method = $this->_defaultMethod;
-      $this->_attributes = "";
     }
-    var_dump( $this->_controller );
-    echo("<br>");
-    var_dump( $this->_method );
-    echo("<br>");
-    var_dump( $this->_attributes );
-    echo("<br>");
-    var_dump( $this->_subMethod );
-
   }
 
+  // Función correr
   public function run()
   {
     try {
+      
+      // Inicializa el controlador
+      $controller = new ($this->_controller)();
+      // Inicializa un metodo del controlador
+      $controller->{$this->_method()}();
 
-      switch ($this->_controller) {
-
-        case "UsrController":
-          $controller = new UsrController();
-          break;
-
-        default:
-          $controller = new HomeController();
-          break;
-
-      }
-      switch ($this->_method) {
-
-        case "show":
-          $controller->show();
-          break;
-        case "create":
-          $controller->create();
-          break;
-        case "update":
-          $controller->update();
-          break;
-        case "delete":
-          $controller->delete();
-          break;
-
-      }
     } catch (Exception $e) {
       echo ($e->getMessage());
-
     }
   }
-
-
-
 }
-
-
 
 ?>
