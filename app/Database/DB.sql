@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2023 a las 05:20:34
+-- Tiempo de generación: 26-10-2023 a las 06:56:52
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,17 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cabellobellojj`
 --
-DROP DATABASE IF EXISTS cabelloBelloJJ;
-
-CREATE DATABASE cabelloBelloJJ;
-use CabelloBelloJJ;
-
+create DATABASE cabellobellojj;
+use cabellobellojj;
 DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_agn` (IN `id` INT)   BEGIN 
+	DELETE FROM ang WHERE agn.agn_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_cita` (IN `id` INT)   BEGIN DELETE FROM cita WHERE cita.cita_id = id; END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_rol` (IN `id` INT)   BEGIN 
+	DELETE FROM rol WHERE rol_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_sta` (IN `id` INT)   BEGIN 
+	DELETE FROM sta WHERE sta_id = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_agn` (IN `dt` DATETIME)   BEGIN 
     INSERT INTO `agn` (agn_dt) VALUES (dt);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `i_cita` (IN `agn` INT, IN `emp` INT, IN `usr` INT, IN `sta` INT)   BEGIN
+	INSERT INTO cita (`agn_id`, `emp_id`, `usr_id`, `sta_id`) VALUES ( agn, emp, usr, sta);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_client` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(60), IN `addr` VARCHAR(80))   BEGIN
@@ -105,6 +120,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_agn` (IN `id` INT, IN `dt` DATETI
     UPDATE agn SET agn_dt = dt WHERE agn_id = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_cita` (IN `id` INT, IN `agn` INT, IN `emp` INT, IN `usr` INT, IN `sta` INT)   BEGIN
+    UPDATE `cita` SET `agn_id`= agn,`emp_id`= emp ,`usr_id`=usr ,`sta_id`= sta WHERE cita.cita_id = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_emp_srv` (IN `id` INT, IN `srv` INT)   BEGIN
 	UPDATE emp E SET E.srv_id = srv WHERE E.srv_id = id;
 END$$
@@ -127,6 +146,10 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_srv` (IN `id` INT, IN `name` VARCHAR(80), IN `dsc` TEXT, IN `ti` INT, IN `img` TEXT, IN `prc` DOUBLE, IN `sta` INT)   BEGIN
     UPDATE srv SET srv_name = name, srv_dsc = dsc, srv_tm = ti ,srv_img = img, srv_cost = prc, sta_id = sta WHERE srv_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_srv_sta` (IN `id` INT, IN `sta` INT)   BEGIN
+	UPDATE srv SR SET SR.sta_id = sta WHERE SR.srv_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_sta` (IN `id` INT, IN `name` VARCHAR(40), IN `dsc` TEXT)   BEGIN
@@ -170,30 +193,22 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr_sta` (IN `id` INT, IN `sta` I
 	UPDATE `usr` SET `sta_id`= sta WHERE usr_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_active_reg` (IN `id` INT)   BEGIN
-	SELECT * FROM usr U WHERE U.usr_id = id AND U.sta_id = 1;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_active_regs` ()   BEGIN
-	SELECT * FROM usr u WHERE u.sta_id =1 ;
-END$$
-CREATE PROCEDURE u_srv_sta (IN id INT, IN sta INT)
-BEGIN
-	UPDATE srv SR SET SR.sta_id = sta WHERE SR.srv_id = id;
-END $$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_active_user` (IN `id` INT)   BEGIN
-	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
-    FROM usr U INNER JOIN per P ON U.per_id = P.per_id
-    INNER JOIN rol R ON U.rol_id = R.rol_id
-    INNER JOIN sta S ON U.sta_id = S.sta_id
-    INNER JOIN sex E ON P.sex_id = E.sex_id
-    INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id
-    WHERE U.usr_id = id AND U.sta_id = 1;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_agn` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_agns` ()   BEGIN
 	SELECT * FROM agn;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita` (IN `id` INT)   BEGIN SELECT *FROM cita WHERE cita.cita_id = id; END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_citas` ()   BEGIN 
+	SELECT * FROM cita;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_citas_sta` (IN `sta` INT)   BEGIN
+	SELECT *FROM cita WHERE cita.sta_id = sta;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_cita_sta` (IN `id` INT, IN `sta` INT)   BEGIN
+	SELECT *FROM cita WHERE cita.sta_id = sta AND cita_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_emp` (IN `id` INT)   BEGIN
@@ -236,15 +251,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_per` (IN `id` INT)   BEGIN
     WHERE U.usr_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_reg` (IN `id` INT)   BEGIN
-	SELECT * FROM usr U WHERE U.usr_id = id;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol` (IN `id` INT)   BEGIN 
+	SELECT * FROM rol WHERE rol_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_regs` ()   BEGIN
-	SELECT * FROM usr;
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rols` ()   BEGIN 
 	SELECT * FROM rol;
 END$$
 
@@ -260,29 +271,77 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sex` ()   BEGIN
 	SELECT * FROM sex;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srv` (IN `id` INT)   BEGIN
+	SELECT * FROM srv WHERE srv.srv_id = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srvs` ()   BEGIN
 	SELECT * FROM srv;
 END$$
 
-CREATE PROCEDURE `v_srv` (IN id INT)   BEGIN
-	SELECT * FROM srv WHERE srv.srv_id = id;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srvs_sta` (IN `rol` INT)   BEGIN
+	SELECT *FROM srv WHERE srv.sta_id = rol;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sta` ()   BEGIN
-	SELECT * FROM sta;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_srv_sta` (IN `id` INT, IN `rol` INT)   BEGIN
+	SELECT *FROM srv WHERE srv.sta_id = rol AND srv.srv_id = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `V_tyDoc` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sta` (IN `id` INT)   BEGIN
+	SELECT * FROM sta where sta_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_stas` ()   BEGIN 
+	SELECT*from sta;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDoc` ()   BEGIN
 	SELECT * FROM tyDoc;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_users` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usr` (IN `id` INT)   BEGIN
+	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
+    FROM usr U INNER JOIN per P ON U.per_id = P.per_id
+    INNER JOIN rol R ON U.rol_id = R.rol_id
+    INNER JOIN sta S ON U.sta_id = S.sta_id
+    INNER JOIN sex E ON P.sex_id = E.sex_id
+    INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id
+    WHERE U.usr_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usrs` ()   BEGIN
 	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
     FROM usr U INNER JOIN per P ON U.per_id = P.per_id
     INNER JOIN rol R ON U.rol_id = R.rol_id
     INNER JOIN sta S ON U.sta_id = S.sta_id
     INNER JOIN sex E ON P.sex_id = E.sex_id
     INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usrs_sta` (IN `sta` INT)   BEGIN
+	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
+    FROM usr U INNER JOIN per P ON U.per_id = P.per_id
+    INNER JOIN rol R ON U.rol_id = R.rol_id
+    INNER JOIN sta S ON U.sta_id = S.sta_id
+    INNER JOIN sex E ON P.sex_id = E.sex_id
+    INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id
+    WHERE U.sta_id = sta;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usr_mdl` (IN `id` INT)   BEGIN
+SELECT MO.mdl_nm,MO.mdl_url FROM rol_mdl RM
+INNER JOIN mdl MO ON RM.mdl_id=MO.mdl_id
+WHERE RM.rol_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_usr_sta` (IN `id` INT, IN `sta` INT)   BEGIN
+	SELECT U.usr_id, U.usr_nm, U.usr_ema, U.usr_tel, U.usr_pass, U.rol_id, R.rol_nm, R.rol_dsc, U.per_id, P.per_nm, P.per_ltnm, P.per_bithdt, P.sex_id, E.sex_nm, E.sex_dsc, P.tyDoc_id, T.tyDoc_nm, T.tyDoc_dsc, P.per_doc, P.per_addr, U.sta_id, S.sta_nm, S.sta_dsc 
+    FROM usr U INNER JOIN per P ON U.per_id = P.per_id
+    INNER JOIN rol R ON U.rol_id = R.rol_id
+    INNER JOIN sta S ON U.sta_id = S.sta_id
+    INNER JOIN sex E ON P.sex_id = E.sex_id
+    INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id
+    WHERE U.usr_id = id AND U.sta_id = sta;
 END$$
 
 DELIMITER ;
@@ -295,9 +354,15 @@ DELIMITER ;
 
 CREATE TABLE `agn` (
   `agn_id` int(11) NOT NULL,
-  `agn_dt` datetime NOT NULL,
-  `tyAgn_id` int(11) NOT NULL
+  `agn_dt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `agn`
+--
+
+INSERT INTO `agn` (`agn_id`, `agn_dt`) VALUES
+(1, '2023-10-24 07:00:00');
 
 -- --------------------------------------------------------
 
@@ -309,7 +374,8 @@ CREATE TABLE `cita` (
   `cita_id` int(11) NOT NULL,
   `agn_id` int(11) DEFAULT NULL,
   `emp_id` int(11) DEFAULT NULL,
-  `usr_id` int(11) DEFAULT NULL
+  `usr_id` int(11) DEFAULT NULL,
+  `sta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -342,10 +408,14 @@ CREATE TABLE `mdl` (
 --
 
 INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
-(1, 'home', 'app/Views/home/home.php', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
-(2, 'header', 'app/Views/template/header.php', 'Ésta es la vista en la cuál se resguarda el \"header\" de la página el cuál tendra su propio controlador según el Rol del usuario.'),
-(3, 'footer', 'app/Views/template/footer.php', 'Ésta es la vista en la cuál se resguarda el \"footer\" de la página.'),
-(4, 'createUsr', 'app/Views/usr/create.php', 'En esta vista el usuario se registrará y envíara sus datos personales al controlador UsrController el cuál revisará, validará y enviará los datos al modulo y este a la DB.');
+(1, 'Home', 'Usr\\Home', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
+(2, 'Servicios', 'Usr\\Srv', NULL),
+(3, 'Calendario', 'Usr\\Calendario', NULL),
+(4, 'Perfil', 'Usr\\Perfil', NULL),
+(5, 'Agendamiento', 'Usr\\Agn', NULL),
+(6, 'Home Guest', 'template/home/home\n', ''),
+(7, 'Login', 'Login\\Login', NULL),
+(8, 'Register', 'Register\\Register', NULL);
 
 -- --------------------------------------------------------
 
@@ -369,7 +439,9 @@ CREATE TABLE `per` (
 --
 
 INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
-(1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras');
+(1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras'),
+(2, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
+(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr');
 
 -- --------------------------------------------------------
 
@@ -390,7 +462,8 @@ CREATE TABLE `rol` (
 INSERT INTO `rol` (`rol_id`, `rol_nm`, `rol_dsc`) VALUES
 (1, 'Administrador', 'Es la persona que está a cargo de la tienda y se encarga de tomar las decisiones importantes, como el inventario, el marketing y el personal.'),
 (2, 'Empleado', 'Es la persona que trabaja en la tienda y se encarga de atender a los clientes, realizar las ventas y mantener la tienda en orden.'),
-(3, 'Cliente', 'Es la persona que visita la tienda para comprar productos o servicios.');
+(3, 'Cliente', 'Es la persona que visita la tienda para comprar productos o servicios.'),
+(4, 'Guest', 'Este es un invitado (usuario no registrado)');
 
 -- --------------------------------------------------------
 
@@ -400,9 +473,22 @@ INSERT INTO `rol` (`rol_id`, `rol_nm`, `rol_dsc`) VALUES
 
 CREATE TABLE `rol_mdl` (
   `rol_mdl_id` int(11) NOT NULL,
-  `rol_id` int(11) DEFAULT NULL,
-  `mdl_id` int(11) DEFAULT NULL
+  `rol_id` int(11) NOT NULL,
+  `mdl_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `rol_mdl`
+--
+
+INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
+(1, 3, 1),
+(2, 3, 2),
+(3, 3, 4),
+(4, 3, 5),
+(5, 4, 6),
+(6, 4, 7),
+(7, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -454,7 +540,7 @@ CREATE TABLE `srv` (
 --
 
 INSERT INTO `srv` (`srv_id`, `srv_nm`, `srv_dsc`, `srv_tm`, `srv_img`, `srv_cost`, `sta_id`) VALUES
-(1, 'Manicure y pedicure', 'Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.', 30, 'https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp', 40000, 1),
+(1, 'Manicure y pedicure', 'Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.', 30, 'https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp', 40000, 2),
 (2, 'Masajes', 'Es un tipo de medicina integral en la que un masajista frota y presiona firmemente la piel, los músculos, los tendones y los ligamentos. En la masoterapia, un especialista frota y presiona los tejidos blandos del cuerpo. Los tejidos blandos incluyen músculo, tejido conectivo, tendones, ligamentos y piel.', 40, 'https://velkaspa.com/wp-content/uploads/2022/09/blog_3.jpg', 100000, 1),
 (3, 'Maquillaje', 'Aplicar cosméticos a alguien o a una parte de su cuerpo, especialmente su rostro, para embellecerlo o modificar su aspecto.', 30, 'https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/04/04/16490814041338.jpg', 35990, 1),
 (4, 'Depilación', 'La depilación es una práctica muy común entre las mujeres, que se realiza comúnmente en las cejas, el rostro, las axilas, las piernas y la Zona V. Existen diferentes tipos de depilación íntima, como la cera, cremas, cuchillas y el láser, siendo esta última realizada por un experto.', 35, 'https://www.diariamenteali.com/medias/depilacion-con.cera-crema-o-laser-1900Wx500H?context=bWFzdGVyfGltYWdlc3w5NDcwOXxpbWFnZS9qcGVnfGhhOS9oNzkvOTA3NDM5ODU2MDI4Ni9kZXBpbGFjaW9uLWNvbi5jZXJhLWNyZW1hLW8tbGFzZXIgXzE5MDBXeDUwMEh8ZTJkNTJkYjc0NjZhZWVlZGNkMjU4OTM4OGI4ZTRlZTE5MmMxMDBlZDQzNjhkMmRmMGU2ZDJkMTk3Y2ZhOTc2Ng', 20000, 1),
@@ -482,7 +568,7 @@ INSERT INTO `sta` (`sta_id`, `sta_nm`, `sta_dsc`) VALUES
 (1, 'Activo', 'Este estado respecta a un usuario o servicio activo en la plataforma'),
 (2, 'Inactivo', 'Este estado respecta a un usuario o servicio inactivo en la plataforma'),
 (3, 'Por confirmar', 'Este estado respecta a un usuario o servicio en proceso de ser activado en la plataforma ya que requiere de un proceso para este mismo'),
-(4, 'inhabilitado', 'El usuario borro la cuenta');
+(4, 'inhabilitado', 'Se \"Elimino\" el registro.');
 
 -- --------------------------------------------------------
 
@@ -497,18 +583,6 @@ CREATE TABLE `turn` (
   `turn_ini` time NOT NULL,
   `turn_end` time NOT NULL,
   `tyTurn_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tyagn`
---
-
-CREATE TABLE `tyagn` (
-  `tyAgn_id` int(11) NOT NULL,
-  `tyAgn_nm` varchar(40) NOT NULL,
-  `tyAgn_dsc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -572,6 +646,14 @@ CREATE TABLE `usr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `usr`
+--
+
+INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
+(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '123123', 3, 2, 1),
+(2, 'juan123', '@mail', 305, '123', 3, 3, 3);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -579,17 +661,20 @@ CREATE TABLE `usr` (
 -- Indices de la tabla `agn`
 --
 ALTER TABLE `agn`
-  ADD PRIMARY KEY (`agn_id`),
-  ADD KEY `tyAgn_id` (`tyAgn_id`);
+  ADD PRIMARY KEY (`agn_id`);
 
 --
 -- Indices de la tabla `cita`
 --
 ALTER TABLE `cita`
   ADD PRIMARY KEY (`cita_id`),
+  ADD UNIQUE KEY `agn_id_2` (`agn_id`),
+  ADD UNIQUE KEY `agn_id_3` (`agn_id`),
   ADD KEY `agn_id` (`agn_id`,`usr_id`,`emp_id`),
   ADD KEY `usr_idPK_cita` (`usr_id`),
-  ADD KEY `emp_idPK_cita` (`emp_id`);
+  ADD KEY `emp_idPK_cita` (`emp_id`),
+  ADD KEY `sta_id` (`sta_id`),
+  ADD KEY `agn_id_4` (`agn_id`);
 
 --
 -- Indices de la tabla `emp`
@@ -656,13 +741,6 @@ ALTER TABLE `turn`
   ADD KEY `tyTurn_idPK_tunr` (`tyTurn_id`);
 
 --
--- Indices de la tabla `tyagn`
---
-ALTER TABLE `tyagn`
-  ADD PRIMARY KEY (`tyAgn_id`),
-  ADD UNIQUE KEY `tyAgn_nm` (`tyAgn_nm`,`tyAgn_dsc`) USING HASH;
-
---
 -- Indices de la tabla `tydoc`
 --
 ALTER TABLE `tydoc`
@@ -692,43 +770,43 @@ ALTER TABLE `usr`
 -- AUTO_INCREMENT de la tabla `agn`
 --
 ALTER TABLE `agn`
-  MODIFY `agn_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `agn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `cita_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cita_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `emp`
 --
 ALTER TABLE `emp`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mdl`
 --
 ALTER TABLE `mdl`
-  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `rol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `rol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `rol_mdl`
 --
 ALTER TABLE `rol_mdl`
-  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `sex`
@@ -755,12 +833,6 @@ ALTER TABLE `turn`
   MODIFY `turn_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tyagn`
---
-ALTER TABLE `tyagn`
-  MODIFY `tyAgn_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `tydoc`
 --
 ALTER TABLE `tydoc`
@@ -776,17 +848,11 @@ ALTER TABLE `tytrun`
 -- AUTO_INCREMENT de la tabla `usr`
 --
 ALTER TABLE `usr`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `agn`
---
-ALTER TABLE `agn`
-  ADD CONSTRAINT `tyAng_idPK_ang` FOREIGN KEY (`tyAgn_id`) REFERENCES `tyagn` (`tyAgn_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cita`
@@ -794,6 +860,7 @@ ALTER TABLE `agn`
 ALTER TABLE `cita`
   ADD CONSTRAINT `agn_idPK_cita` FOREIGN KEY (`agn_id`) REFERENCES `agn` (`agn_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `emp_idPK_cita` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sta_idPk_cita` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usr_idPK_cita` FOREIGN KEY (`usr_id`) REFERENCES `usr` (`usr_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
