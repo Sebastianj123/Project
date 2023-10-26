@@ -1,36 +1,58 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
+<?php
+use App\Controllers\User\UsrController;
+
+
+session_start();
+if (!isset($_SESSION["newsession"])) {
+  header("Location: " . DEFAULT_ROUTE);
+} else {
+  $User = new UsrController();
+  $id = $_SESSION["newsession"];
+  $attributesId="usr_id";
+  $modules = $Usr->getModelUsr();
+}
+
+?>
+<!-- Header -->
+  <header class="container-fluid d-grid">
+      <!-- Cabecera del Header -->
+      <hHeader class="row">
+          <!-- apartado Logo y Nombre de la empresa -->
+          <div id="container_logo-nm" class="row col-6">
+              <div id="container_logo" class="col-3">
+                  <img src="assets/img/icons/Logo.png" alt="Logo" class="p-4 w-100">
+              </div>
+              <div id="container_nm" class="col-9 d-flex aligt-items-center ">
+                <div style="height:50%;" class="mt-4">
+                  <h1 class="text-primary h1 mt-4"> Cabello Bello JJ</h1>
+                </div>
+              </div>
+          </div>
+  
+          <!-- Nav de los botones/link log y el Reg -->
+          <nav id="container_log_reg" class="col-6">
+            <?php foreach ($modules as $module): ?>
+              <li class="nav-item">
+                <a class="nav-link" href="<?= APP_URL_PUBLIC . $module['mdl_url'] ?>">
+                  <?= $module['mdl_nm'] ?>
+                </a>
+              </li>
+            <?php endforeach ?>
+          </nav>
+      </hHeader>
+
+      <navHeader class="container-fluid">
+        <ul class="nav nav-pills mb-3 container-fluid d-flex" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active f-grap" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link f-grap" id="pills-services-tab" data-bs-toggle="pill" data-bs-target="#pills-services" type="button" role="tab" aria-controls="pills-services" aria-selected="false">Servicios</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link f-grap" id="pills-calendar-tab" data-bs-toggle="pill" data-bs-target="#pills-calendar" type="button" role="tab" aria-controls="pills-calendar" aria-selected="false">calendar</button>
+          </li>
+        </ul>
+      </navHeader>
+
+  </header>

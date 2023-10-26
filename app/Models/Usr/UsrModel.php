@@ -113,6 +113,12 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
+  public function getModelUsr($id)
+  {
+    $this->sql = "CALL v_usr_mdl($id)";
+    return $this->getQuery();
+  }
+
 }
           
 ?>

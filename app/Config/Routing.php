@@ -4,7 +4,7 @@ namespace App\Config;
 use App\Controllers\Usr\UsrController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\Srv\SrvController;
-use App\Config\Constants;
+use App\Config;
 use Exception;
 
 class Routing
@@ -13,7 +13,7 @@ class Routing
   private $_folder;
   private $defaults = [
     "folder" => "public/",
-    "controller" => "home",
+    "controller" => "Home",
     "method" => "show",
   ];
   private $_folderController;
@@ -25,13 +25,12 @@ class Routing
 
   public function __construct()
   {
-
     // Carpetas Default
     $this->_folder = $this->defaults['folder']; //public
     $_folderController = $this->defaults['controller']; // home
 
     // Controlador Default
-    $this->_controller = ucwords($_folderController . "Controller"); //HomeController
+    $this->_controller = ucwords("App\Controllers\\$_folderController\\$_folderController"."Controller"); //HomeController
 
     // Metodo Default
     $this->_method = $this->defaults['method']; // show
@@ -60,7 +59,8 @@ class Routing
       $this->_attributes = (isset($tempAttributes[1])) ? $tempAttributes[1] : "" ;
       
       // Verificacion de controlador y metodo
-      $tempController = ucwords($this->url[1] . "Controller");
+      $cntllr= ucwords($this->url[1]);
+      $tempController = "App\Controllers\\$cntllr\\$cntllr" ."Controller";
       $tempMethod = $tempAttributes[0];
       if(class_exists($tempController)) {
         $this->_controller = $tempController;
@@ -72,13 +72,14 @@ class Routing
   // Función correr
   public function run()
   {
+    var_dump($this->_controller,$this->_method);
+    var_dump(class_exists($this->_controller));
+    // var_dump(new HomeController);  
     try {
-      
       // Inicializa el controlador
-      $controller = new ($this->_controller)();
+      $controller = new HomeController;
       // Inicializa un metodo del controlador
-      $controller->{$this->_method()}();
-
+      $controller->{$this->_method}();
     } catch (Exception $e) {
       echo ($e->getMessage());
     }

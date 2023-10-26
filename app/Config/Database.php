@@ -2,8 +2,8 @@
 namespace App\Config;
 use \mysqli;
 use \Exception;
-// use App\Config\Constants;
-require_once("../app/Config/Constants.php");
+use App\Config\App;
+// require_once("../app/Config/Constants.php");
 
 class Database
 {
