@@ -2,7 +2,7 @@
 namespace App\Model\Cita;
 use App\Config\Model;
 
-final class Cita extends Model
+final class CitaModel extends Model
 {
   protected $table;
   protected $primary;

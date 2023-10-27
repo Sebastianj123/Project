@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Cotrollers\validateTypeData;
+namespace App\Cotrollers;
 class validateData
 {
     private $typeData;
@@ -40,7 +40,7 @@ class validateData
     }
 }
 
-$str = '3054102953';
-$type = (new validateData($str))->validateTypeData();
-echo $type;
+// $str = '3054102953';
+// $type = (new validateData($str))->validateTypeData();
+// echo $type;
 ?>

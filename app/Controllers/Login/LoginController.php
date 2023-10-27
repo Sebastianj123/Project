@@ -9,10 +9,8 @@ class LoginController extends Controller
 {
 
   private $model;
-
   private $result;
   private $routeDefautl;
-
   protected $primary;
   public function __construct()
   {
@@ -27,19 +25,21 @@ class LoginController extends Controller
   {
     return $this->view("login/login");
   }
+
   public function login()
   {
     $this->routeDefautl = APP_URL_PUBLIC . 'home/show';
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-      $modelUser = $this->getDataModel();
-      $userPassword = $modelUser['user_password'];
-      $userEmail = $modelUser['user_user'];
-      $this->result = $this->model->showUserUser($userEmail);
+      $modelUsr = $this->getDataModel();
+      $userEmail = $modelUsr['usr_nm'];
+      $userPassword = $modelUsr['usr_pass'];
+      $this->result = $this->model->getLoginData($userEmail);
 
       if (count($this->result) > 0) {
-        if (password_verify($userPassword, $this->result[0]["user_password"])) {
+        if (password_verify($userPassword, $this->result[0]["usr_pass"])) {
+          session_destroy();
           session_start();
-          $_SESSION["newsession"] = $this->result[0]["user_id"];
+          $_SESSION["usr_id"] = $this->result[0]["usr_id"];
           header("Location: " . $this->routeDefautl);
 
         } else {
@@ -63,8 +63,9 @@ class LoginController extends Controller
   public function getDataModel()
   {
     $data = [
-      'user_user' => $_REQUEST['user_user'],
-      'user_password' => $_REQUEST['user_password']
+      'usr_nm' => $_REQUEST['usr_nm'],
+      'remember' => $_REQUEST['remember'],
+      'usr_pass' => $_REQUEST['usr_pass'],
     ];
     return $data;
   }

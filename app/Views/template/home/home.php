@@ -1,5 +1,8 @@
+<?php
+  
+?>
+
 <body>
-<?php require_once('../app/Views/template/header.php');?>
 
   <bBody>
     <div class="tab-content" id="pills-tabContent">

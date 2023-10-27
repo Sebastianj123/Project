@@ -1,5 +1,6 @@
 <?php
 namespace App\Config;
+require_once("../app/Config/Constants.php");
 
 use App\Controllers\Usr\UsrController;
 use App\Controllers\Home\HomeController;
@@ -12,9 +13,9 @@ class Routing
 
   private $_folder;
   private $defaults = [
-    "folder" => "public/",
-    "controller" => "Home",
-    "method" => "show",
+    "folder" => DEFAULT_FOLDER,
+    "controller" => DEFAULT_CONTROLLER,
+    "method" => DEFAULT_METHOD,
   ];
   private $_folderController;
   private $serverUri;

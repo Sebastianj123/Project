@@ -1,6 +1,7 @@
 <?php
 namespace App\Config;
 use App\Config\Database;
+use Exception;
 
 abstract class Model 
 {
@@ -27,7 +28,7 @@ abstract class Model
             $this->result = $prepare_sql->fetch_all(MYSQLI_ASSOC);
             $this->sql->free();
             $prepare_sql->free();
-            $this->objDB->connectMysqliClose();
+            $this->objDB->closeConnect();
         } catch (Exception $e) {
             $this->result = $this->error($e);
         } finally {
@@ -36,6 +37,6 @@ abstract class Model
     }
 
     final protected function getValuesForSql(array $data) : string {
-          return '"'. implode('", "', $array) . '"';
+          return '"'. implode('", "'. $data . '"');
     }
 }

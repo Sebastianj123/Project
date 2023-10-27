@@ -5,10 +5,14 @@ if(isset($data['message'])){
   $messageText = $data['message'];
 }
 
-
 ?>
 <!--Container-->
 <section class="row">
+    <?php if(isset($messageText)):?>
+      <div class="alert alert-warning" role="alert">
+        <?= $messageText?>
+      </div>
+    <?php endif ?>
   <h3>Login User </h3>
   <!--Container form-->
   <form id="loginForm" action="<?= APP_URL_PUBLIC ?>login/login" method="POST">
@@ -24,11 +28,7 @@ if(isset($data['message'])){
       <button class="btn btn-outline-secondary" type="button" onclick="changeTypeInput('user_password',this)"
         id="btn-password"><i class="bi bi-shield-lock"></i></button>
     </div>
-    <?php if(isset($messageText)):?>
-    <div class="alert alert-warning" role="alert">
-    <?= $messageText?>
-    </div>
-    <?php endif ?>
+
     <button type="submit" form="loginForm" class="btn btn-primary w-100">Save changes</button>
   </form>
 

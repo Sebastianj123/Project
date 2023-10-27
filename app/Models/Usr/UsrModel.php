@@ -1,9 +1,9 @@
 <?php
     
     namespace App\Models\Usr;
-    use App\Controllers\validateTypeData;
     use App\Config\Model;
-    use PDO;
+    use App\Cotrollers\validateData;
+use PDO;
 
 final class UsrModel extends Model
 {
@@ -40,14 +40,14 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
-  public function getLoginData($usr_nm, $usr_pass) : array{
-    $type = (new validateData($usr_name))->validateTypeData();
+  public function getLoginData($usr_nm) : array{
+    $type = (new validateData($usr_nm))->validateTypeData();
     $this->sql = "Call login('$type','$usr_nm');";
     return $this->getQuery();
   }
 
   public function insertUsr(string $typeUsr, array $data, string &$srv_id){
-    $values = $this->getValuseForSql($data);
+    $values = $this->getValuesForSql($data);
     switch ($typeUsr) {
       case 'emp':
         $sp = 'i_emp';
@@ -63,12 +63,12 @@ final class UsrModel extends Model
     }
     
     $this->sql = "CALL $sp ($values $srv);";
-    $this->resul = $this->getQuery();
+    $this->result = $this->getQuery();
     return $this->result;
   }
 
   public function updateUsr(string $typeUsr, array $data){
-        $values = $this->getValuseForSql($data);
+        $values = $this->getValuesForSql($data);
         $this->sql = "CALL u_usr ();";
         return $this->getQuery();
   }
@@ -113,7 +113,7 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
-  public function getModelUsr($id)
+  public function getModelUsr($id = 4)
   {
     $this->sql = "CALL v_usr_mdl($id)";
     return $this->getQuery();

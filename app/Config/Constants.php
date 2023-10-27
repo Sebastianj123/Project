@@ -9,9 +9,12 @@ define('PASS','');
 
 /* Default options */
 define("DEFAULT_FOLDER",'public/');
-define("DEFAULT_CONTROLLER", "login");
+define("DEFAULT_CONTROLLER", "home");
 define("DEFAULT_METHOD", "show");
 define("DEFAULT_ACTION", "list");
+define("DEFAULT_ROL_ID",4);
+define('DEFAULT_USR_NM', 'guest');
+
 /* Default App options */
 
 define("APP_URL","http://127.0.0.1/SENA/project/app/");

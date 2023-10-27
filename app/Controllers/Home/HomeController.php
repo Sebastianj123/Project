@@ -7,9 +7,9 @@ class HomeController extends Controller{
     protected $model;
 
     public function show(){
-      // $rol = (isset($_SESSION)) ? $_SESSION['rol_id'] : 4;
-      // $this->model = new UsrModel;
-      // $data = $this->model->getModelUsr();
+      $rol = (isset($_SESSION)) ? $_SESSION['rol_id'] : 4;
+      $this->model = new UsrModel;
+      $data = $this->model->getModelUsr();
       return $this->view("template/home/home");
     }
   }
