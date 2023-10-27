@@ -2,8 +2,8 @@
     
     namespace App\Models\Usr;
     use App\Config\Model;
-    use App\Cotrollers\validateData;
 use PDO;
+use Public\Assets\tools\validateData;
 
 final class UsrModel extends Model
 {
@@ -46,7 +46,7 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
-  public function insertUsr(string $typeUsr, array $data, string &$srv_id){
+  public function insertUsr(string $typeUsr, array $data, ?string $srv_id = ''){
     $values = $this->getValuesForSql($data);
     switch ($typeUsr) {
       case 'emp':
@@ -63,8 +63,7 @@ final class UsrModel extends Model
     }
     
     $this->sql = "CALL $sp ($values $srv);";
-    $this->result = $this->getQuery();
-    return $this->result;
+    return $this->getQuery();
   }
 
   public function updateUsr(string $typeUsr, array $data){

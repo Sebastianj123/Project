@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Cotrollers;
+namespace Public\Assets\tools;
 class validateData
 {
     private $typeData;

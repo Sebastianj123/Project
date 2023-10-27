@@ -25,7 +25,7 @@ class Database
     {
         try {
             $this->con = new mysqli($this->host, $this->user, $this->pass, $this->db);
-            echo('Connected :D <br>');
+            // echo('Connected :D <br>');
         } catch (Exception $e) {
 			echo $e->getMessage();
 			exit();

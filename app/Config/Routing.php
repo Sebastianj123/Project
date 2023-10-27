@@ -5,7 +5,10 @@ require_once("../app/Config/Constants.php");
 use App\Controllers\Usr\UsrController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\Srv\SrvController;
+use App\Controllers\Guest\GuestController;
 use App\Config;
+use App\Controllers\Header\HeaderController;
+// use App\Controllers\Login\guestController;
 use Exception;
 
 class Routing
@@ -17,7 +20,7 @@ class Routing
     "controller" => DEFAULT_CONTROLLER,
     "method" => DEFAULT_METHOD,
   ];
-  private $_folderController;
+  private $folderController;
   private $serverUri;
   private $url;
   private $_controller;
@@ -26,12 +29,20 @@ class Routing
 
   public function __construct()
   {
+
+    if (isset($_SESSION)) {
+      $this->defaults = [
+        "folder" => DEFAULT_FOLDER,
+        "controller" => DEFAULT_CONTROLLER_LOGIN,
+        "method" => DEFAULT_METHOD,
+      ];
+    }
     // Carpetas Default
     $this->_folder = $this->defaults['folder']; //public
-    $_folderController = $this->defaults['controller']; // home
+    $this->folderController = $this->defaults['controller']; // home
 
     // Controlador Default
-    $this->_controller = ucwords("App\Controllers\\$_folderController\\$_folderController"."Controller"); //HomeController
+    $this->_controller = ucwords("App\Controllers\\$this->folderController\\$this->folderController"."Controller"); //HomeController
 
     // Metodo Default
     $this->_method = $this->defaults['method']; // show
@@ -45,6 +56,9 @@ class Routing
 
     // Inicialización metodo
     $this->matchRoute();
+
+    
+    // var_dump((new LoginGuestController)->show());
   }
 
   public function matchRoute()
@@ -53,7 +67,7 @@ class Routing
     if (isset($this->url[1]) && isset($this->url[2])) {
       
       // Controlador
-      $_folderController = ucwords($this->url[1]);
+      $this->folderController = ucwords($this->url[1]);
       
       // Atributos
       $tempAttributes = explode("?", $this->url[2]);
@@ -73,17 +87,32 @@ class Routing
   // Función correr
   public function run()
   {
-    var_dump($this->_controller,$this->_method);
-    var_dump(class_exists($this->_controller));
-    // var_dump(new HomeController);  
+    (new HeaderController)->show();
+
     try {
       // Inicializa el controlador
-      $controller = new HomeController;
+      $controller = new $this->_controller;
       // Inicializa un metodo del controlador
       $controller->{$this->_method}();
     } catch (Exception $e) {
       echo ($e->getMessage());
     }
+  }
+
+  /**
+   * Get the value of _method
+   */ 
+  public function get_method()
+  {
+    return $this->_method;
+  }
+
+  /**
+   * Get the value of folderController
+   */ 
+  public function getFolderController()
+  {
+    return $this->folderController;
   }
 }
 

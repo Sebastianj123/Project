@@ -6,10 +6,7 @@ class HomeController extends Controller{
     protected $view;
     protected $model;
 
-    public function show(){
-      $rol = (isset($_SESSION)) ? $_SESSION['rol_id'] : 4;
-      $this->model = new UsrModel;
-      $data = $this->model->getModelUsr();
+    public function showGuest(){
       return $this->view("template/home/home");
     }
   }

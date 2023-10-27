@@ -19,19 +19,20 @@ require_once('../app/Config/Autoload.php');
   <link rel="stylesheet" href="assets/css/normalice.css">
 </head>
 
-<body>
-  <div class="container-fluid">
+<body style="background:#c8bdff;">
+  <div class="container-fluid d-flex flex-column">
   <?php
     
     // Iniciar Session Guest
     $router = new Routing();
-    (new UsrController)->getSession();
-    (new HeaderController)->show();
+    (new UsrController)->getDefaultSession();
     $router->run();
   ?>
-<?= APP_NAME ?> 
 
-  </div>
+</div>
+
+<?php require_once("../app/Views/template/footer.php") ?> 
+
 
 </body>
 
