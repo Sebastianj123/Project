@@ -56,14 +56,13 @@ class Routing
 
     // Inicialización metodo
     $this->matchRoute();
-
     
     // var_dump((new LoginGuestController)->show());
   }
 
   public function matchRoute()
   {
-    
+
     if (isset($this->url[1]) && isset($this->url[2])) {
       
       // Controlador
@@ -81,13 +80,13 @@ class Routing
         $this->_controller = $tempController;
         $this->_method = (in_array($tempMethod, get_class_methods($this->_controller))) ? $tempMethod : $this->defaults['method'];
       }
+
     }
   }
 
   // Función correr
   public function run()
   {
-    (new HeaderController)->show();
 
     try {
       // Inicializa el controlador

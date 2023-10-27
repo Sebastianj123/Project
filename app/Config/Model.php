@@ -21,7 +21,7 @@ abstract class Model
         return 'Error: ' . $e->getMenssage();
     }
 
-    protected final function getQuery() : mixed  {
+    protected final function getQuery()  {
         try {
             $sql = $this->sql;
             $prepare_sql = $this->conn->query($sql);
@@ -37,6 +37,6 @@ abstract class Model
     }
 
     final protected function getValuesForSql(array $data) : string {
-          return '"'. implode('", "'. $data . '"');
+          return '"'. implode('", "', $data) . '"';
     }
 }

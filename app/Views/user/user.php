@@ -1,12 +1,6 @@
 <?php
-/*
- *Ahutor:DIEGO CASALLAS
- *Busines: SINAPSIS TECHNOLOGIES
- *Date:13/08/2023
- *Description:.....
- */
-include_once('../app/Views/template/header.php');
 $users = $data['users'];
+var_dump()
 
 ?>
 <div class="table-responsive">

@@ -10,7 +10,7 @@ define('PASS','');
 /* Default options */
 define("DEFAULT_FOLDER",'public/');
 define("DEFAULT_CONTROLLER","Guest");
-define("DEFAULT_CONTROLLER_LOGIN","Usr");
+define("DEFAULT_CONTROLLER_LOGIN","usr");
 define("DEFAULT_METHOD", "show");
 define("DEFAULT_ACTION", "list");
 define("DEFAULT_ROL_ID",4);

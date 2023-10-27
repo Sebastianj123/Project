@@ -23,6 +23,9 @@ SET time_zone = "+00:00";
 create DATABASE cabellobellojj;
 use cabellobellojj;
 DELIMITER $$
+
+
+DELIMITER $$
 --
 -- Procedimientos
 --
@@ -36,9 +39,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `d_rol` (IN `id` INT)   BEGIN
 	DELETE FROM rol WHERE rol_id = id;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_sex` (IN `id` INT)   BEGIN 
+DELETE FROM sex where sex_id = id; END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `d_sta` (IN `id` INT)   BEGIN 
 	DELETE FROM sta WHERE sta_id = id;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_tyDoc` (IN `id` INT)   BEGIN 
+DELETE FROM tydoc where tydoc_id = id; END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_agn` (IN `dt` DATETIME)   BEGIN 
     INSERT INTO `agn` (agn_dt) VALUES (dt);
@@ -267,7 +276,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol_mdls` ()   BEGIN
 	SELECT * FROM rol_mdl;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sex` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sex` (IN `id` INT)   BEGIN 
+SELECT * FROM sex where sex_id = id; END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_sexs` ()   BEGIN
 	SELECT * FROM sex;
 END$$
 
@@ -295,7 +307,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_stas` ()   BEGIN
 	SELECT*from sta;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDoc` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDoc` (IN `id` INT)   BEGIN 
+SELECT * FROM tydoc where tydoc_id = id; END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_tyDocs` ()   BEGIN
 	SELECT * FROM tyDoc;
 END$$
 
@@ -408,14 +423,14 @@ CREATE TABLE `mdl` (
 --
 
 INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
-(1, 'Home', 'Usr\\Home', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
-(2, 'Servicios', 'Usr\\Srv', NULL),
-(3, 'Calendario', 'Usr\\Calendario', NULL),
-(4, 'Perfil', 'Usr\\Perfil', NULL),
-(5, 'Agendamiento', 'Usr\\Agn', NULL),
-(6, 'Home Guest', 'template/home/home\n', ''),
-(7, 'Login', 'Login\\Login', NULL),
-(8, 'Register', 'Register\\Register', NULL);
+(1, 'Home', 'usr\\showHome', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
+(2, 'Servicios', 'mdl\\showSrv', NULL),
+(3, 'Citas', 'mdl\\showCitas', NULL),
+(4, 'Perfil', 'mdl\\showPerfil', NULL),
+(5, 'Agendamiento', 'mdl\\showAgn', NULL),
+(6, 'Home Guest', 'guest\\show', ''),
+(7, 'Login', 'guest\\showLogin', NULL),
+(8, 'Register', 'guest\\showRegister', NULL);
 
 -- --------------------------------------------------------
 
@@ -441,7 +456,8 @@ CREATE TABLE `per` (
 INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
 (1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras'),
 (2, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
-(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr');
+(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
+(5, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 ');
 
 -- --------------------------------------------------------
 
@@ -540,12 +556,12 @@ CREATE TABLE `srv` (
 --
 
 INSERT INTO `srv` (`srv_id`, `srv_nm`, `srv_dsc`, `srv_tm`, `srv_img`, `srv_cost`, `sta_id`) VALUES
-(1, 'Manicure y pedicure', 'Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.', 30, 'https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp', 40000, 2),
+(1, 'Manicure y pedicure', 'Este servicio consiste en un tratamiento para las uñas (de las manos y pies). Ofrecemos el arte y la moda para las uñas, por ejemplo, pintándolas en diferentes estilos, también se aplica, repara y quita uñas postizas o extensiones.', 30, 'https://bonitta.com.mx/wp-content/uploads/2021/03/bonitta_Tipos-de-manicura-profesional.jpg.webp', 40000, 1),
 (2, 'Masajes', 'Es un tipo de medicina integral en la que un masajista frota y presiona firmemente la piel, los músculos, los tendones y los ligamentos. En la masoterapia, un especialista frota y presiona los tejidos blandos del cuerpo. Los tejidos blandos incluyen músculo, tejido conectivo, tendones, ligamentos y piel.', 40, 'https://velkaspa.com/wp-content/uploads/2022/09/blog_3.jpg', 100000, 1),
 (3, 'Maquillaje', 'Aplicar cosméticos a alguien o a una parte de su cuerpo, especialmente su rostro, para embellecerlo o modificar su aspecto.', 30, 'https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/04/04/16490814041338.jpg', 35990, 1),
 (4, 'Depilación', 'La depilación es una práctica muy común entre las mujeres, que se realiza comúnmente en las cejas, el rostro, las axilas, las piernas y la Zona V. Existen diferentes tipos de depilación íntima, como la cera, cremas, cuchillas y el láser, siendo esta última realizada por un experto.', 35, 'https://www.diariamenteali.com/medias/depilacion-con.cera-crema-o-laser-1900Wx500H?context=bWFzdGVyfGltYWdlc3w5NDcwOXxpbWFnZS9qcGVnfGhhOS9oNzkvOTA3NDM5ODU2MDI4Ni9kZXBpbGFjaW9uLWNvbi5jZXJhLWNyZW1hLW8tbGFzZXIgXzE5MDBXeDUwMEh8ZTJkNTJkYjc0NjZhZWVlZGNkMjU4OTM4OGI4ZTRlZTE5MmMxMDBlZDQzNjhkMmRmMGU2ZDJkMTk3Y2ZhOTc2Ng', 20000, 1),
 (5, 'Tratamientos faciales', 'Este tratamiento basado en ultrasonidos sirve para mejorar las arrugas y líneas del escote, elevan la piel del cuello, cejar y bajo del mentón. Consiste en estimular con ultrasonidos la producción de nuevo colágeno y elastina en las capas profundas de la piel.', 25, 'https://blog.farmaelglobo.com/wp-content/uploads/2021/06/positive-dark-skinned-woman-with-afro-combed-hair-wears-headband-cares-about-facial-skin-wipes-cheek-with-cosmetic-sponge-keeps-eyes-shut-with-pleasure.jpg', 18000, 1),
-(6, 'Cortes De Cabello', 'Corte de pelo desfilado, la primera idea que te surge. Es el más común y el primero que te van a ofrecer los peluqueros, porque sigue funcionando como el primer día.', 15, '30', 23000, 1),
+(6, 'Cortes De Cabello', 'Corte de pelo desfilado, la primera idea que te surge. Es el más común y el primero que te van a ofrecer los peluqueros, porque sigue funcionando como el primer día.', 15, 'https://v2.cdnpk.net/videvo_files/video/premium/partners0659/thumbnails/BB_f81872fc-e7d0-4cec-a626-a106df0b756f_small.jpg', 23000, 1),
 (7, 'Tratamiento Capilar', 'El tratamiento capilar son cuidados que se aplican al cabello y cuya finalidad es mantener la salud y buena apariencia del mismo. Actualmente existen múltiples tratamientos capilares para cada problema, como por ejemplo para tratar la caída del cabello, el pelo graso, hidratar o dar volumen.', 30, 'https://www.todoimplantecapilar.com/wp-content/uploads/2019/09/Tratamientos-para-la-alopecia-7-alternativas-para-tener-en-cuenta.jpg', 80000, 1);
 
 -- --------------------------------------------------------
@@ -650,8 +666,9 @@ CREATE TABLE `usr` (
 --
 
 INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '123123', 3, 2, 1),
-(2, 'juan123', '@mail', 305, '123', 3, 3, 3);
+(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 2, 1),
+(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 3, 1),
+(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 5, 3);
 
 --
 -- Índices para tablas volcadas
@@ -794,7 +811,7 @@ ALTER TABLE `mdl`
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -848,7 +865,7 @@ ALTER TABLE `tytrun`
 -- AUTO_INCREMENT de la tabla `usr`
 --
 ALTER TABLE `usr`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

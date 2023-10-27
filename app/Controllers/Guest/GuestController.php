@@ -64,8 +64,8 @@ class GuestController extends Controller
 
           $data = $this->result[0];
           $data['timeLine'] = isset($modelUsr['remember']);
-          (new UsrController)->getSession($data);
-          header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . DEFAULT_METHOD);
+          $data = var_dump((new UsrController)->getSession($data));
+          header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . "/". DEFAULT_METHOD);
 
         } else {
 
@@ -93,6 +93,7 @@ class GuestController extends Controller
     $data = array_map(function($value) {
       return filter_var($value, FILTER_SANITIZE_STRING);
     }, $data);
+    $data['usr_pass'] = password_hash($data['usr_pass'],PASSWORD_DEFAULT);
 
     $this->model->insertUsr('client',$data);
   }
@@ -101,7 +102,7 @@ class GuestController extends Controller
   {
     $data = [
       'usr_nm' => $_REQUEST['usr_nm'],
-      'remember' => $_REQUEST['remember'],
+      'remember' => (empty($_REQUEST['remember'])) ? false : true ,
       'usr_pass' => $_REQUEST['usr_pass'],
     ];
     return $data;

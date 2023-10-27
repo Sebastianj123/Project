@@ -25,7 +25,6 @@ require_once('../app/Config/Autoload.php');
     
     // Iniciar Session Guest
     $router = new Routing();
-    (new UsrController)->getDefaultSession();
     $router->run();
   ?>
 
