@@ -2,9 +2,6 @@
 namespace App;
 
 use App\Config\Routing;
-use App\Controllers\Header\HeaderController;
-use App\Controllers\Usr\UsrController;
-
 
 require_once('../app/Config/Autoload.php');
 ?>
@@ -22,8 +19,6 @@ require_once('../app/Config/Autoload.php');
 <body style="background:#c8bdff;">
   <div class="container-fluid d-flex flex-column">
   <?php
-    
-    // Iniciar Session Guest
     $router = new Routing();
     $router->run();
   ?>
@@ -31,7 +26,6 @@ require_once('../app/Config/Autoload.php');
 </div>
 
 <?php require_once("../app/Views/template/footer.php") ?> 
-
 
 </body>
 

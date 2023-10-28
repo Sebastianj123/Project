@@ -1,5 +1,7 @@
 <?php 
-require_once("../app/Views/template/header.php");
+    require_once("../app/Views/usr/header.php");
+    $srv = $data['srv'];
+// 
 ?>
 <main>
     <section class="introduccion m-3">

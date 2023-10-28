@@ -10,7 +10,7 @@ define('PASS','');
 /* Default options */
 define("DEFAULT_FOLDER",'public/');
 define("DEFAULT_CONTROLLER","Guest");
-define("DEFAULT_CONTROLLER_LOGIN","usr");
+define("DEFAULT_CONTROLLER_LOGIN","home");
 define("DEFAULT_METHOD", "show");
 define("DEFAULT_ACTION", "list");
 define("DEFAULT_ROL_ID",4);
@@ -21,6 +21,7 @@ define('DEFAULT_USR_NM', 'Guest');
 define("APP_URL","http://127.0.0.1/SENA/Project/app/");
 define("APP_URL_PUBLIC","http://127.0.0.1/SENA/Project/public/");
 define("APP_NAME","Cabello Bello JJ");
+define("RUTE_HOME","template/" . DEFAULT_CONTROLLER_LOGIN . "/" . DEFAULT_CONTROLLER_LOGIN);
 
 define("DEFAULT_ROUTE", APP_URL_PUBLIC.DEFAULT_CONTROLLER.'/'.DEFAULT_METHOD);
 

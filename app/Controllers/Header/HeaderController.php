@@ -10,23 +10,15 @@ class HeaderController extends Controller{
     public function __construct()
     {
       $this->model = new UsrModel;
-      
     }
-    public function showGuest()
-    {
-      // var_dump($this->model->getModelUsr());
-      $data['mdls'] = $this->model->getModelUsr();
-      return $data;
-    } 
 
-    public function showHeader() {
+    public function showHeader() :array {
 
-      $rol = $_SESSION['rol_id'];
-      var_dump($rol);
-      $this->model = new UsrModel;
-      $data['mdls'] = $this->model->getModelUsr($rol);
+      session_start();
+      $rol = (isset($_SESSION['session']['rol_id'])) ? $_SESSION['session']['rol_id'] : 4 ;
+      $data['mdls'] = null;
+      $data['mdls'] = $this->model->getModelUsr ($rol);
       return $data;
-      
     }
   }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2023 a las 06:56:52
+-- Tiempo de generación: 28-10-2023 a las 05:17:38
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -20,15 +20,15 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cabellobellojj`
 --
-create DATABASE cabellobellojj;
+
+create or REPLACE DATABASE cabellobellojj;
 use cabellobellojj;
-DELIMITER $$
 
-
-DELIMITER $$
 --
 -- Procedimientos
 --
+DELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `d_agn` (IN `id` INT)   BEGIN 
 	DELETE FROM ang WHERE agn.agn_id = id;
 END$$
@@ -423,14 +423,17 @@ CREATE TABLE `mdl` (
 --
 
 INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
-(1, 'Home', 'usr\\showHome', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
+(1, 'Home', 'home\\showHome', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
 (2, 'Servicios', 'mdl\\showSrv', NULL),
 (3, 'Citas', 'mdl\\showCitas', NULL),
 (4, 'Perfil', 'mdl\\showPerfil', NULL),
 (5, 'Agendamiento', 'mdl\\showAgn', NULL),
-(6, 'Home Guest', 'guest\\show', ''),
+(6, 'Home Guest', 'home\\show', ''),
 (7, 'Login', 'guest\\showLogin', NULL),
-(8, 'Register', 'guest\\showRegister', NULL);
+(8, 'Register', 'guest\\showRegister', NULL),
+(11, 'Reporte', 'home/repShow', NULL),
+(12, 'Delete Usr', 'usr/showDelete', NULL),
+(13, 'LogOut', 'usr/logOut', NULL);
 
 -- --------------------------------------------------------
 
@@ -449,15 +452,6 @@ CREATE TABLE `per` (
   `per_addr` varchar(90) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `per`
---
-
-INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
-(1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras'),
-(2, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
-(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
-(5, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 ');
 
 -- --------------------------------------------------------
 
@@ -498,13 +492,18 @@ CREATE TABLE `rol_mdl` (
 --
 
 INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
+(15, 1, 13),
 (1, 3, 1),
 (2, 3, 2),
 (3, 3, 4),
 (4, 3, 5),
+(11, 3, 11),
+(14, 3, 13),
 (5, 4, 6),
 (6, 4, 7),
-(7, 4, 8);
+(7, 4, 8),
+(10, 4, 11),
+(13, 4, 12);
 
 -- --------------------------------------------------------
 
@@ -660,16 +659,6 @@ CREATE TABLE `usr` (
   `per_id` int(11) NOT NULL,
   `sta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `usr`
---
-
-INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 2, 1),
-(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 3, 1),
-(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 5, 3);
-
 --
 -- Índices para tablas volcadas
 --
@@ -777,12 +766,8 @@ ALTER TABLE `usr`
   ADD UNIQUE KEY `usr_nm` (`usr_nm`,`usr_ema`,`usr_tel`,`per_id`),
   ADD KEY `per_id` (`per_id`,`rol_id`,`sta_id`),
   ADD KEY `rol_idPK_usr` (`rol_id`),
-  ADD KEY `sta_idPK_usr` (`sta_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
+  ADD KEY `sta_idPK_usr` (`sta_id`),
+  ADD KEY `per_idPk_usr` (`per_id`);
 --
 -- AUTO_INCREMENT de la tabla `agn`
 --
@@ -805,13 +790,13 @@ ALTER TABLE `emp`
 -- AUTO_INCREMENT de la tabla `mdl`
 --
 ALTER TABLE `mdl`
-  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -823,7 +808,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_mdl`
 --
 ALTER TABLE `rol_mdl`
-  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `sex`
@@ -865,7 +850,7 @@ ALTER TABLE `tytrun`
 -- AUTO_INCREMENT de la tabla `usr`
 --
 ALTER TABLE `usr`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -918,11 +903,33 @@ ALTER TABLE `turn`
 -- Filtros para la tabla `usr`
 --
 ALTER TABLE `usr`
-  ADD CONSTRAINT `per_idPK_usr` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `rol_idPK_usr` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  -- ADD CONSTRAINT `per_idPK_usr` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sta_idPK_usr` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Volcado de datos para la tabla `per`
+--
+
+INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
+(1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras'),
+(2, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
+(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
+(5, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 '),
+(6, 'juan', 'lopps', '6554-05-12', 5, 4, 1234567890, 'call#sapoxd'),
+(7, 'Geoff', 'Carlo', '1984-11-13', 1, 3, 9323710, 'Cl 15 15-15');
+
+INSERT INTO per (`per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
+('julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf');
+--
+-- Volcado de datos para la tabla `usr`
+--
+
+INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
+(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 2, 1),
+(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 3, 1),
+(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 5, 3),
+(4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 6, 3),
+(5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 7, 3),
+(8, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 8, 1);

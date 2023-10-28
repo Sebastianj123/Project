@@ -17,7 +17,7 @@ class Routing
   private $_folder;
   private $defaults = [
     "folder" => DEFAULT_FOLDER,
-    "controller" => DEFAULT_CONTROLLER,
+    "controller" => DEFAULT_CONTROLLER_LOGIN,
     "method" => DEFAULT_METHOD,
   ];
   private $folderController;
@@ -30,13 +30,6 @@ class Routing
   public function __construct()
   {
 
-    if (isset($_SESSION)) {
-      $this->defaults = [
-        "folder" => DEFAULT_FOLDER,
-        "controller" => DEFAULT_CONTROLLER_LOGIN,
-        "method" => DEFAULT_METHOD,
-      ];
-    }
     // Carpetas Default
     $this->_folder = $this->defaults['folder']; //public
     $this->folderController = $this->defaults['controller']; // home
@@ -64,7 +57,7 @@ class Routing
   {
 
     if (isset($this->url[1]) && isset($this->url[2])) {
-      
+
       // Controlador
       $this->folderController = ucwords($this->url[1]);
       
@@ -80,7 +73,7 @@ class Routing
         $this->_controller = $tempController;
         $this->_method = (in_array($tempMethod, get_class_methods($this->_controller))) ? $tempMethod : $this->defaults['method'];
       }
-
+      
     }
   }
 

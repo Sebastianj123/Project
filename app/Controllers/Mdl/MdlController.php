@@ -1,12 +1,5 @@
 <?php
-/*
- *Ahutor:DIEGO CASALLAS
- *Busines: SINAPSIS TECHNOLOGIES
- *Date:13/10/2023
- *Description:...
- */
-
-namespace App\Controllers\User;
+namespace App\Controllers\Mdl;
 
 use App\Config\Controller;
 use App\Models\User\UserModel;
@@ -16,16 +9,20 @@ class UserController extends Controller
 {
   protected $model;
   protected $result;
-  public function __construct()
+  protected $table;
+
+  public function __construct($tabla)
   {
-    $this->model = new UserModel(false);
+    $this->table = ucwords($tabla);
+    $this->model = new ($tabla."Model");
     $this->result = array();
 
   }
   public function show()
   {
-    $data['users'] = $this->model->getUserAll();
-    return $this->view("user/user", $data);
+    $method = "get" . $this->table . "s";
+    $data[''] = $this->model->{$method}();
+    return $this->view("mdl/ver", $data);
 
   }
 

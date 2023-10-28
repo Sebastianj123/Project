@@ -1,13 +1,13 @@
 <?php
 
-// use App\Controllers\Usr\UsrController;
-
 use App\Controllers\Header\HeaderController;
 
-(new HeaderController)->showGuest();  
-// $mdl = (isset($data['mdl'])) ? $data['mdl'] : 'Home Guest';
-// $modules = $data['mdls'];
+$datos = (new HeaderController)->showHeader();
+$modules = $datos['mdls'];
 
+// var_dump($modules);
+// $mdl = (isset($data['mdl'])) ? $data['mdl'] : 'Home Guest';
+// echo $mdl;
 ?>
 
 <style>

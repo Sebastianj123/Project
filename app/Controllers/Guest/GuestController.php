@@ -28,10 +28,7 @@ class GuestController extends Controller
 
   public function show()
   {
-    $this->model = new SrvModel;
-    $data['srv'] = $this->model->getSrvs();
-    $data['mdl'] = "Home Guest";
-    return $this->view("template/home/home",$data);
+    
   }
 
   public function showLogin(){
@@ -64,8 +61,10 @@ class GuestController extends Controller
 
           $data = $this->result[0];
           $data['timeLine'] = isset($modelUsr['remember']);
-          $data = var_dump((new UsrController)->getSession($data));
-          header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . "/". DEFAULT_METHOD);
+ 
+          UsrController::getSession($data);
+          // var_dump($_SESSION['session']);
+          header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . "/". DEFAULT_METHOD . ucwords(DEFAULT_CONTROLLER_LOGIN));
 
         } else {
 

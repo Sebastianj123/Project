@@ -4,9 +4,11 @@
 
 use App\Controllers\Header\HeaderController;
 
-(new HeaderController)->showHeader();
-$modules = $data['mdls'];
-$mdl = (isset($data['mdl'])) ? $data['mdl'] : 'Home Guest';
+$datos = (new HeaderController)->showHeader();
+$modules = $datos['mdls'];
+
+// var_dump($modules);
+// $mdl = (isset($data['mdl'])) ? $data['mdl'] : 'Home Guest';
 // echo $mdl;
 ?>
 
