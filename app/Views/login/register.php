@@ -46,12 +46,12 @@
     <input type="text" class = "form-control" name="per_ltnm" id="per_ltnm" placeholder="Apellido" required>
     
     <div class="row">
-      <label for="per_bithDt" class="col-8">
+      <label for="per_bithDt" class="col-7">
         <span class="form-control">
           Fecha de nacimiento:
         </span>
       </label>
-      <div class="col-4">
+      <div class="col-5">
         <input type="date" class="form-control" name="per_bithDt" id="per_bithDt" required>
       </div>
     </div>

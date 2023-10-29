@@ -49,7 +49,6 @@ class GuestController extends Controller
 
   public function login()
   {
-    $this->routeDefautl = APP_URL_PUBLIC . 'template/home/show';
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $modelUsr = $this->getDataModel();
       $userEmail = $modelUsr['usr_nm'];
@@ -57,18 +56,23 @@ class GuestController extends Controller
       $this->result = $this->model->getLoginData($userEmail);
 
       if (count($this->result) > 0) {
-        if (password_verify($userPassword, $this->result[0]["usr_pass"])) {
+        if ($this->result[0]['sta_id'] == 1) {
+          if (password_verify($userPassword, $this->result[0]["usr_pass"])) {
 
-          $data = $this->result[0];
-          $data['timeLine'] = isset($modelUsr['remember']);
- 
-          UsrController::getSession($data);
-          // var_dump($_SESSION['session']);
-          header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . "/". DEFAULT_METHOD . ucwords(DEFAULT_CONTROLLER_LOGIN));
-
+            $data = $this->result[0];
+            $data['timeLine'] = (isset($modelUsr['remember'])) ? 0 : 30;
+   
+            UsrController::getSession($data);
+            // var_dump($_SESSION['session']);
+            header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . "/". DEFAULT_METHOD . ucwords(DEFAULT_CONTROLLER_LOGIN));
+  
+          } else {
+  
+            $data['message'] = "Invalid password";
+            return $this->view("login/login", $data);
+          }
         } else {
-
-          $data['message'] = "Invalid password";
+          $data['message'] = 'The user is "' . $this->result[0]['sta_nm'] .'"';
           return $this->view("login/login", $data);
         }
 
@@ -114,4 +118,6 @@ class GuestController extends Controller
     header("Location: " . $this->routeDefautl);
   }
 }
+
+
 ?>

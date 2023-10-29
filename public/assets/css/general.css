@@ -1,0 +1,95 @@
+:root {
+    --black-rock-50: #d9d3ff;
+    --black-rock-100: #c8bdff;
+    --black-rock-200: #a391ff;
+    --black-rock-300: #785bff;
+    --black-rock-350: #673ab7;
+    --black-rock-400: #5e1eff;
+    --black-rock-500: #3e00e6;
+    --black-rock-600: #4f00ff;
+    --black-rock-700: #4a00ff;
+    --black-rock-710: #5a00fe;
+    --black-rock-720: #6300fd;
+    --black-rock-800: #3e00e6;
+    --black-rock-900: #3200af;
+    --black-rock-950: #120033;   
+}
+
+footer {
+    background: var(--black-rock-950);
+    position: inherit;
+    bottom: 0;
+  }
+
+  form {
+    width: 500px;   
+    margin: 0 auto;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    color: var(--black-rock-50);
+    border: none;
+    cursor: pointer;
+  }
+
+  .text-withe {
+    color: var(--black-rock-200) !important;
+  }
+
+  .form-control {
+    background-color: var(--black-rock-800);
+    font-weight: bold;
+    color: var(--black-rock-200);
+  }
+
+  .form-control:hover {
+    background-color: var(--black-rock-500);
+
+  }
+
+  .form-control:focus {
+    background-color: var(--black-rock-950);
+    color: var(--black-rock-200);
+
+  }
+
+  .form-control::placeholder {
+    color: var(--black-rock-200);
+  }
+.bg-purple950 {
+    background: var(--black-rock-950) !important;
+}
+
+button:hover {
+    background: var(--black-rock-200) !important;
+    color: var(--black-rock-50) !important;
+    font-weight: bold !important;
+  }
+
+.btn-primary {
+    background-color: var(--black-rock-350)!important;
+    border-color: var(--black-rock-350)!important;
+    color: var(--black-rock-50)!important;
+}
+
+.nav-item {
+color: var(--black-rock-50);
+background-color: var(--black-rock-600);
+}
+
+.nav-item:hover {
+background-color: var(--black-rock-710);
+}
+
+.nav-item:active {
+background-color: var(--black-rock-720);
+}

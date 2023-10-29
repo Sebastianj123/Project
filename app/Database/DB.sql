@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2023 a las 05:17:38
+-- Tiempo de generación: 29-10-2023 a las 03:23:27
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -21,14 +21,14 @@ SET time_zone = "+00:00";
 -- Base de datos: `cabellobellojj`
 --
 
-create or REPLACE DATABASE cabellobellojj;
-use cabellobellojj;
+DROP DATABASE IF EXISTS cabellobellojj;
+CREATE DATABASE cabellobellojj;
+USE cabellobellojj;
 
+DELIMITER $$
 --
 -- Procedimientos
 --
-DELIMITER $$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `d_agn` (IN `id` INT)   BEGIN 
 	DELETE FROM ang WHERE agn.agn_id = id;
 END$$
@@ -452,6 +452,17 @@ CREATE TABLE `per` (
   `per_addr` varchar(90) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `per`
+--
+
+INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
+(1, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
+(2, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
+(3, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 '),
+(4, 'juan', 'lopps', '6554-05-12', 5, 4, 1234567890, 'call#sapoxd'),
+(5, 'Geoff', 'Carlo', '1984-11-13', 1, 3, 9323710, 'Cl 15 15-15'),
+(6, 'julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf');
 
 -- --------------------------------------------------------
 
@@ -492,18 +503,18 @@ CREATE TABLE `rol_mdl` (
 --
 
 INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
-(15, 1, 13),
-(1, 3, 1),
-(2, 3, 2),
-(3, 3, 4),
-(4, 3, 5),
-(11, 3, 11),
-(14, 3, 13),
-(5, 4, 6),
-(6, 4, 7),
-(7, 4, 8),
-(10, 4, 11),
-(13, 4, 12);
+(1, 1, 13),
+(2, 3, 1),
+(3, 3, 2),
+(4, 3, 4),
+(5, 3, 5),
+(6, 3, 11),
+(7, 3, 13),
+(8, 4, 6),
+(9, 4, 7),
+(10, 4, 8),
+(11, 4, 11),
+(12, 4, 12);
 
 -- --------------------------------------------------------
 
@@ -659,6 +670,19 @@ CREATE TABLE `usr` (
   `per_id` int(11) NOT NULL,
   `sta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usr`
+--
+
+INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
+(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 1, 1),
+(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 2, 1),
+(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 3),
+(4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 4, 3),
+(5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 5, 3),
+(6, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 6, 1);
+
 --
 -- Índices para tablas volcadas
 --
@@ -768,6 +792,11 @@ ALTER TABLE `usr`
   ADD KEY `rol_idPK_usr` (`rol_id`),
   ADD KEY `sta_idPK_usr` (`sta_id`),
   ADD KEY `per_idPk_usr` (`per_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
 --
 -- AUTO_INCREMENT de la tabla `agn`
 --
@@ -796,7 +825,7 @@ ALTER TABLE `mdl`
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -808,7 +837,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_mdl`
 --
 ALTER TABLE `rol_mdl`
-  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `sex`
@@ -903,33 +932,11 @@ ALTER TABLE `turn`
 -- Filtros para la tabla `usr`
 --
 ALTER TABLE `usr`
+  ADD CONSTRAINT `per_idPK_usr` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `rol_idPK_usr` FOREIGN KEY (`rol_id`) REFERENCES `rol` (`rol_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  -- ADD CONSTRAINT `per_idPK_usr` FOREIGN KEY (`per_id`) REFERENCES `per` (`per_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `sta_idPK_usr` FOREIGN KEY (`sta_id`) REFERENCES `sta` (`sta_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
---
--- Volcado de datos para la tabla `per`
---
-
-INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
-(1, 'juli', 'asdf', '0002-12-12', 2, 4, 123123, 'kras'),
-(2, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
-(3, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
-(5, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 '),
-(6, 'juan', 'lopps', '6554-05-12', 5, 4, 1234567890, 'call#sapoxd'),
-(7, 'Geoff', 'Carlo', '1984-11-13', 1, 3, 9323710, 'Cl 15 15-15');
-
-INSERT INTO per (`per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
-('julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf');
---
--- Volcado de datos para la tabla `usr`
---
-
-INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 2, 1),
-(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 3, 1),
-(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 5, 3),
-(4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 6, 3),
-(5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 7, 3),
-(8, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 8, 1);
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

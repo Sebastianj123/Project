@@ -14,17 +14,12 @@ class UsrController extends Controller
     $this->result = array();
   }
 
-  public function getSessionGuest(){
-    session_start();
-    $_SESSION['session'] = ['rol_id' => 4];
-  }
-
   public static function getSession(array $data){
       session_start();
       $dataAuxiliar = ['usr_id' => $data['usr_id'], 'rol_id' => $data['rol_id']];
-      session_set_cookie_params((($data['timeLine']) ? 0 : 30 * 60) , null, DEFAULT_ROUTE);
+      session_set_cookie_params($data['timeLine'] * 60 , null, DEFAULT_ROUTE);
       $_SESSION['session'] = $dataAuxiliar;
-      // var_dump($_SESSION['session']);
+      var_dump($_SESSION['session']);
     }
   
     public function showDelete() {

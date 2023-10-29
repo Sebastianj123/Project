@@ -7,12 +7,18 @@ use App\Controllers\Header\HeaderController;
 $datos = (new HeaderController)->showHeader();
 $modules = $datos['mdls'];
 
-// var_dump($modules);
+// var_dump($modules); 
 // $mdl = (isset($data['mdl'])) ? $data['mdl'] : 'Home Guest';
 // echo $mdl;
 ?>
 
 <style>
+    button:hover {
+      background: #a391ff;
+      color: #fff;
+      font-weight: bold;
+    }
+
   .btn-primary {
   background-color: #673ab7!important;
   border-color: #673ab7!important;
@@ -50,11 +56,6 @@ button {
                 </div>
               </div>
           </div>
-  
-          <!-- Nav de los botones/link log y el Reg -->
-          <nav id="container_log_reg" class="col-6">
-            
-          </nav>
       </hHeader>
 
       <navHeader class="row">
