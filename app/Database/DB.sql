@@ -117,7 +117,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `i_tyDoc` (IN `name` VARCHAR(40), IN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `login` (IN `typeData` VARCHAR(8), IN `data` VARCHAR(80))   BEGIN
-    SELECT * FROM usr U WHERE 
+    SELECT U.usr_id, U.usr_pass, U.rol_id, S.sta_id, S.sta_nm FROM usr U INNER JOIN sta S ON U.sta_id = S.sta_id
+WHERE
     CASE typeData 
         WHEN 'usr_nm' THEN U.usr_nm
         WHEN 'usr_ema' THEN U.usr_ema
@@ -424,14 +425,14 @@ CREATE TABLE `mdl` (
 
 INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
 (1, 'Home', 'home\\showHome', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
-(2, 'Servicios', 'mdl\\showSrv', NULL),
-(3, 'Citas', 'mdl\\showCitas', NULL),
-(4, 'Perfil', 'mdl\\showPerfil', NULL),
-(5, 'Agendamiento', 'mdl\\showAgn', NULL),
+(2, 'Servicios', 'person\\showSrv', NULL),
+(3, 'Citas', 'person\\showCitas', NULL),
+(4, 'Perfil', 'person\\showPerfil', NULL),
+(5, 'Agendamiento', 'person\\showAgn', NULL),
 (6, 'Home Guest', 'home\\show', ''),
 (7, 'Login', 'guest\\showLogin', NULL),
 (8, 'Register', 'guest\\showRegister', NULL),
-(11, 'Reporte', 'home/repShow', NULL),
+(11, 'Reporte', 'person/repShow', NULL),
 (12, 'Delete Usr', 'usr/showDelete', NULL),
 (13, 'LogOut', 'usr/logOut', NULL);
 
@@ -512,9 +513,7 @@ INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
 (7, 3, 13),
 (8, 4, 6),
 (9, 4, 7),
-(10, 4, 8),
-(11, 4, 11),
-(12, 4, 12);
+(10, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -678,7 +677,7 @@ CREATE TABLE `usr` (
 INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
 (1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 1, 1),
 (2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 2, 1),
-(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 3),
+(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 1),
 (4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 4, 3),
 (5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 5, 3),
 (6, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 6, 1);

@@ -21,13 +21,14 @@ abstract class Model
         return 'Error: ' . $e->getMenssage();
     }
 
-    protected final function getQuery()  {
+    protected final function getQuery($typeArray = null)  {
+        $typeResult = ($typeArray === null) ? MYSQLI_ASSOC : MYSQLI_NUM; 
         try {
             $sql = $this->sql;
-            $prepare_sql = $this->conn->query($sql);
-            $this->result = $prepare_sql->fetch_all(MYSQLI_ASSOC);
+            $consult = $this->conn->query($sql);
+            $this->result = $consult->fetch_all($typeResult);
             $this->sql->free();
-            $prepare_sql->free();
+            $consult->free();
             $this->objDB->closeConnect();
         } catch (Exception $e) {
             $this->result = $this->error($e);

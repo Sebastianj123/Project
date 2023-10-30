@@ -6,6 +6,7 @@ use App\Controllers\Usr\UsrController;
 use App\Controllers\Home\HomeController;
 use App\Controllers\Srv\SrvController;
 use App\Controllers\Guest\GuestController;
+use App\Controllers\Person\PersonController;
 use App\Config;
 use App\Controllers\Header\HeaderController;
 // use App\Controllers\Login\guestController;

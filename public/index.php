@@ -18,6 +18,31 @@ require_once('../app/Config/Autoload.php');
 
 </head>
 
+<style>
+  .btn-primary {
+  background-color: #673ab7!important;
+  border-color: #673ab7!important;
+  color: #fff!important;
+}
+
+.nav-item {
+  color: #fff;
+  background-color: #4f00ff;
+}
+
+.nav-item:hover {
+  background-color: #5a00fe;
+}
+
+.nav-item:active {
+  background-color: #6300fd;
+}
+button {
+  color:#fff !important;
+}
+</style>
+
+
 <body style="background:#c8bdff;">
   <div class="container-fluid d-flex flex-column">
   <?php

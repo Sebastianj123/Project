@@ -16,9 +16,9 @@ class SrvModel extends Model
     $this->attributes = array( 'srv_nm', 'srv_dsc','srv_tm', 'srv_img','srv_cost', 'sta_id');    
   }
 
-  public function getSrvs()  {
+  public function getSrvs($type = null)  {
     $this->sql = 'CALL v_srvs();';
-    return $this->getQuery();
+    return $this->getQuery($type);
   }
 
   public function getSrv($id) : array {

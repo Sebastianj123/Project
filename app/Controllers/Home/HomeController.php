@@ -34,9 +34,5 @@ class HomeController extends Controller{
       return $this->view($folder,$data);
     }
 
-    public function repShow() {
-      return $this->view("usr/reporte");
-    }
-
   }
 ?>

@@ -10,51 +10,6 @@ $modules = $datos['mdls'];
 // echo $mdl;
 ?>
 
-<style>
-  .btn-primary {
-  background-color: #673ab7!important;
-  border-color: #673ab7!important;
-  color: #fff!important;
-}
-
-.nav-item {
-  color: #fff;
-  background-color: #4f00ff;
-}
-
-.nav-item:hover {
-  background-color: #5a00fe;
-}
-
-.nav-item:active {
-  background-color: #6300fd;
-}
-button {
-  color:#fff !important;
-}
-</style>
-<!-- Header -->
-  <header class="w-100 d-grid  m-0" >
-      <!-- Cabecera del Header -->
-      <hHeader class="row nger" style="background: #3200af;">
-          <!-- apartado Logo y Nombre de la empresa -->
-          <div id="container_logo-nm" class="row col-6">
-              <div id="container_logo" class="col-3">
-                  <img src="assets/img/icons/Logo.png" alt="Logo" class="p-4 w-100">
-              </div>
-              <div id="container_nm" class="col-9 d-flex aligt-items-center ">
-                <div style="height:50%;" class="mt-4">
-                  <h1 class=" h1 mt-4" style="color: #120033;"> Cabello Bello JJ</h1>
-                </div>
-              </div>
-          </div>
-  
-          <!-- Nav de los botones/link log y el Reg -->
-          <nav id="container_log_reg" class="col-6">
-            
-          </nav>
-      </hHeader>
-
       <navHeader class="row">
         <ul class="nav nav-pills w-100 h-100 d-flex bg-dark" id="mdl" role="tablist">
           <?php foreach ($modules as $module): ?>

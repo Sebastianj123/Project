@@ -42,7 +42,7 @@ button {
 }
 </style>
 <!-- Header -->
-  <header class="w-100 d-grid  m-0" >
+<header class="w-100 d-grid  m-0" >
       <!-- Cabecera del Header -->
       <hHeader class="row nger" style="background: #3200af;">
           <!-- apartado Logo y Nombre de la empresa -->
@@ -56,8 +56,13 @@ button {
                 </div>
               </div>
           </div>
+  
+          <!-- Nav de los botones/link log y el Reg -->
+          <nav id="container_log_reg" class="col-6">
+            
+          </nav>
       </hHeader>
-
+      
       <navHeader class="row">
         <ul class="nav nav-pills w-100 h-100 d-flex bg-dark" id="mdl" role="tablist">
           <?php foreach ($modules as $module): ?>

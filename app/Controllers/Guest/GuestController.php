@@ -71,7 +71,7 @@ class GuestController extends Controller
             $data['message'] = "Invalid password";
             return $this->view("login/login", $data);
           }
-        } else {
+        } else {  
           $data['message'] = 'The user is "' . $this->result[0]['sta_nm'] .'"';
           return $this->view("login/login", $data);
         }
