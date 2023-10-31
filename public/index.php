@@ -2,7 +2,7 @@
 namespace App;
 
 use App\Config\Routing;
-
+session_start();
 require_once('../app/Config/Autoload.php');
 ?>
 

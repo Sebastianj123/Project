@@ -1,7 +1,9 @@
 <?php
 namespace App\Controllers\Usr;
 use App\Config\Controller;
+use App\Models\Sex\SexModel;
 use App\Models\Srv\SrvModel;
+use App\Models\TyDoc\TyDocModel;
 use App\Models\Usr\UsrModel;
 
 class UsrController extends Controller
@@ -43,8 +45,36 @@ class UsrController extends Controller
         return $this->view('usr/srv',$data);
     }
 
+    public function activateUsr() {
+      if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['usr']) ) {
+          $this->model = new UsrModel;
+          $id = ($this->model->getLoginData($_GET['ema']))[0]['usr_id'];
+          $this->model->activeUsr($id);
+      }
+      header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . '/' . DEFAULT_METHOD);
+    }
 
+    public function showPerfil() {
+      $this->model = new UsrModel;
+      $datos = $_SESSION['session'];
+      $data['usr'] = ($this->model->getUsr($datos['usr_id']))[0];
+      $this->model = new SexModel;
+      $data['sex'] = $this->model->getSexAll();
+      $this->model = new TyDocModel;
+      $data['tyDoc'] = $this->model->getTyDocAll();
+      return $this->view('usr/perfil',$data);
+  }
 
+  public function showEdit() {
+    $this->model = new UsrModel;
+    $datos = $_SESSION['session'];
+    $data['usr'] = ($this->model->getUsr($datos['usr_id']))[0];
+    $this->model = new SexModel;
+    $data['sex'] = $this->model->getSexAll();
+    $this->model = new TyDocModel;
+    $data['tyDoc'] = $this->model->getTyDocAll();
+    return $this->view('usr/editPerfil',$data);
+}
 }
 
 ?>

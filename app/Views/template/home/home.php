@@ -1,11 +1,10 @@
 <?php  
 require_once("../app/Views/template/header.php");
 $srv = $data['srv'];
-
 ?>
 <main>
     <section class="introduccion m-3">
-      <h1 id="nosotros">Sobre nosotros Querido Invitado</h1>
+      <h1 id="nosotros">Sobre nosotros querido usuario</h1>
       <p>
       El salon de belleza <?= APP_NAME ?> es un salón de belleza de lujo que ofrece una amplia gama de servicios para hombres, mujeres y niños. Nuestros estilistas están capacitados en las últimas tendencias y técnicas, y están comprometidos a brindar a nuestros clientes una experiencia de belleza excepcional.
       </p>

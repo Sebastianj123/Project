@@ -2,6 +2,7 @@
 namespace App\Controllers\Header;
 use App\Config\Controller;
 use App\Controllers\Usr\UsrController;
+use App\Models\Rol\RolModel;
 use App\Models\Usr\UsrModel;
 class HeaderController extends Controller{
     protected $view;
@@ -13,12 +14,12 @@ class HeaderController extends Controller{
     }
 
     public function showHeader() :array {
-
-      session_start();
       $rol = (isset($_SESSION['session']['rol_id'])) ? $_SESSION['session']['rol_id'] : 4 ;
-      $data['mdls'] = null;
-      $data['mdls'] = $this->model->getModelUsr ($rol);
-      return $data;
+      $data['session'] = $_SESSION['session'];
+      $data['mdls'] = $this->model->getModelUsr($rol);
+      $this->model = new RolModel;
+      $data['rol'] = ($this->model->getRolId($rol))[0];
+      return $data; 
     }
   }
 ?>

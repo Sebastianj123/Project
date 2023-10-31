@@ -31,6 +31,7 @@ class Routing
   public function __construct()
   {
 
+
     // Carpetas Default
     $this->_folder = $this->defaults['folder']; //public
     $this->folderController = $this->defaults['controller']; // home
@@ -70,7 +71,8 @@ class Routing
       $cntllr= ucwords($this->url[1]);
       $tempController = "App\Controllers\\$cntllr\\$cntllr" ."Controller";
       $tempMethod = $tempAttributes[0];
-      if(class_exists($tempController)) {
+
+      if(class_exists($tempController) && in_array($tempMethod, get_class_methods($tempController))) {
         $this->_controller = $tempController;
         $this->_method = (in_array($tempMethod, get_class_methods($this->_controller))) ? $tempMethod : $this->defaults['method'];
       }

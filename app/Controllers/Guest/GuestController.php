@@ -4,6 +4,7 @@ namespace App\Controllers\Guest;
 
 use App\Models\Usr\UsrModel;
 use App\Config\Controller;
+use App\Controllers\Mail\MailController;
 use App\Controllers\Usr\UsrController;
 use App\Models\Sex\SexModel;
 use App\Models\Srv\SrvModel;
@@ -89,16 +90,21 @@ class GuestController extends Controller
     $data = $_POST;
 
     // Valida los datos
+    $controller = new MailController($data);
+    
     $data = array_filter($data, function($value) {
       return !empty($value);
     });
-
+    
+    
     $data = array_map(function($value) {
       return filter_var($value, FILTER_SANITIZE_STRING);
     }, $data);
+    
     $data['usr_pass'] = password_hash($data['usr_pass'],PASSWORD_DEFAULT);
 
     $this->model->insertUsr('client',$data);
+
 
     $data['message'] = 'Debes verificar tu cuenta por medio de correo electronico, se envio al correo que registraste en la página';
     return $this->view('login/login');

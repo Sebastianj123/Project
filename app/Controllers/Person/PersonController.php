@@ -2,6 +2,7 @@
 namespace App\Controllers\Person;
 use App\Config\Controller;
 use App\Models\Srv\SrvModel;
+use App\Models\Usr\UsrModel;
 
 class PersonController extends Controller
 {
@@ -14,7 +15,5 @@ class PersonController extends Controller
         return $this->view('mdl/showMdl',$data);
     }
 
-    public function showPerfil() {
-        
-    }
+
 }

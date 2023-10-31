@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers\Home;
 use App\Config\Controller;
+use App\Models\Rol\RolModel;
 use App\Models\Srv\SrvModel;
 use App\Models\Usr\UsrModel;
 class HomeController extends Controller{
@@ -25,11 +26,9 @@ class HomeController extends Controller{
 
     public function show() {
       $data['mdls'] = $this->headerModules;
-      
       // Modulos del Home
       $this->model = new SrvModel;
       $data['srv'] = $this->model->getSrvs();
-      
       $folder = RUTE_HOME;
       return $this->view($folder,$data);
     }
