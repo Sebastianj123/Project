@@ -1,5 +1,5 @@
 <?php 
-    require_once("../app/Views/template/header.php");
+    require_once("../app/Views/template/header.php"); 
 ?>
 <style>
     body {

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers\Usr;
 use App\Config\Controller;
+use App\Models\Srv\SrvModel;
 use App\Models\Usr\UsrModel;
 
 class UsrController extends Controller
@@ -34,6 +35,12 @@ class UsrController extends Controller
         session_destroy();
       } 
       header("Location: " . APP_URL_PUBLIC . DEFAULT_CONTROLLER_LOGIN . '/' . DEFAULT_METHOD);
+    }
+
+    public function showSrv() : mixed {
+      $this->model = new SrvModel();
+        $data['srv'] = $this->model->getSrvs();
+        return $this->view('usr/srv',$data);
     }
 
 

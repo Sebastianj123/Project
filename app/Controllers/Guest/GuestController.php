@@ -99,6 +99,9 @@ class GuestController extends Controller
     $data['usr_pass'] = password_hash($data['usr_pass'],PASSWORD_DEFAULT);
 
     $this->model->insertUsr('client',$data);
+
+    $data['message'] = 'Debes verificar tu cuenta por medio de correo electronico, se envio al correo que registraste en la página';
+    return $this->view('login/login');
   }
 
   public function getDataModel()
