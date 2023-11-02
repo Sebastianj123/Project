@@ -71,7 +71,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `i_client` (IN `name` VARCHAR(80), I
         
         INSERT INTO `usr` 
         (`usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`)  
-        VALUES (usrName, ema, tel, `pass`, 3, idPer, 3);
+        VALUES (usrName, ema, tel, `pass`, 3, idPer, 1);
     END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_emp` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(80), IN `addr` VARCHAR(80), IN `srvID` INT)   BEGIN
