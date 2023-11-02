@@ -15,7 +15,7 @@ class HeaderController extends Controller{
 
     public function showHeader() :array {
       $rol = (isset($_SESSION['session']['rol_id'])) ? $_SESSION['session']['rol_id'] : 4 ;
-      $data['session'] = $_SESSION['session'];
+      $data['session'] = (isset($_SESSION['session'])) ? $_SESSION['session'] : '';
       $data['mdls'] = $this->model->getModelUsr($rol);
       $this->model = new RolModel;
       $data['rol'] = ($this->model->getRolId($rol))[0];

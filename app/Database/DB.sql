@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-10-2023 a las 03:23:27
+-- Tiempo de generación: 02-11-2023 a las 17:47:14
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 -- Base de datos: `cabellobellojj`
 --
 
-DROP DATABASE IF EXISTS cabellobellojj;
-CREATE DATABASE cabellobellojj;
-USE cabellobellojj;
+drop database if not exists cabellobellojj;
+CREATE database cabellobellojj;
+use cabellobellojj;
 
 DELIMITER $$
 --
@@ -48,6 +48,11 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `d_tyDoc` (IN `id` INT)   BEGIN 
 DELETE FROM tydoc where tydoc_id = id; END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `d_usr` (IN `id` INT)   BEGIN 
+	DELETE FROM per WHERE per_id = (SELECT per_id FROM usr WHERE usr_id = id);
+    DELETE from usr where usr_id = id;
+END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_agn` (IN `dt` DATETIME)   BEGIN 
     INSERT INTO `agn` (agn_dt) VALUES (dt);
@@ -171,11 +176,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `u_tyDoc` (IN `id` INT, IN `name` VA
 	UPDATE `tydoc` SET `tyDoc_nm`= `name`,`tyDoc_dsc`=dsc WHERE `tyDoc_id` = id;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr` (IN `id` INT, IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `addr` VARCHAR(80), IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(60), IN `sta` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr` (IN `id` INT, IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `addr` VARCHAR(80))   BEGIN
     UPDATE `usr`
     INNER JOIN `per` ON `usr`.`per_id` = `per`.`per_id`
-    SET `usr`.`usr_nm` = `usrName`, `usr`.`usr_ema` = `ema`, `usr`.`usr_tel` = `tel`, `usr`.`usr_pass` = `pass`, `usr`.`sta_id` = `sta`,`per`.`per_nm` = `name`,`per`.`per_ltnm` = `lastName`,`per`.`sex_id` = `sex`,`per`.`tyDoc_id` = `tyDoc`,`per`.`per_doc` = `doc`,`per`.`per_bithDt` = `date`, `per`.`per_addr` = `addr`
+    SET 
+    `usr`.`usr_nm` = `usrName`, 
+    `usr`.`usr_ema` = `ema`, 
+    `usr`.`usr_tel` = `tel`, 
+    `per`.`per_nm` = `name`, 
+    `per`.`per_ltnm` = `lastName`,
+    `per`.`sex_id` = `sex`,
+    `per`.`tyDoc_id` = `tyDoc`,
+    `per`.`per_doc` = `doc`,
+    `per`.`per_bithDt` = `date`,
+    `per`.`per_addr` = `addr`
     WHERE `usr`.`usr_id` = `id` AND `per`.`per_id` = `id`;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr_pass` (IN `id` INT, IN `pass` VARCHAR(60))   BEGIN
+	UPDATE usr U SET U.usr_pass = pass WHERE U.usr_id = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `u_usr_rol` (IN `id` INT, IN `rol` INT)   BEGIN
@@ -259,6 +278,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `v_per` (IN `id` INT)   BEGIN
     INNER JOIN sex E ON P.sex_id = E.sex_id
     INNER JOIN tyDoc T ON P.tyDoc_id = T.tyDoc_id
     WHERE U.usr_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_reg` (IN `id` INT)   BEGIN
+	SELECT * FROM usr U WHERE U.usr_id = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `v_regs` ()   BEGIN
+	SELECT * FROM usr U;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `v_rol` (IN `id` INT)   BEGIN 
@@ -424,17 +451,17 @@ CREATE TABLE `mdl` (
 --
 
 INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
-(1, 'Home', 'home\\showHome', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
-(2, 'Servicios', 'person\\showSrv', NULL),
+(1, 'Home', 'home\\show', 'Esta es la vista central a la cuál el usuario entrará de primeras sino a iniciado sesión.'),
+(2, 'Servicios', 'usr\\showSrv', 'Esta es la vista donde los usuarios pueden observar los servicios activos en la página'),
 (3, 'Citas', 'person\\showCitas', NULL),
-(4, 'Perfil', 'person\\showPerfil', NULL),
+(4, 'Perfil', 'usr\\showPerfil', NULL),
 (5, 'Agendamiento', 'person\\showAgn', NULL),
-(6, 'Home Guest', 'home\\show', ''),
 (7, 'Login', 'guest\\showLogin', NULL),
 (8, 'Register', 'guest\\showRegister', NULL),
 (11, 'Reporte', 'person/repShow', NULL),
 (12, 'Delete Usr', 'usr/showDelete', NULL),
-(13, 'LogOut', 'usr/logOut', NULL);
+(13, 'LogOut', 'usr/logOut', NULL),
+(14, 'Servicios', 'admin/srv', 'Vista de admin sobre los servicios');
 
 -- --------------------------------------------------------
 
@@ -458,12 +485,14 @@ CREATE TABLE `per` (
 --
 
 INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
-(1, 'Juan', 'Garcia', '2006-08-12', 1, 2, 1232122233, 'KR'),
 (2, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
-(3, 'Sebastian', 'JAramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 '),
+(3, 'Sebastian', 'Jaramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 No 67 A 66 '),
 (4, 'juan', 'lopps', '6554-05-12', 5, 4, 1234567890, 'call#sapoxd'),
 (5, 'Geoff', 'Carlo', '1984-11-13', 1, 3, 9323710, 'Cl 15 15-15'),
-(6, 'julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf');
+(6, 'julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf'),
+(9, 'Sebastian', 'JAramillo', '2006-12-30', 4, 5, 1, 'kr11 '),
+(12, 'Sebastian', 'JAramillo', '2023-10-31', 1, 1, 12312, 'kr11 '),
+(17, 'Sebastian', 'JAramillo', '2023-10-04', 2, 3, 3523461624641, 'kr11 ');
 
 -- --------------------------------------------------------
 
@@ -504,14 +533,16 @@ CREATE TABLE `rol_mdl` (
 --
 
 INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
-(1, 1, 13),
+(16, 1, 13),
+(15, 1, 14),
+(14, 2, 14),
 (2, 3, 1),
 (3, 3, 2),
 (4, 3, 4),
 (5, 3, 5),
 (6, 3, 11),
 (7, 3, 13),
-(8, 4, 6),
+(8, 4, 1),
 (9, 4, 7),
 (10, 4, 8);
 
@@ -675,12 +706,14 @@ CREATE TABLE `usr` (
 --
 
 INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(1, 'JuanDa', 'JUANNEITOR98@gmail.com', 3121221212, '$2y$10$gQrEGzy1JV00ZpBdJC/2Wui7ZxajBF4.dQd1.TjXu0hHnw5wjpDQG', 3, 1, 1),
 (2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 2, 1),
-(3, 'armadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 1),
+(3, 'superArmadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 1),
 (4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 4, 3),
 (5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 5, 3),
-(6, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 6, 1);
+(6, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 6, 1),
+(9, 'armadillo2', 'armadillo2@gmail.com', 1321321313, '$2y$10$QeiX1FNLmz2XS6qNw/G/ouR2v3aDfY6jJ6yqbOSygiPGjdLL6Cn2O', 3, 9, 3),
+(10, 'armadillo3', 'armadillo3@gmail.com', 1232, '$2y$10$//tGatTnl7W4/KcT2dL0O.e42h4eOiAI2BqKi4lGmxqfu1RVYA6hy', 3, 12, 3),
+(11, 'armadillo4', 'a@a.a', 3051231212, '$2y$10$TZNInGmUY/9rKx0WZ3rk4eR7OQVuijUk2WbUFdj2d.SYcN3YpIyVS', 3, 17, 3);
 
 --
 -- Índices para tablas volcadas
@@ -787,6 +820,7 @@ ALTER TABLE `tytrun`
 ALTER TABLE `usr`
   ADD PRIMARY KEY (`usr_id`),
   ADD UNIQUE KEY `usr_nm` (`usr_nm`,`usr_ema`,`usr_tel`,`per_id`),
+  ADD UNIQUE KEY `usr_nm_2` (`usr_nm`,`usr_ema`,`usr_tel`),
   ADD KEY `per_id` (`per_id`,`rol_id`,`sta_id`),
   ADD KEY `rol_idPK_usr` (`rol_id`),
   ADD KEY `sta_idPK_usr` (`sta_id`),
@@ -818,13 +852,13 @@ ALTER TABLE `emp`
 -- AUTO_INCREMENT de la tabla `mdl`
 --
 ALTER TABLE `mdl`
-  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -836,7 +870,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_mdl`
 --
 ALTER TABLE `rol_mdl`
-  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `sex`
@@ -878,7 +912,7 @@ ALTER TABLE `tytrun`
 -- AUTO_INCREMENT de la tabla `usr`
 --
 ALTER TABLE `usr`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas

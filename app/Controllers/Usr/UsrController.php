@@ -25,9 +25,6 @@ class UsrController extends Controller
       var_dump($_SESSION['session']);
     }
   
-    public function showDelete() {
-      return $this->view("usr/delete"); 
-    }
 
     public function logOut() {
       session_start();
@@ -75,6 +72,31 @@ class UsrController extends Controller
     $data['tyDoc'] = $this->model->getTyDocAll();
     return $this->view('usr/editPerfil',$data);
 }
+
+   public function updateUsr() {
+      $this->model = new UsrModel;
+      $data = array_merge(['usr_id' => $_SESSION['session']['usr_id']], $_POST);
+      $this->model->updateUsr($data);
+      header('Location: ' . APP_URL_PUBLIC . 'usr' . '/' . 'showPerfil');
+   }
+
+   public function showDelete() {
+    $data['usr'] = $_SESSION['session'];
+    return $this->view('usr/delete',$data);
+   }
+
+   public function inhability() {
+      $this->model = new UsrModel;
+      $id = $_SESSION['session']['usr_id'];
+      $pass = ($this->model->getReg($_SESSION['session']['usr_id']))[0]['usr_pass'];
+      if (password_verify($_POST['usr_pass'], $pass)) {
+        $this->model = new UsrModel;
+        $this->model->deleteUsr($id);
+        $this->logOut();
+      }
+
+      return $this->view('usr/delete');
+   }
 }
 
 ?>

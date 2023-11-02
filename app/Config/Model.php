@@ -37,6 +37,11 @@ abstract class Model
         }
     }
 
+    final function query() {
+        $this->conn->query($this->sql);
+        return mysqli_affected_rows($this->conn);
+    }
+
     final protected function getValuesForSql(array $data) : string {
           return '"'. implode('", "', $data) . '"';
     }

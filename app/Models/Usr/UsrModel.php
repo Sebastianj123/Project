@@ -1,7 +1,7 @@
 <?php
     
-    namespace App\Models\Usr;
-    use App\Config\Model;
+namespace App\Models\Usr;
+use App\Config\Model;
 use PDO;
 use Public\Assets\tools\validateData;
 
@@ -66,15 +66,15 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
-  public function updateUsr(string $typeUsr, array $data){
-        $values = $this->getValuesForSql($data);
-        $this->sql = "CALL u_usr ();";
-        return $this->getQuery();
+  public function updateUsr(array $data){
+      $values = $this->getValuesForSql($data);
+      $this->sql = "CALL u_usr ($values);";
+      return $this->getQuery();
   }
 
   public function deleteUsr($id) {
     $this->sql = "CALL u_usr_sta($id,4);";
-    return $this->getQuery();
+    $this->query();
   }
 
   public function activeUsr($id) {
@@ -118,6 +118,21 @@ final class UsrModel extends Model
     return $this->getQuery();
   }
 
+  public function getReg($id) {
+    $this->sql = "CALL v_reg($id)";
+    return $this->getQuery();
+  }
+
+  public function getRegs() {
+    $this->sql = "CALL v_reg()";
+    return $this->getQuery();
+  }
+
+  public function setPass(array $data) {
+    $values = $this->getValuesForSql($data);
+    $this->sql = "CALL v_reg($values)";
+    return $this->getQuery();
+  }
 }
           
 ?>

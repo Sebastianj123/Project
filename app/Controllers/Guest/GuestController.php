@@ -27,11 +27,6 @@ class GuestController extends Controller
 
   }
 
-  public function show()
-  {
-    
-  }
-
   public function showLogin(){
     // unset($data['mdl']); 
     $data['mdl'] = "Login";
