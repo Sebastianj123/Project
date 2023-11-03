@@ -91,10 +91,13 @@ class UsrController extends Controller
       $pass = ($this->model->getReg($_SESSION['session']['usr_id']))[0]['usr_pass'];
       if (password_verify($_POST['usr_pass'], $pass)) {
         $this->model = new UsrModel;
-        $this->model->deleteUsr($id);
-        $this->logOut();
+        if ($this->model->inhabilityUsr($id)) {
+          return $this->view('usr/delete');
+        }
+        else {
+          $this->logOut();
+        }
       }
-
       return $this->view('usr/delete');
    }
 }

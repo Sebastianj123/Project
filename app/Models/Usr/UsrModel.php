@@ -73,38 +73,48 @@ final class UsrModel extends Model
   }
 
   public function deleteUsr($id) {
+    $this->sql = "CALL d_usr($id);";
+    return $this->query();    
+  }
+  public function inhabilityUsr($id) {
     $this->sql = "CALL u_usr_sta($id,4);";
     $this->query();
   }
 
+  public function setSta($id,$sta = 3) {
+    $this->sql = "CALL u_usr_sta($id,$sta);";
+    echo $this->sql;
+    return $this->query();
+  }
+
   public function activeUsr($id) {
     $this->sql = "CALL u_usr_sta($id,1);";
-    return $this->getQuery();
+    return $this->query();
   }
 
   public function inactiveUsr($id) {
     $this->sql = "CALL u_usr_sta($id,2);";
-    return $this->getQuery();
+    return $this->query();
   }
 
   public function toConfirmUsr($id) {
     $this->sql = "CALL u_usr_sta($id,3);";
-    return $this->getQuery();
+    return $this->query();
   }
 
   public function setAmindRol($id) {
     $this->sql = "CALL u_usr_rol($id,1);";
-    return $this->getQuery();
+    return $this->query();
   }
   
   public function setEmpRol($id, $srv){
     $this->sql = "Call u_usr_rol_emp($id,$srv);";
-    return $this->getQuery();
+    return $this->query();
   }
 
   public function setClientRol($id) {
     $this->sql = "CALL u_usr_rol($id,3);";
-    return $this->getQuery();
+    return $this->query();
   }
 
   public function getEmps() {
@@ -131,7 +141,7 @@ final class UsrModel extends Model
   public function setPass(array $data) {
     $values = $this->getValuesForSql($data);
     $this->sql = "CALL v_reg($values)";
-    return $this->getQuery();
+    return $this->query();
   }
 }
           

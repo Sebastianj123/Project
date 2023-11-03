@@ -23,6 +23,13 @@ if(isset($data['message'])){
         Credenciales de usuario:
       </label>
 
+      <div class="alert alert-primary d-flex align-items-center w-100" role="alert">
+        <div>
+          Puede ingresar con el nombre de usuario, email o numero de telefo registrado en el formulario de registro
+        </div>
+        <button type="button" class="btn-close me-2" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
       <div class="col-12">
         <input type="text" class="form-control " id="usr_nm" name="usr_nm" placeholder="name@example.com" required>
       </div>

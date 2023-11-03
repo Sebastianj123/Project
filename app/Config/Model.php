@@ -39,7 +39,7 @@ abstract class Model
 
     final function query() {
         $this->conn->query($this->sql);
-        return mysqli_affected_rows($this->conn);
+        return ($this->conn->affected_rows > 0);
     }
 
     final protected function getValuesForSql(array $data) : string {

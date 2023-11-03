@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2023 a las 17:47:14
+-- Tiempo de generación: 03-11-2023 a las 05:32:31
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -71,7 +71,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `i_client` (IN `name` VARCHAR(80), I
         
         INSERT INTO `usr` 
         (`usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`)  
-        VALUES (usrName, ema, tel, `pass`, 3, idPer, 1);   
+        VALUES (usrName, ema, tel, `pass`, 3, idPer, 3);
     END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `i_emp` (IN `name` VARCHAR(80), IN `lastName` VARCHAR(80), IN `date` DATE, IN `sex` INT, IN `tyDoc` INT, IN `doc` DOUBLE, IN `usrName` VARCHAR(80), IN `ema` VARCHAR(80), IN `tel` DOUBLE, IN `pass` VARCHAR(80), IN `addr` VARCHAR(80), IN `srvID` INT)   BEGIN
@@ -461,7 +461,9 @@ INSERT INTO `mdl` (`mdl_id`, `mdl_nm`, `mdl_url`, `mdl_dsc`) VALUES
 (11, 'Reporte', 'person/repShow', NULL),
 (12, 'Delete Usr', 'usr/showDelete', NULL),
 (13, 'LogOut', 'usr/logOut', NULL),
-(14, 'Servicios', 'admin/srv', 'Vista de admin sobre los servicios');
+(14, 'Servicios', 'admin/srv', 'Vista de admin sobre los servicios'),
+(15, 'Eliminar Usuario', 'admin/showDeleteUsr', 'Esta es la vista del admin con la cual puede eliminar un usuario'),
+(16, 'Actualizar Estado De Usuario', 'admin/showSetSta', 'Esta es la vista con la cual el administrador podrá alterar el estado del usuario');
 
 -- --------------------------------------------------------
 
@@ -486,13 +488,13 @@ CREATE TABLE `per` (
 
 INSERT INTO `per` (`per_id`, `per_nm`, `per_ltnm`, `per_bithdt`, `sex_id`, `tyDoc_id`, `per_doc`, `per_addr`) VALUES
 (2, 'julian', 'Barbosa', '0021-12-21', 3, 2, 1233121212, 'kr'),
-(3, 'Sebastian', 'Jaramillo', '2023-10-03', 1, 2, 1232121212, 'kr11 No 67 A 66 '),
 (4, 'juan', 'lopps', '6554-05-12', 5, 4, 1234567890, 'call#sapoxd'),
 (5, 'Geoff', 'Carlo', '1984-11-13', 1, 3, 9323710, 'Cl 15 15-15'),
 (6, 'julai', 'asdfe', '0002-12-12', 2, 4, 234123123, 'krasadf'),
 (9, 'Sebastian', 'JAramillo', '2006-12-30', 4, 5, 1, 'kr11 '),
 (12, 'Sebastian', 'JAramillo', '2023-10-31', 1, 1, 12312, 'kr11 '),
-(17, 'Sebastian', 'JAramillo', '2023-10-04', 2, 3, 3523461624641, 'kr11 ');
+(19, 'em', 'pleadpo', '2023-11-01', 1, 2, 123, 'kr11 No 67 A 66 '),
+(21, 'Sebastian', 'armadillo', '2019-05-03', 1, 2, 12398765, 'kr11 No 67 A 66 ');
 
 -- --------------------------------------------------------
 
@@ -533,14 +535,20 @@ CREATE TABLE `rol_mdl` (
 --
 
 INSERT INTO `rol_mdl` (`rol_mdl_id`, `rol_id`, `mdl_id`) VALUES
+(23, 1, 1),
+(15, 1, 2),
+(18, 1, 11),
 (16, 1, 13),
-(15, 1, 14),
-(14, 2, 14),
+(20, 1, 15),
+(26, 1, 16),
+(19, 2, 1),
+(14, 2, 2),
+(21, 2, 4),
+(6, 2, 11),
+(22, 2, 13),
 (2, 3, 1),
 (3, 3, 2),
 (4, 3, 4),
-(5, 3, 5),
-(6, 3, 11),
 (7, 3, 13),
 (8, 4, 1),
 (9, 4, 7),
@@ -706,14 +714,13 @@ CREATE TABLE `usr` (
 --
 
 INSERT INTO `usr` (`usr_id`, `usr_nm`, `usr_ema`, `usr_tel`, `usr_pass`, `rol_id`, `per_id`, `sta_id`) VALUES
-(2, 'juan123', 'Juanito@mail.co', 305, '$2y$10$yTv.sEgs2oJzfdFY/brSu.6v179sRN8uDK2VAzvnxcHMyd9nSGyui', 3, 2, 1),
-(3, 'superArmadillo', 'sisoyyosebastian@gmail.com', 3042312132, '$2y$10$JKlHPy6Abf4VVyrpm8z9duZ.i1/g90g4gytXUsBk7fcoiA7X6X2iG', 3, 3, 1),
 (4, 'xd', 'hola@gmail.com', 1313544258, '$2y$10$sED7ovNeRw7GbHHSl5wL5evh5mgtcPlTHkTZMeZ9rsXkvCkhv4DtS', 3, 4, 3),
 (5, 'Geoffcarlo', 'Ggg@hotmail.com', 3112892166, '$2y$10$QkHdOhvtqFP1XyoNddmOGeA2TnAo5OMXMjoAd8pTp7MU.8q5icZeO', 3, 5, 3),
 (6, 'admin', 'a@.aaa', 1231231212, '$2y$10$qRSxhKWhIC9RcurkDqnaX.oPuxDJT5mY9FSz3ArdFnFf4iWx0GVFi', 1, 6, 1),
-(9, 'armadillo2', 'armadillo2@gmail.com', 1321321313, '$2y$10$QeiX1FNLmz2XS6qNw/G/ouR2v3aDfY6jJ6yqbOSygiPGjdLL6Cn2O', 3, 9, 3),
+(9, 'armadillo2', 'armadillo2@gmail.com', 1321321313, '$2y$10$QeiX1FNLmz2XS6qNw/G/ouR2v3aDfY6jJ6yqbOSygiPGjdLL6Cn2O', 2, 9, 1),
 (10, 'armadillo3', 'armadillo3@gmail.com', 1232, '$2y$10$//tGatTnl7W4/KcT2dL0O.e42h4eOiAI2BqKi4lGmxqfu1RVYA6hy', 3, 12, 3),
-(11, 'armadillo4', 'a@a.a', 3051231212, '$2y$10$TZNInGmUY/9rKx0WZ3rk4eR7OQVuijUk2WbUFdj2d.SYcN3YpIyVS', 3, 17, 3);
+(12, 'emp', 'emp@gmail.co', 132123321, '$2y$10$3n2NYCG7u.YMVfqGUK4cOOs10XX4dU.i80WD2vLtcPZXycj097TG2', 2, 19, 1),
+(13, 'superArmadillo', 'sisoyyosebastian@gmail.com', 123327612, '$2y$10$m6O6Dgjy0bmemQqMki1YHe/4pjZ4Fy8A9eEi/a3QaZQdxAKYWEVsS', 3, 21, 1);
 
 --
 -- Índices para tablas volcadas
@@ -852,13 +859,13 @@ ALTER TABLE `emp`
 -- AUTO_INCREMENT de la tabla `mdl`
 --
 ALTER TABLE `mdl`
-  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `per`
 --
 ALTER TABLE `per`
-  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `per_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -870,7 +877,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_mdl`
 --
 ALTER TABLE `rol_mdl`
-  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `rol_mdl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `sex`
@@ -912,7 +919,7 @@ ALTER TABLE `tytrun`
 -- AUTO_INCREMENT de la tabla `usr`
 --
 ALTER TABLE `usr`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
