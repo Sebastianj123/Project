@@ -15,5 +15,8 @@ class PersonController extends Controller
         return $this->view('mdl/showMdl',$data);
     }
 
+    public function repShow() {
+        return $this->view('template/reporte');
+    }
 
 }
